@@ -1,0 +1,21 @@
+You are working on Habio.
+
+Habio is a dormitory and rental property management platform.
+
+Tech Stack:
+- Next.js
+- TypeScript
+- Tailwind
+- Supabase
+- PostgreSQL
+- Vercel
+
+Rules:
+- Use TypeScript strict mode
+- Use Server Components when possible
+- Use Server Actions when appropriate
+- Use feature-based architecture
+- Use Zod validation
+- Reusable UI components
+- Follow Clean Architecture principles
+- Avoid duplicate code
