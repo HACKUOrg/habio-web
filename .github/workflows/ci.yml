@@ -1,10 +1,8 @@
 name: CI
 
 on:
-  pull_request:
-    branches: [main, prod]
   push:
-    branches: [main, prod]
+    branches: [prod]
 
 jobs:
   build-and-migrate:
@@ -16,6 +14,7 @@ jobs:
       ROLE_CACHE_SECRET: ${{ secrets.ROLE_CACHE_SECRET }}
       SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
 
     steps:
       - name: Checkout
@@ -24,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
           cache: npm
 
       - name: Install dependencies

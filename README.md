@@ -13,7 +13,7 @@ Dormitory and rental property management platform.
 1. Copy environment variables:
 
 ```bash
-cp .env.example .env.local
+cp .env.local .env.production
 ```
 
 2. Fill in Supabase credentials from your dev project dashboard.
