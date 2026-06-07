@@ -1,224 +1,404 @@
-# 06 — Implementation Roadmap
+# 06 - Implementation Roadmap
 
-## Overview
+## 1. Guiding Order
 
-The roadmap is divided into five phases. Each phase builds on the previous one and produces a shippable increment. The goal is to reach a working end-to-end MVP (all four roles, core feature set) by end of Phase 3.
+Implement the authorization model before building role dashboards. The old single-role model must not become the foundation for application code.
 
-```mermaid
-gantt
-    title Habio Implementation Roadmap
-    dateFormat  YYYY-MM-DD
-    axisFormat  Week %W
-
-    section Phase 1 — Foundation
-    Project scaffold & CI        :p1a, 2024-01-01, 5d
-    Database schema & migrations :p1b, after p1a, 5d
-    Auth pages & middleware       :p1c, after p1b, 5d
-    Dashboard shell & RBAC       :p1d, after p1c, 4d
-
-    section Phase 2 — Core Data
-    Room management              :p2a, after p1d, 5d
-    Tenant management            :p2b, after p2a, 5d
-    Billing (generate + pay)     :p2c, after p2b, 7d
-
-    section Phase 3 — Operations
-    Maintenance tickets          :p3a, after p2c, 7d
-    Housekeeping tasks           :p3b, after p3a, 5d
-    In-app notifications         :p3c, after p3b, 5d
-
-    section Phase 4 — LINE Integration
-    LINE webhook & account link  :p4a, after p3c, 5d
-    LINE push notifications      :p4b, after p4a, 5d
-    LINE message templates       :p4c, after p4b, 3d
-
-    section Phase 5 — Polish
-    Manager analytics dashboard  :p5a, after p4c, 5d
-    Performance & SEO            :p5b, after p5a, 3d
-    RLS pgTAP tests              :p5c, after p5a, 4d
-    Staging UAT + bug fixes      :p5d, after p5c, 5d
-```
-
----
-
-## Phase 1 — Foundation
-
-**Goal**: A working, deployed skeleton with authentication, role routing, and an empty dashboard shell.
-
-**Duration**: ~3 weeks
-
-### Deliverables
-
-| # | Task | Files / Outputs |
-|---|---|---|
-| 1.1 | Initialise Supabase CLI workspace | `supabase/config.toml` |
-| 1.2 | Write initial schema migration | `supabase/migrations/..._initial_schema.sql` — includes `property_staff` table, all indexes, and partial unique indexes |
-| 1.3 | Write RLS policies migration | `supabase/migrations/..._rls_policies.sql` |
-| 1.4 | Write triggers migration | `supabase/migrations/..._triggers.sql` — includes `pg_cron` jobs for overdue bills and notification archival |
-| 1.5 | Generate TypeScript types | `src/types/database.ts` |
-| 1.6 | Wire root `src/middleware.ts` | Auth guard + role redirect live |
-| 1.7 | Build `/auth/login` page | `src/app/(auth)/auth/login/page.tsx` |
-| 1.8 | Build `/auth/forgot-password` page | `src/app/(auth)/auth/forgot-password/page.tsx` |
-| 1.9 | Build `/auth/callback` route handler | `src/app/(auth)/auth/callback/route.ts` |
-| 1.10 | Build dashboard layout shell | `src/app/(dashboard)/layout.tsx`, `Sidebar`, `Topnav` |
-| 1.11 | Build empty dashboard pages per role | `/manager/dashboard`, `/tenant/dashboard`, `/technician/dashboard`, `/housekeeper/dashboard` |
-| 1.12 | Set up `.env.example` and Vercel project | Deployment pipeline verified |
-| 1.13 | Set up CI (GitHub Actions) | `supabase db push` + `next build` on every PR |
-
-### Exit Criteria
-
-- User can sign in, is redirected to their role's dashboard, and cannot access other roles' routes
-- Database schema deployed to dev Supabase project with all RLS policies active
-- Vercel preview deployment green on every PR
-
----
-
-## Phase 2 — Core Data
-
-**Goal**: Managers can set up their property — add rooms, onboard tenants, and generate bills.
-
-**Duration**: ~3 weeks
-
-### Deliverables
-
-| # | Task | Files / Outputs |
-|---|---|---|
-| 2.1 | Room list page (manager) | `/manager/rooms/page.tsx` |
-| 2.2 | Create/edit room form | `RoomForm`, `createRoom` action, `updateRoom` action |
-| 2.3 | Room detail page | `/manager/rooms/[roomId]/page.tsx` |
-| 2.4 | Archive room (soft delete) | `archiveRoom` action |
-| 2.5 | Tenant directory page | `/manager/tenants/page.tsx` |
-| 2.6 | Invite/create tenant form | `TenantForm`, `createTenant` action |
-| 2.6a | Staff management (add/remove technicians & housekeepers) | `addPropertyStaff` action, `removePropertyStaff` action — writes to `property_staff` table |
-| 2.7 | Tenant detail page | `/manager/tenants/[tenantId]/page.tsx` |
-| 2.8 | Lease status management | `updateTenant` action — status transitions |
-| 2.9 | Tenant's own room/lease view | `/tenant/room/page.tsx` |
-| 2.10 | Bill generation form | `BillForm` + `LineItemRow`, `createBill` action |
-| 2.11 | Bill detail + line items (manager) | `/manager/billing/[billId]/page.tsx` |
-| 2.12 | Mark bill as paid | `markBillPaid` action |
-| 2.13 | Tenant bill list + detail | `/tenant/billing/page.tsx`, `/tenant/billing/[billId]/page.tsx` |
-| 2.14 | Overdue bill detection | Scheduled check or query at page load; status set to `overdue` |
-
-### Exit Criteria
-
-- Manager can CRUD rooms, invite a tenant, generate a bill, and mark it paid
-- Tenant can view their room details, lease dates, and billing history
-- RLS verified: tenant A cannot see tenant B's bills
-
----
-
-## Phase 3 — Operations
-
-**Goal**: Maintenance tickets and housekeeping tasks are fully functional. All roles have their core workflows. In-app notifications are live.
-
-**Duration**: ~3 weeks
-
-### Deliverables
-
-| # | Task | Files / Outputs |
-|---|---|---|
-| 3.1 | Ticket list (manager) with filters | `/manager/maintenance/page.tsx` |
-| 3.2 | Ticket detail + assignment (manager) | `/manager/maintenance/[ticketId]/page.tsx`, `assignTicket` action |
-| 3.3 | Submit ticket form (tenant) + photo upload | `TicketForm`, `createTicket` action, Supabase Storage signed upload |
-| 3.4 | Tenant ticket list + detail | `/tenant/maintenance/page.tsx`, `[ticketId]/page.tsx` |
-| 3.5 | Technician ticket list + detail | `/technician/tickets/page.tsx`, `[ticketId]/page.tsx` |
-| 3.6 | Update ticket status (technician) | `updateTicket` action |
-| 3.7 | Comment thread (all ticket participants) | `TicketComments` component, `addComment` action |
-| 3.8 | Housekeeping task creation + assignment (manager) | `TaskForm`, `createTask` action, `assignTask` action |
-| 3.9 | Task list (manager) | `/manager/housekeeping/page.tsx` |
-| 3.10 | Housekeeper task list + detail | `/housekeeper/tasks/page.tsx`, `[taskId]/page.tsx` |
-| 3.11 | Mark task complete with notes (housekeeper) | `completeTask` action |
-| 3.12 | Notification insert logic in all Server Actions | Notifications inserted after each meaningful event |
-| 3.13 | Notification bell (realtime) | `NotificationBell`, `useRealtimeNotifications` hook |
-| 3.14 | Full notification inbox page | `/notifications/page.tsx` |
-| 3.15 | Mark read / mark all read | `markRead`, `markAllRead` actions |
-
-### Exit Criteria
-
-- Full ticket lifecycle works end-to-end (tenant creates → manager assigns → technician resolves)
-- Full housekeeping lifecycle works (manager creates → housekeeper completes)
-- In-app notifications arrive in real-time; badge count updates without page refresh
-- All four role dashboards are functional with accurate summary data
-
----
-
-## Phase 4 — LINE Integration
-
-**Goal**: Users connected to LINE receive push notifications mirroring in-app events. Tenants can link their LINE account.
-
-**Duration**: ~2 weeks
-
-### Deliverables
-
-| # | Task | Files / Outputs |
-|---|---|---|
-| 4.1 | LINE SDK wrapper | `src/lib/line/client.ts` |
-| 4.2 | LINE webhook route handler | `src/app/api/webhooks/line/route.ts` |
-| 4.3 | HMAC signature validation | `validateSignature()` in `src/lib/line/client.ts` |
-| 4.4 | `follow` event handler — link LINE account | Upsert `line_connections` |
-| 4.5 | `unfollow` event handler — deactivate connection | Set `is_active = false` |
-| 4.6 | LINE push after notification insert | `src/lib/actions/notifications.ts` — call `pushMessage()` if connection exists |
-| 4.7 | Flex message templates | `src/lib/line/messages.ts` — bill, ticket, task templates |
-| 4.8 | LINE connection status in profile settings | Show connected/disconnected status |
-| 4.9 | Test LINE integration in staging | All notification types verified in LINE app |
-
-### Exit Criteria
-
-- Following the LINE Official Account links the user's account
-- Unfollowing deactivates the connection without error
-- All in-app notification types trigger a matching LINE push message
-- Webhook passes HMAC validation; invalid signatures are rejected with 401
-
----
-
-## Phase 5 — Polish
-
-**Goal**: Production-ready quality — analytics, performance, test coverage, and UAT sign-off.
-
-**Duration**: ~2–3 weeks
-
-### Deliverables
-
-| # | Task | Files / Outputs |
-|---|---|---|
-| 5.1 | Manager analytics dashboard | Occupancy rate, revenue summary, ticket resolution time, task completion rate |
-| 5.2 | Overdue bill cron job | `pg_cron` job `flip-overdue-bills` (defined in triggers migration) — flips `pending` → `overdue` on `due_date` |
-| 5.2a | Notifications archival cron | `pg_cron` job `archive-old-notifications` (defined in triggers migration) — moves read notifications older than 90 days to `notifications_archive` |
-| 5.3 | Lease expiry notifications | Cron + notification insert for leases expiring in ≤30 days |
-| 5.4 | pgTAP RLS test suite | `supabase/tests/rls_policies.test.sql` |
-| 5.5 | Add `supabase test db` to CI | CI pipeline updated |
-| 5.6 | Performance audit | Lighthouse scores, slow query identification, index review |
-| 5.7 | Accessibility audit | WCAG 2.1 AA checklist, keyboard navigation, screen reader pass |
-| 5.8 | `.env.example` finalised | All variables documented |
-| 5.9 | Staging UAT with real users | Bug triage and fixes |
-| 5.10 | Production launch | DNS, Vercel prod env vars, Supabase prod project |
-
-### Exit Criteria
-
-- All four roles have completed UAT sign-off
-- Lighthouse performance score ≥ 80 on mobile
-- Zero open P0/P1 bugs
-- RLS test suite passes in CI
-
----
-
-## Dependencies & Critical Path
+Critical path:
 
 ```mermaid
-flowchart TD
-    P1_schema[Schema + Migrations] --> P1_auth[Auth + Middleware]
-    P1_auth --> P1_shell[Dashboard Shell]
-    P1_shell --> P2_rooms[Room Management]
-    P2_rooms --> P2_tenants[Tenant Management]
-    P2_tenants --> P2_billing[Billing]
-    P2_billing --> P3_tickets[Maintenance Tickets]
-    P2_billing --> P3_housekeeping[Housekeeping]
-    P3_tickets --> P3_notifications[Notifications]
-    P3_housekeeping --> P3_notifications
-    P3_notifications --> P4_line[LINE Integration]
-    P3_notifications --> P5_analytics[Analytics + Polish]
-    P4_line --> P5_analytics
+flowchart LR
+    schema[Membership Schema] --> rls[RLS Helpers and Policies]
+    rls --> authFlows[Auth and Invitation Flows]
+    authFlows --> appShell[Dashboard Shell and Context Switcher]
+    appShell --> modules[Feature Modules]
+    modules --> qa[Tests and Hardening]
 ```
 
-**Critical path**: Schema → Auth → Rooms → Tenants → Billing → Tickets/Housekeeping → Notifications → LINE → Launch
+## 2. Phase 0 - Auth and RBAC Foundation
 
-The schema is the single most important deliverable; all application features depend on it being stable. Schema changes after Phase 2 should be treated as breaking changes and go through a migration review.
+**Architecture review migrations (20240109000000–20240109000010):** `user_identities` + `handle_new_user` email identity (REC-01); `notification_deliveries` (REC-02); `audit_logs` + `record_audit_event` + archive (REC-03); `platform_admins` + `organizations.suspended_at` (REC-04); archival pg_cron jobs (REC-05); buildings RLS fix (REC-06); tickets RLS fix (REC-07); org-level owner invitations (REC-09); `archived_at` columns (REC-13); subscription tables + `check_property_limit` (REC-14); activity feed views (§13).
+
+Deliverables:
+
+- Create `membership_role` and `invitation_status` enums.
+- Create `memberships`, `invitations`, and `tenant_profiles`.
+- Remove the design dependency on `profiles.role`, `organization_members`, `property_staff`, and `properties.manager_id`.
+- Add indexes for membership lookups, invitation validation, and tenant room occupancy.
+- Add partial unique indexes on memberships, org-consistency trigger, and last-owner deactivation guard.
+- Denormalize `organization_id` onto `tenant_profiles`, `billing_periods`, `meter_readings`, and `housekeeping_tasks`.
+- Add RLS helper functions around memberships; inline predicates in row-level policies (no `can_access_property` in `USING` clauses).
+- Add `invitations_archive` and `notifications_archive` tables with `pg_cron` archival jobs.
+- Mandate keyset pagination helpers for all list views.
+- Add pgTAP tests for cross-organization and cross-property denial.
+- Regenerate Supabase types after migrations.
+- Create `platform_admins` table (outside `memberships`; keyed on `auth.users.id`, includes `granted_by`, `revoked_at`).
+- Add `suspended_at timestamptz` to `organizations`.
+- Add `is_platform_admin()` SECURITY DEFINER helper; exclude platform admins from org-scoped RLS policies — platform admin queries must run via service-role endpoints only.
+- Create `audit_logs` table with `actor_id`, `organization_id`, `property_id`, `event_type`, `metadata jsonb`, `created_at`. Revoke UPDATE/DELETE grants at schema level — records are INSERT-only.
+- Add composite indexes on `audit_logs(organization_id, created_at desc)` and `(property_id, created_at desc)`.
+- **Migration**: `user_identities` table with RLS (provider-based identity; supports email, LINE, Google, Apple without schema changes).
+- **Migration**: `notifications` and `notification_deliveries` tables — schema only; no delivery logic yet.
+- **Architecture**: User Identity Layer documented in `02-system-architecture.md` §3.1.
+- **Architecture**: Notification architecture documented in `02-system-architecture.md` §3.2.
+- **Trigger**: `handle_new_user` inserts an `email` row into `user_identities` for every new registration.
+
+Schema additions (Phase 0 migration):
+
+```sql
+create table public.platform_admins (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid not null unique references auth.users(id) on delete cascade,
+  granted_by  uuid references auth.users(id) on delete set null,
+  created_at  timestamptz not null default now(),
+  revoked_at  timestamptz
+);
+
+alter table public.organizations
+  add column suspended_at timestamptz;
+
+create table public.audit_logs (
+  id              uuid primary key default gen_random_uuid(),
+  actor_id        uuid references auth.users(id) on delete set null,
+  organization_id uuid references public.organizations(id) on delete set null,
+  property_id     uuid references public.properties(id) on delete set null,
+  event_type      text not null,
+  metadata        jsonb not null default '{}',
+  created_at      timestamptz not null default now()
+);
+
+create index idx_audit_logs_org_created      on public.audit_logs (organization_id, created_at desc);
+create index idx_audit_logs_property_created on public.audit_logs (property_id, created_at desc);
+create index idx_audit_logs_event_type       on public.audit_logs (event_type, created_at desc);
+
+revoke update, delete on public.audit_logs from authenticated;
+```
+
+Exit criteria:
+
+- Owner signup creates organization, first property, and owner membership.
+- Staff invitations create memberships only after acceptance.
+- Tenant activation creates tenant membership and tenant profile.
+- RLS denies access outside the user's memberships.
+- Platform admin can view all organizations and suspend one without belonging to any membership.
+- Critical business events produce an immutable `audit_logs` row.
+
+## 3. Phase 1 - Auth UI and Context
+
+Deliverables:
+
+- Owner registration and onboarding screens.
+- Invite acceptance and password setup screens.
+- Tenant activation screens.
+- Membership/property/role switcher.
+- `habio-active-membership` signed cookie.
+- Middleware route guard with `validateMembershipById` fast path (full membership list only on context switch).
+- **LINE linking**: Account linking page at `/[role]/account/link-line` for all five roles (owner, manager, technician, housekeeper, tenant).
+- **Server actions**: `linkLineIdentity` and `unlinkLineIdentity` in `src/lib/actions/identity.ts`.
+- **UI**: Display LINE linked/unlinked status in account settings for all roles.
+- **Notifications**: `in_app` channel activated — notifications inbox reads from `notifications` + `notification_deliveries`.
+
+Exit criteria:
+
+- Multi-role users can switch context.
+- Wrong role route redirects to active role dashboard.
+- Users with no memberships cannot access dashboards.
+- Any role can link a LINE account after authentication; linking does not grant access without a membership.
+- In-app notification inbox reads from `notifications` with per-channel delivery state in `notification_deliveries`.
+
+## 4. Phase 2 - Organization and Property Core
+
+Deliverables:
+
+- Owner organization settings.
+- Property CRUD.
+- Building CRUD.
+- Room CRUD and archive.
+- Manager property assignment through memberships.
+- Apply archival strategy (§11) to `properties`, `buildings`, and `rooms` — add `archived_at` columns; default RLS and list queries exclude `archived_at is not null` rows.
+
+Exit criteria:
+
+- Owners can manage all organization properties.
+- Managers see and modify only assigned properties.
+- Cross-property room access is denied by RLS.
+
+## 5. Phase 2.5 - Subscription and SaaS Management
+
+Deliverables:
+
+- `subscription_plans` table (name, max_properties, max_rooms_per_property, features jsonb).
+- `organization_subscriptions` table (organization_id, plan_id, status, billing_cycle, current_period_start, current_period_end, trial_ends_at, cancelled_at).
+- `usage_counters` table (organization_id, metric, count, period_start) — primary key on (organization_id, metric, period_start).
+- Server Actions to check and increment usage counters before property/room creation.
+- Feature-gate helper `is_feature_enabled(org_id, feature_key)` for plan-based access control in Server Actions (not in RLS).
+- Platform admin UI: view subscription status per organization, override plan limits.
+
+Plans:
+
+- free: max 1 property, limited rooms per property
+- starter: limited properties, limited rooms per property
+- pro: unlimited properties, unlimited rooms
+- enterprise: custom limits via features jsonb override
+
+Schema additions (Phase 2.5 migration):
+
+```sql
+create table public.subscription_plans (
+  id                      uuid primary key default gen_random_uuid(),
+  name                    text not null unique,
+  max_properties          integer,          -- null = unlimited
+  max_rooms_per_property  integer,          -- null = unlimited
+  features                jsonb not null default '{}',
+  created_at              timestamptz not null default now()
+);
+
+create table public.organization_subscriptions (
+  id                    uuid primary key default gen_random_uuid(),
+  organization_id       uuid not null unique references public.organizations(id) on delete cascade,
+  plan_id               uuid not null references public.subscription_plans(id),
+  status                text not null default 'active',
+  billing_cycle         text not null default 'monthly',
+  current_period_start  date not null,
+  current_period_end    date not null,
+  trial_ends_at         timestamptz,
+  cancelled_at          timestamptz,
+  created_at            timestamptz not null default now(),
+  updated_at            timestamptz not null default now()
+);
+
+create table public.usage_counters (
+  organization_id  uuid not null references public.organizations(id) on delete cascade,
+  metric           text not null,
+  count            integer not null default 0,
+  period_start     date not null,
+  updated_at       timestamptz not null default now(),
+  primary key (organization_id, metric, period_start)
+);
+```
+
+Exit criteria:
+
+- Every organization has an `organization_subscriptions` row.
+- Property creation is blocked when `max_properties` limit is reached.
+- Room creation is blocked when `max_rooms_per_property` limit is reached.
+- Plan limits are enforced in Server Actions; RLS does not enforce plan limits.
+
+## 6. Phase 3 - Tenant and Billing
+
+Deliverables:
+
+- Manager-created tenant activation.
+- Tenant profile management.
+- Lease lifecycle.
+- Billing periods.
+- Bills and bill line items.
+- Tenant bill view.
+
+Exit criteria:
+
+- Managers can manage tenants only in assigned properties.
+- Tenants see only their own room and bills.
+- Occupancy constraints prevent two active tenants in one room.
+- `tenant_created`, `tenant_updated`, `bill_created`, and `bill_paid` events produce `audit_logs` rows.
+
+## 7. Phase 4 - Operations
+
+Deliverables:
+
+- Maintenance tickets and comments.
+- Technician assignment and status updates.
+- Housekeeping tasks.
+- Meter readings and manager approval.
+- Notifications.
+
+Exit criteria:
+
+- Technicians see only assigned jobs.
+- Housekeepers see only assigned tasks and scoped meter readings.
+- Owners and managers have property-scoped operational dashboards.
+- `maintenance_ticket_created`, `maintenance_ticket_closed`, `membership_added`, and `membership_removed` events produce `audit_logs` rows.
+- Activity feed queries against `audit_logs` are indexed and performant at property scope.
+
+## 8. Phase 5 — LINE Messaging, Push Notifications, and Realtime
+
+> **Schema dependency:** The `user_identities` and `notification_deliveries` tables required by Phase 5 are already in place from Phase 0. LINE Messaging API, webhooks, push notification delivery, Rich Menu, and LIFF are deferred to this phase.
+
+Deliverables:
+
+- LINE Messaging API integration.
+- LINE push notifications (writes `notification_deliveries` rows with `channel = 'line'`).
+- LINE webhook processing with HMAC-SHA256 signature validation.
+- Realtime notification channels.
+- Ticket attachment storage policies.
+- Rich Menu and LIFF (mobile task views for staff and tenants).
+
+Exit criteria:
+
+- Storage and Realtime policies mirror membership-based access.
+- LINE webhook uses server-side validation and service-role writes only where needed.
+
+## 9. Phase 6 - Security and Launch Hardening
+
+Deliverables:
+
+- Supabase advisors clean or documented.
+- RLS test suite in CI.
+- Invitation expiry job (pending to expired).
+- Membership deactivation workflows (respect last-owner guard).
+- Audit review of `SECURITY DEFINER` functions and execute grants.
+- Performance review of membership helper indexes.
+
+Exit criteria:
+
+- No known cross-organization data paths.
+- No client-side service role exposure.
+- Multi-role user journeys are covered by tests.
+
+## 10. Pagination Standard
+
+All list views use keyset (cursor-based) pagination. Offset pagination is not permitted on operational tables.
+
+```sql
+-- Example: bills list for a property
+select *
+from public.bills
+where property_id = $1
+  and (created_at, id) < ($cursor_created_at, $cursor_id)
+order by created_at desc, id desc
+limit 20;
+```
+
+Application helpers should accept an opaque cursor encoding `(created_at, id)` and return `next_cursor` in the response.
+
+## 11. Soft Delete and Archival Strategy
+
+Use `archived_at` for business records that must remain queryable for history, reporting, or audit trail. Use `deleted_at` only when the row must be logically invisible but cannot be hard-deleted (e.g., a user who has audit associations). Never hard-delete operational data.
+
+Rules:
+
+- `archived_at`: set when an entity is retired from active use. Default RLS and list queries add `WHERE archived_at IS NULL`. The record remains readable by owners, managers, and platform admins.
+- `deleted_at`: reserved for compliance-only soft deletion. Not used in v1.
+- Hard deletes are forbidden on: properties, buildings, rooms, bills, maintenance_tickets, housekeeping_tasks, tenant_profiles, memberships.
+
+Tables requiring `archived_at` (add in Phase 0 or Phase 2 as applicable):
+
+- properties
+- buildings
+- rooms (already present)
+- bills
+- maintenance_tickets
+- housekeeping_tasks
+- tenant_profiles (already present)
+
+RLS and query pattern:
+
+- Every list policy and application query must filter `WHERE archived_at IS NULL`.
+- Archive actions are owner- or manager-only mutations setting `archived_at = now()`.
+- Archival is not reversible without an explicit unarchive action (owner-only).
+
+## 12. Audit Logging Standard
+
+`audit_logs` is INSERT-only. UPDATE and DELETE grants are revoked at schema level.
+
+Tracked event types (minimum MVP set):
+
+- tenant_created
+- tenant_updated
+- bill_created
+- bill_paid
+- maintenance_ticket_created
+- maintenance_ticket_closed
+- housekeeping_task_completed
+- meter_reading_approved
+- membership_added
+- membership_removed
+- property_archived
+- organization_suspended
+
+Each row must include:
+
+- `actor_id`: auth.users.id of the performing user (null for system jobs)
+- `organization_id`: scoping org (required for all non-platform events)
+- `property_id`: scoping property (nullable for org-level events)
+- `event_type`: one of the tracked event types above
+- `metadata`: jsonb snapshot of relevant identifiers and before/after values
+
+RLS:
+
+- Owners can SELECT `audit_logs` WHERE `organization_id` matches their membership.
+- Managers can SELECT `audit_logs` WHERE `property_id` matches their membership.
+- Platform admins can SELECT all rows via service-role endpoint.
+- No authenticated role may UPDATE or DELETE `audit_logs`.
+
+Exit criteria:
+
+- Critical business actions produce audit rows in the same transaction.
+- Audit records are queryable by organization and property with index-only scans.
+- No UPDATE or DELETE on `audit_logs` succeeds from any authenticated session.
+
+## 13. Activity Feed Foundation
+
+Activity feeds are read views over `audit_logs`. Do not create a separate `activity_events` table; derive feeds from `audit_logs` using indexed queries.
+
+Suggested views (implemented in Phase 4 or Phase 2.5):
+
+```sql
+create view public.organization_activity_feed as
+  select id, actor_id, organization_id, property_id, event_type, metadata, created_at
+  from public.audit_logs
+  where organization_id is not null
+  order by created_at desc;
+
+create view public.property_activity_feed as
+  select id, actor_id, organization_id, property_id, event_type, metadata, created_at
+  from public.audit_logs
+  where property_id is not null
+  order by created_at desc;
+```
+
+Application queries paginate via keyset on `(created_at, id)` — see §10.
+
+Feed event display examples:
+
+- tenant_activated → "Tenant [name] activated in Room [number]"
+- bill_paid → "Bill [amount] paid by [tenant]"
+- ticket_assigned → "Ticket #[id] assigned to [technician]"
+- ticket_closed → "Ticket #[id] closed"
+- meter_approved → "Meter reading for Room [number] approved"
+
+Dashboard integration: owner and manager dashboards include a property-scoped activity feed widget in Phase 4. Org-level feed added in Phase 6.
+
+## 14. Migration Checklist
+
+| Step | Action |
+|---|---|
+| 1 | Add new enums and tables additively. |
+| 2 | Backfill legacy org owners, property managers, staff, and tenants into memberships. |
+| 3 | Create tenant profiles from legacy tenants. |
+| 4 | Add partial unique indexes, org-consistency and last-owner triggers, `organization_id` denormalization, and archival tables. |
+| 5 | Replace old RLS helpers and policies. |
+| 6 | Regenerate TypeScript database types. |
+| 7 | Update seed data and pgTAP tests. |
+| 8 | Drop legacy role and access columns/tables after verification. |
+| 9 | Create `platform_admins`, add `organizations.suspended_at`, create `audit_logs` with revoked UPDATE/DELETE grants. |
+| 10 | Create `subscription_plans`, `organization_subscriptions`, `usage_counters`; seed default plan rows. |
+| 11 | Backfill `organization_subscriptions` for all existing organizations (assign free plan). |
+| 12 | Add `archived_at` to `properties`, `buildings`, `bills`, `maintenance_tickets`, `housekeeping_tasks`; update RLS policies and list queries. |
+| 13 | Create `organization_activity_feed` and `property_activity_feed` views. |
+
+## 15. Major Risks
+
+- RLS recursion around `memberships` if policies read the same table directly.
+- Multi-role UX confusion if the active context is hidden.
+- Partial tenant activation if membership, tenant profile, and room update are not transactional.
+- Invitation token leakage through logs.
+- Performance regressions if membership and property foreign keys are not indexed.
+- Offset pagination on large operational tables (`bills`, `maintenance_tickets`, `notifications`).
+- Unbounded `invitations` and `notifications` table growth without archival.
+- Middleware loading all memberships per request for users with many property assignments.
+- Subscription limit bypass: Server Action usage check and counter increment are not atomic; a concurrent property creation can pass the limit check before the counter is updated. Mitigation: use `SELECT … FOR UPDATE` on `usage_counters` or increment in a single `UPDATE … RETURNING` with a limit guard.
+- Missing audit trail for critical actions: a Server Action that mutates data without writing to `audit_logs` in the same transaction loses the record permanently. Mitigation: shared `recordAuditEvent(tx, event)` helper called inside every mutating transaction; pgTAP test asserts audit row exists after key actions.
+- Platform admin privilege escalation: if `platform_admins` is readable or writable by authenticated sessions, a user could grant themselves admin access. Mitigation: `platform_admins` table has no RLS SELECT/INSERT policy for authenticated; all reads and writes use service-role only.
+- Excessive audit log growth: at 100,000 tenants generating ~20 auditable events per month, `audit_logs` accumulates ~2M rows/month. Mitigation: add `audit_logs_archive` table and weekly `pg_cron` job archiving rows older than 180 days; retain indexes on the live table for recent queries only.
+- Activity feed query performance: `organization_activity_feed` view without a covering index degrades under high event volume. Mitigation: enforce keyset pagination; add partial index on `(organization_id, created_at desc)` and `(property_id, created_at desc)` in Phase 0; benchmark at 1M rows before Phase 4 dashboard integration.

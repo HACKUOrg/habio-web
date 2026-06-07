@@ -5,7 +5,10 @@
 - **Colocation**: feature-specific code (components, hooks, actions) lives near the route that uses it; only truly shared code is lifted to `src/components/` or `src/lib/`
 - **Route groups** `(auth)` and `(dashboard)` isolate auth pages from the protected app shell without affecting the URL
 - **Role-scoped route trees**: each role gets its own directory under `(dashboard)`, preventing accidental cross-role component sharing
+- **Property context**: manager routes are nested under `/manager/properties/[propertyId]/` for multi-property scoping
+- **Feature modules**: domain components grouped under `src/components/{organizations,properties,buildings,rooms,billing,maintenance,housekeeping,meter-readings}/`
 - **Server Actions in `src/lib/actions/`**: all mutations are colocated by domain, importable by any Server Component or Client Component
+- **Read queries in `src/lib/queries/`**: server-side data fetching helpers separate from mutations
 - **No barrel files** in `src/app/` — Next.js App Router handles module discovery; barrels cause issues with Server/Client component boundaries
 
 ---
@@ -43,37 +46,61 @@ habio-web/
     │   │   │
     │   │   ├── manager/                # Manager-only pages
     │   │   │   ├── dashboard/
-    │   │   │   │   └── page.tsx        # Overview: occupancy, outstanding bills, open tickets
+    │   │   │   │   └── page.tsx        # Overview: cross-property summary
+    │   │   │   ├── organizations/
+    │   │   │   │   ├── page.tsx        # Organization list
+    │   │   │   │   ├── new/
+    │   │   │   │   │   └── page.tsx    # Create organization form
+    │   │   │   │   └── [organizationId]/
+    │   │   │   │       ├── page.tsx    # Organization overview + members
+    │   │   │   │       └── members/
+    │   │   │   │           └── page.tsx  # Manage org members
     │   │   │   ├── properties/
-    │   │   │   │   ├── page.tsx        # Property list
+    │   │   │   │   ├── page.tsx        # Property list (filtered by org)
+    │   │   │   │   ├── new/
+    │   │   │   │   │   └── page.tsx    # Create property form
     │   │   │   │   └── [propertyId]/
-    │   │   │   │       └── page.tsx    # Single property overview
-    │   │   │   ├── rooms/
-    │   │   │   │   ├── page.tsx        # Room list with status filter
-    │   │   │   │   ├── new/
-    │   │   │   │   │   └── page.tsx    # Create room form
-    │   │   │   │   └── [roomId]/
-    │   │   │   │       └── page.tsx    # Room detail + tenant history
-    │   │   │   ├── tenants/
-    │   │   │   │   ├── page.tsx        # Tenant directory
-    │   │   │   │   ├── new/
-    │   │   │   │   │   └── page.tsx    # Invite / create tenant
-    │   │   │   │   └── [tenantId]/
-    │   │   │   │       └── page.tsx    # Tenant detail + lease + billing summary
-    │   │   │   ├── billing/
-    │   │   │   │   ├── page.tsx        # Bill list with status filter
-    │   │   │   │   ├── new/
-    │   │   │   │   │   └── page.tsx    # Generate bill form
-    │   │   │   │   └── [billId]/
-    │   │   │   │       └── page.tsx    # Bill detail + line items + mark paid
-    │   │   │   ├── maintenance/
-    │   │   │   │   ├── page.tsx        # Ticket list (all statuses, filter by priority)
-    │   │   │   │   └── [ticketId]/
-    │   │   │   │       └── page.tsx    # Ticket detail + assignment + comments
-    │   │   │   └── housekeeping/
-    │   │   │       ├── page.tsx        # Task calendar / list view
-    │   │   │       └── new/
-    │   │   │           └── page.tsx    # Create task form
+    │   │   │   │       ├── page.tsx    # Property overview + building list
+    │   │   │   │       ├── buildings/
+    │   │   │   │       │   ├── page.tsx        # Building list
+    │   │   │   │       │   ├── new/
+    │   │   │   │       │   │   └── page.tsx    # Create building form
+    │   │   │   │       │   └── [buildingId]/
+    │   │   │   │       │       ├── page.tsx    # Building detail
+    │   │   │   │       │       └── rooms/
+    │   │   │   │       │           ├── page.tsx        # Room list
+    │   │   │   │       │           ├── new/
+    │   │   │   │       │           │   └── page.tsx    # Create room form
+    │   │   │   │       │           └── [roomId]/
+    │   │   │   │       │               └── page.tsx    # Room detail
+    │   │   │   │       ├── tenants/
+    │   │   │   │       │   ├── page.tsx        # Tenant directory
+    │   │   │   │       │   ├── new/
+    │   │   │   │       │   │   └── page.tsx    # Invite / create tenant
+    │   │   │   │       │   └── [tenantId]/
+    │   │   │   │       │       └── page.tsx    # Tenant detail
+    │   │   │   │       ├── billing/
+    │   │   │   │       │   ├── page.tsx        # Bill list
+    │   │   │   │       │   ├── new/
+    │   │   │   │       │   │   └── page.tsx    # Generate bill form
+    │   │   │   │       │   └── [billId]/
+    │   │   │   │       │       └── page.tsx    # Bill detail
+    │   │   │   │       ├── meter-readings/
+    │   │   │   │       │   ├── page.tsx        # Billing periods + readings
+    │   │   │   │       │   ├── new/
+    │   │   │   │       │   │   └── page.tsx    # Open billing period
+    │   │   │   │       │   └── [periodId]/
+    │   │   │   │       │       └── page.tsx    # Review + approve readings
+    │   │   │   │       ├── maintenance/
+    │   │   │   │       │   ├── page.tsx        # Ticket list
+    │   │   │   │       │   └── [ticketId]/
+    │   │   │   │       │       └── page.tsx    # Ticket detail
+    │   │   │   │       ├── housekeeping/
+    │   │   │   │       │   ├── page.tsx        # Task calendar / list
+    │   │   │   │       │   └── new/
+    │   │   │   │       │       └── page.tsx    # Create task form
+    │   │   │   │       └── staff/
+    │   │   │   │           └── page.tsx        # Property staff management
     │   │   │
     │   │   ├── tenant/                 # Tenant-only pages
     │   │   │   ├── dashboard/
@@ -102,9 +129,13 @@ habio-web/
     │   │   ├── housekeeper/            # Housekeeper-only pages
     │   │   │   ├── dashboard/
     │   │   │   │   └── page.tsx        # Today's tasks + weekly view
-    │   │   │   └── tasks/
-    │   │   │       └── [taskId]/
-    │   │   │           └── page.tsx    # Task detail + mark complete + notes
+    │   │   │   ├── tasks/
+    │   │   │   │   └── [taskId]/
+    │   │   │   │       └── page.tsx    # Task detail + mark complete + notes
+    │   │   │   └── meter-readings/
+    │   │   │       ├── page.tsx        # Open billing periods for assigned properties
+    │   │   │       └── [periodId]/
+    │   │   │           └── page.tsx    # Enter readings by building
     │   │   │
     │   │   └── notifications/          # Shared across all roles
     │   │       └── page.tsx            # Full notification inbox
@@ -131,6 +162,19 @@ habio-web/
     │   ├── auth/
     │   │   ├── login-form.tsx          # Email/password sign-in form
     │   │   └── forgot-password-form.tsx
+    │   ├── organizations/
+    │   │   ├── organization-card.tsx
+    │   │   ├── organization-form.tsx
+    │   │   └── org-member-list.tsx
+    │   ├── properties/
+    │   │   ├── property-card.tsx
+    │   │   ├── property-form.tsx
+    │   │   ├── property-switcher.tsx   # Multi-property navigation dropdown
+    │   │   └── property-status-badge.tsx
+    │   ├── buildings/
+    │   │   ├── building-card.tsx
+    │   │   ├── building-form.tsx
+    │   │   └── building-floor-indicator.tsx
     │   ├── rooms/
     │   │   ├── room-card.tsx           # Room status card (used in list + detail)
     │   │   ├── room-form.tsx           # Create/edit room form
@@ -144,6 +188,12 @@ habio-web/
     │   │   ├── bill-form.tsx           # Generate bill + line item editor
     │   │   ├── line-item-row.tsx
     │   │   └── bill-status-badge.tsx
+    │   ├── meter-readings/
+    │   │   ├── billing-period-card.tsx
+    │   │   ├── billing-period-form.tsx
+    │   │   ├── meter-reading-form.tsx  # Housekeeper entry form
+    │   │   ├── meter-reading-table.tsx # Manager review table
+    │   │   └── meter-reading-status-badge.tsx
     │   ├── maintenance/
     │   │   ├── ticket-card.tsx
     │   │   ├── ticket-form.tsx         # Submit ticket + attachment upload
@@ -168,16 +218,32 @@ habio-web/
     │   │   └── messages.ts             # Flex message templates
     │   ├── actions/                    # Next.js Server Actions (all mutations)
     │   │   ├── auth.ts                 # signIn, signOut, resetPassword
+    │   │   ├── organizations.ts        # createOrganization, updateOrganization, inviteOrgMember
+    │   │   ├── properties.ts           # createProperty, updateProperty, archiveProperty
+    │   │   ├── buildings.ts            # createBuilding, updateBuilding, deleteBuilding
     │   │   ├── rooms.ts                # createRoom, updateRoom, archiveRoom
     │   │   ├── tenants.ts              # createTenant, updateTenant, archiveTenant
     │   │   ├── billing.ts              # createBill, updateBill, markBillPaid, addLineItem
+    │   │   ├── meter-readings.ts       # createBillingPeriod, submitMeterReading, approveMeterReading
     │   │   ├── maintenance.ts          # createTicket, updateTicket, assignTicket, addComment
     │   │   ├── housekeeping.ts         # createTask, updateTask, assignTask, completeTask
     │   │   └── notifications.ts        # markRead, markAllRead
+    │   ├── queries/                    # Read-only server-side data fetching
+    │   │   ├── organizations.ts        # getOrganizations, getOrgMembers
+    │   │   ├── properties.ts           # getProperties, getPropertyById
+    │   │   ├── buildings.ts            # getBuildings, getBuildingById
+    │   │   ├── rooms.ts                # getRooms, getRoomById
+    │   │   ├── meter-readings.ts       # getBillingPeriods, getMeterReadings
+    │   │   └── managed-properties.ts   # getManagedPropertyIds (property switcher)
     │   ├── validations/                # Zod schemas (shared by actions + forms)
+    │   │   ├── organization.ts
+    │   │   ├── property.ts
+    │   │   ├── building.ts
     │   │   ├── room.ts
     │   │   ├── tenant.ts
     │   │   ├── bill.ts
+    │   │   ├── billing-period.ts
+    │   │   ├── meter-reading.ts
     │   │   ├── ticket.ts
     │   │   └── task.ts
     │   └── utils.ts                    # cn() and other utility functions
@@ -185,7 +251,9 @@ habio-web/
     ├── hooks/
     │   ├── use-realtime-notifications.ts  # Supabase Realtime subscription for notifications
     │   ├── use-realtime-tickets.ts        # Realtime subscription for ticket board (manager)
-    │   └── use-realtime-tasks.ts          # Realtime subscription for task list (housekeeper)
+    │   ├── use-realtime-tasks.ts          # Realtime subscription for task list (housekeeper)
+    │   ├── use-realtime-meter-readings.ts # Realtime subscription for meter reading review (manager)
+    │   └── use-property-context.ts        # Current property context from URL params
     │
     └── types/
         ├── database.ts                 # Generated by `supabase gen types typescript`
@@ -245,8 +313,11 @@ supabase/
 ├── migrations/
 │   ├── 20240101000000_initial_schema.sql    # Enums + all tables
 │   ├── 20240102000000_rls_policies.sql      # All RLS policies
-│   └── 20240103000000_triggers.sql          # Triggers + helper functions
-├── seed.sql                                  # Dev-only test data
+│   ├── 20240103000000_triggers.sql          # Triggers + helper functions
+│   ├── 20240104000000_security_and_performance_fixes.sql
+│   └── 20240607000000_multi_property_schema.sql  # Organizations, buildings, meter readings
+├── seed.sql                                  # Dev-only test data (org + building structure)
 └── tests/
-    └── rls_policies.test.sql                 # pgTAP RLS tests
+    ├── rls_policies.test.sql                 # pgTAP RLS tests
+    └── multi_property_rls.test.sql           # pgTAP tests for new tables
 ```

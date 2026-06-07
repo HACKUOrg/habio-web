@@ -2,7 +2,15 @@
 
 ## 1. Overview
 
-Habio is a multi-tenant dormitory management SaaS. A single deployment serves multiple dormitory **properties**, each operated independently by its own **Manager**. Tenants, technicians, and housekeepers interact with the platform through role-scoped views.
+Habio is a multi-property dormitory management SaaS. A single deployment serves multiple **organizations**, each owning one or more **properties**. Each property contains one or more **buildings**, and each building contains **rooms**.
+
+The entity hierarchy is:
+
+```
+Organization → Property → Building → Room
+```
+
+**Managers** may operate a single property, multiple properties within an organization, or an entire organization. **Tenants**, **technicians**, and **housekeepers** interact with the platform through role-scoped views. See [09-multi-property.md](./09-multi-property.md) for the full architecture reference.
 
 ---
 
@@ -10,10 +18,10 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 
 | Role | Description |
 |---|---|
-| **Manager** | Owns or operates one or more properties. Full administrative control within their properties. |
+| **Manager** | Owns or operates one or more properties within an organization. May manage a single property, multiple properties, or an entire organization (via org-level admin scope). |
 | **Tenant** | Rents a room. Views bills, raises maintenance tickets, checks housekeeping schedule. |
 | **Technician** | Handles assigned maintenance tickets. Updates ticket progress and adds comments. |
-| **Housekeeper** | Handles assigned cleaning tasks. Updates task status. |
+| **Housekeeper** | Handles assigned cleaning tasks. Enters and submits meter readings for assigned properties. |
 
 > A user has exactly one role. Role is stored in `profiles.role` and enforced by Row Level Security (RLS) plus Next.js middleware.
 
@@ -29,14 +37,37 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 - Post-login redirect to role-specific dashboard
 - Middleware-enforced route protection
 
-### 3.2 Room Management
+### 3.2 Organization Management
 
-- Create, update, and archive rooms within a property
-- Room attributes: number, floor, type (single/double/studio), monthly rate, status
+- Create and manage organizations (property groups)
+- Organization attributes: name, slug, plan
+- Invite org members with scope: `owner`, `admin`, `viewer`
+- Org owner/admin can manage all properties within the organization
+- See [09-multi-property.md](./09-multi-property.md) §3 for hierarchy details
+
+### 3.3 Property Management
+
+- Create, update, and archive properties within an organization
+- Property attributes: name, address, phone, status (`active`, `inactive`, `archived`)
+- Assign a property manager (`properties.manager_id`)
+- Property list filtered by organization context
+
+### 3.4 Building Management
+
+- Create, update buildings within a property
+- Building attributes: name, total floors
+- Buildings group rooms within a property (e.g., Building A, Building B)
+- At least one building per property
+
+### 3.5 Room Management
+
+- Create, update, and archive rooms within a building
+- Room attributes: number, floor, type (single/double/studio/suite), monthly rate, status
 - Room statuses: `available`, `occupied`, `maintenance`
+- Room numbers unique per property (across all buildings)
 - Bulk room import (v2)
 
-### 3.3 Tenant Management
+### 3.6 Tenant Management
 
 - Invite or manually create tenant accounts linked to a room
 - Lease lifecycle: active, expiring, expired, terminated
@@ -44,7 +75,7 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 - Automatic room status update on lease start/end
 - Tenant directory with search and filtering
 
-### 3.4 Billing
+### 3.7 Billing
 
 - Manager generates monthly bills per tenant
 - Bills contain line items: rent, utilities, late fees, one-off charges
@@ -52,9 +83,22 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 - Mark bill as paid (manual confirmation, no gateway in v1)
 - Tenant views their bill history and current outstanding balance
 - Overdue detection based on due date
+- Utility charges can be generated from approved meter readings
 - Payment gateway integration (v2)
 
-### 3.5 Maintenance Tickets
+### 3.8 Meter Reading
+
+- Manager opens a billing period for a property (start/end dates)
+- System pre-creates meter reading rows for all occupied rooms
+- Housekeeper enters meter readings by property or building
+- Housekeeper submits readings for manager review
+- Manager reviews, approves, or rejects readings
+- Manager generates utility bill line items from approved readings
+- Billing period statuses: `open`, `closed`, `archived`
+- Meter reading statuses: `pending`, `submitted`, `approved`, `rejected`
+- Readings are immutable once the billing period is closed
+
+### 3.9 Maintenance Tickets
 
 - Tenant submits a maintenance request with title, description, and photo attachment
 - Priority levels: `low`, `medium`, `high`, `urgent`
@@ -64,7 +108,7 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 - Notification sent to tenant on status change
 - Manager views all tickets across property with filters
 
-### 3.6 Housekeeping
+### 3.10 Housekeeping
 
 - Manager creates housekeeping tasks with room, date, and notes
 - Task statuses: `pending`, `in_progress`, `completed`, `skipped`
@@ -73,7 +117,7 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 - Housekeeper marks tasks complete with optional notes
 - Manager monitors completion rates
 
-### 3.7 Notifications
+### 3.11 Notifications
 
 - In-app notification inbox for all roles
 - Notification triggers:
@@ -89,18 +133,31 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 
 ## 4. User Stories
 
+### Organization Owner / Admin
+
+| ID | Story |
+|---|---|
+| O-01 | As an Organization Owner, I want to create an organization so I can group my properties under one account. |
+| O-02 | As an Organization Owner, I want to add properties to my organization so I can manage multiple dormitory sites. |
+| O-03 | As an Organization Owner, I want to invite other managers as org admins so they can help manage all properties. |
+| O-04 | As an Organization Admin, I want to view all properties in my organization so I have a unified overview. |
+
 ### Manager
 
 | ID | Story |
 |---|---|
-| M-01 | As a Manager, I want to add rooms to my property so I can track occupancy. |
-| M-02 | As a Manager, I want to create a tenant account and assign them to a room so they can access the platform. |
-| M-03 | As a Manager, I want to generate a monthly bill for a tenant so rent and utilities are tracked. |
-| M-04 | As a Manager, I want to mark a bill as paid so I can reconcile payments. |
-| M-05 | As a Manager, I want to view all open maintenance tickets so I can prioritise repairs. |
-| M-06 | As a Manager, I want to assign a maintenance ticket to a technician so work is allocated. |
-| M-07 | As a Manager, I want to create and assign housekeeping tasks so cleaning is scheduled. |
-| M-08 | As a Manager, I want to view a dashboard summary of occupancy, outstanding bills, and open tickets. |
+| M-01 | As a Manager, I want to add buildings to my property so I can organise rooms by structure. |
+| M-02 | As a Manager, I want to add rooms to a building so I can track occupancy. |
+| M-03 | As a Manager, I want to create a tenant account and assign them to a room so they can access the platform. |
+| M-04 | As a Manager, I want to generate a monthly bill for a tenant so rent and utilities are tracked. |
+| M-05 | As a Manager, I want to mark a bill as paid so I can reconcile payments. |
+| M-06 | As a Manager, I want to open a billing period and review meter readings so utility charges are accurate. |
+| M-07 | As a Manager, I want to approve meter readings and generate utility bill line items so billing is automated. |
+| M-08 | As a Manager, I want to view all open maintenance tickets so I can prioritise repairs. |
+| M-09 | As a Manager, I want to assign a maintenance ticket to a technician so work is allocated. |
+| M-10 | As a Manager, I want to create and assign housekeeping tasks so cleaning is scheduled. |
+| M-11 | As a Manager, I want to view a dashboard summary of occupancy, outstanding bills, and open tickets across my properties. |
+| M-12 | As a Manager, I want to switch between properties so I can manage multiple sites from one account. |
 
 ### Tenant
 
@@ -128,6 +185,8 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 | HK-01 | As a Housekeeper, I want to view my assigned tasks for the day so I can plan my rounds. |
 | HK-02 | As a Housekeeper, I want to mark a task as complete so the manager knows the room has been cleaned. |
 | HK-03 | As a Housekeeper, I want to add notes to a task so I can flag issues in a room. |
+| HK-04 | As a Housekeeper, I want to enter meter readings by property or building so utility usage is recorded. |
+| HK-05 | As a Housekeeper, I want to submit meter readings for manager review so the billing process can proceed. |
 
 ---
 
@@ -142,8 +201,9 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 ### 5.2 Security
 
 - All routes protected by Supabase Auth session validation in middleware
-- RLS policies enforce data isolation between properties
-- No cross-property data leakage — a manager cannot read another manager's data
+- RLS policies enforce data isolation between organizations and properties
+- No cross-org or cross-property data leakage — a manager cannot read another organization's data
+- Org-level access validated via `organization_members` in addition to `properties.manager_id`
 - Passwords never stored in application layer (delegated to Supabase Auth)
 - LINE webhook endpoint validated with channel signature (HMAC-SHA256)
 - Environment secrets never exposed to the client bundle
@@ -156,8 +216,10 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 
 ### 5.4 Scalability
 
-- Multi-property architecture from day one; no per-tenant database isolation
-- Pagination on all list views (default page size: 20)
+- Multi-property, multi-organization architecture; shared schema with RLS (no per-tenant database isolation)
+- Organization → Property → Building → Room hierarchy supports SaaS growth
+- Keyset (cursor-based) pagination on all list views (default page size: 20); offset pagination is not permitted on operational tables at scale
+- `organization_id` denormalized on all operational tables for org-level RLS and analytics without joins
 - Supabase connection pooling via PgBouncer
 
 ### 5.5 Accessibility
@@ -181,8 +243,12 @@ Habio is a multi-tenant dormitory management SaaS. A single deployment serves mu
 ## 6. Out of Scope (v1)
 
 - Online payment gateway integration
+- Platform-level subscription billing (Stripe for org plans)
 - Bulk room/tenant import via CSV
 - Custom billing cycles (non-monthly)
 - Multi-language LINE bot responses
 - Native mobile application
 - Accounting/ERP integrations
+- Custom domains / white-labeling per organization
+- Audit log for enterprise compliance
+- IoT meter auto-read integration

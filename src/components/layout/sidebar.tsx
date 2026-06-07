@@ -4,14 +4,24 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { UserRole } from '@/types'
+import type { MembershipRole } from '@/types'
 
 interface SidebarProps {
-  role: UserRole
+  role: MembershipRole
 }
 
-const navItems: Record<UserRole, { href: string; label: string }[]> = {
-  manager: [{ href: '/manager/dashboard', label: 'Dashboard' }],
+const navItems: Record<MembershipRole, { href: string; label: string }[]> = {
+  owner: [
+    { href: '/owner/dashboard', label: 'Dashboard' },
+    { href: '/owner/properties', label: 'Properties' },
+    { href: '/owner/staff/invite', label: 'Invite staff' },
+    { href: '/manager/tenants/new', label: 'Add tenant' },
+  ],
+  manager: [
+    { href: '/manager/dashboard', label: 'Dashboard' },
+    { href: '/manager/staff/invite', label: 'Invite staff' },
+    { href: '/manager/tenants/new', label: 'Add tenant' },
+  ],
   tenant: [{ href: '/tenant/dashboard', label: 'Dashboard' }],
   technician: [{ href: '/technician/dashboard', label: 'Dashboard' }],
   housekeeper: [{ href: '/housekeeper/dashboard', label: 'Dashboard' }],
@@ -30,7 +40,8 @@ export function Sidebar({ role }: SidebarProps) {
       </div>
       <nav className="flex flex-1 flex-col gap-1 p-3">
         {items.map((item) => {
-          const isActive = pathname === item.href
+          const isActive =
+            pathname === item.href || (item.href !== `/${role}/dashboard` && pathname.startsWith(item.href))
           return (
             <Link
               key={item.href}

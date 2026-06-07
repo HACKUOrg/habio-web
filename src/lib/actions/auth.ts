@@ -2,8 +2,10 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { clearRoleCacheInCookies, setRoleCacheInCookies } from '@/lib/role-cache-server'
-import { roleDashboardPath, type UserRole } from '@/types'
+import {
+  clearMembershipSession,
+  resolvePostAuthRedirect,
+} from '@/lib/actions/membership'
 
 export type AuthActionState = {
   error?: string
@@ -33,24 +35,14 @@ export async function signIn(
     return { error: 'Sign in failed. Please try again.' }
   }
 
-  const { data: profile, error: profileError } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', userId)
-    .single()
-
-  if (profileError || !profile?.role) {
-    return { error: 'Unable to load your profile. Please contact support.' }
-  }
-
-  await setRoleCacheInCookies(userId, profile.role as UserRole)
-  redirect(roleDashboardPath(profile.role as UserRole))
+  const destination = await resolvePostAuthRedirect(userId)
+  redirect(destination)
 }
 
 export async function signOut(): Promise<void> {
   const supabase = await createClient()
   await supabase.auth.signOut()
-  await clearRoleCacheInCookies()
+  await clearMembershipSession()
   redirect('/auth/login')
 }
 

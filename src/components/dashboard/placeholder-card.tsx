@@ -9,9 +9,10 @@ import {
 interface PlaceholderCardProps {
   title: string
   description: string
+  action?: React.ReactNode
 }
 
-export function PlaceholderCard({ title, description }: PlaceholderCardProps) {
+export function PlaceholderCard({ title, description, action }: PlaceholderCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -19,9 +20,11 @@ export function PlaceholderCard({ title, description }: PlaceholderCardProps) {
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">
-          This section will be available in a future phase.
-        </p>
+        {action ?? (
+          <p className="text-sm text-muted-foreground">
+            This section will be available in a future phase.
+          </p>
+        )}
       </CardContent>
     </Card>
   )

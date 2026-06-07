@@ -1,6 +1,7 @@
 'use client'
 
-import { LogOut } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowLeftRight, LogOut } from 'lucide-react'
 import { signOut } from '@/lib/actions/auth'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -12,11 +13,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import type { UserRole } from '@/types'
+import { MEMBERSHIP_ROLE_LABELS, type MembershipWithContext } from '@/types'
 
 interface TopnavProps {
   fullName: string
-  role: UserRole
+  membership: MembershipWithContext
+  hasMultipleMemberships: boolean
 }
 
 function getInitials(name: string): string {
@@ -28,17 +30,15 @@ function getInitials(name: string): string {
     .toUpperCase()
 }
 
-const roleLabels: Record<UserRole, string> = {
-  manager: 'Manager',
-  tenant: 'Tenant',
-  technician: 'Technician',
-  housekeeper: 'Housekeeper',
-}
+export function Topnav({ fullName, membership, hasMultipleMemberships }: TopnavProps) {
+  const roleLabel = MEMBERSHIP_ROLE_LABELS[membership.role]
+  const contextLabel = membership.propertyName
+    ? `${roleLabel} · ${membership.propertyName}`
+    : `${roleLabel} · ${membership.organizationName}`
 
-export function Topnav({ fullName, role }: TopnavProps) {
   return (
     <header className="flex h-14 items-center justify-between border-b px-6">
-      <div />
+      <p className="text-sm text-muted-foreground">{contextLabel}</p>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-9 w-9 rounded-full">
@@ -51,10 +51,18 @@ export function Topnav({ fullName, role }: TopnavProps) {
           <DropdownMenuLabel>
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium">{fullName}</p>
-              <p className="text-xs text-muted-foreground">{roleLabels[role]}</p>
+              <p className="text-xs text-muted-foreground">{contextLabel}</p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          {hasMultipleMemberships && (
+            <DropdownMenuItem asChild>
+              <Link href="/select-membership" className="flex cursor-pointer items-center">
+                <ArrowLeftRight className="mr-2 h-4 w-4" />
+                Switch workspace
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem asChild>
             <form action={signOut}>
               <button

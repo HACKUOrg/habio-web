@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { getActiveMembershipForUser } from '@/lib/actions/membership'
+import { membershipDashboardPath } from '@/lib/membership/paths'
 import { LoginForm } from '@/components/auth/login-form'
-import { roleDashboardPath, type UserRole } from '@/types'
 
 export default async function LoginPage() {
   const supabase = await createClient()
@@ -9,15 +10,11 @@ export default async function LoginPage() {
   const userId = data?.claims?.sub
 
   if (userId) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', userId)
-      .single()
-
-    if (profile?.role) {
-      redirect(roleDashboardPath(profile.role as UserRole))
+    const activeMembership = await getActiveMembershipForUser(userId)
+    if (activeMembership) {
+      redirect(membershipDashboardPath(activeMembership.role))
     }
+    redirect('/select-membership')
   }
 
   return (

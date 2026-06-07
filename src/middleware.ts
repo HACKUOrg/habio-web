@@ -1,7 +1,13 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { getRoleFromCache, setRoleCacheCookie } from '@/lib/role-cache'
+import {
+  parseActiveMembershipCookie,
+  setActiveMembershipCookie,
+} from '@/lib/membership/cookie'
+import { membershipDashboardPath, roleFromPath } from '@/lib/membership/paths'
+import { validateMembershipById } from '@/lib/membership/queries'
 import { updateSession } from '@/lib/supabase/middleware'
-import { ROLE_ROUTES, roleDashboardPath, type UserRole } from '@/types'
+
+const MEMBERSHIP_EXEMPT_PATHS = ['/select-membership']
 
 export async function middleware(request: NextRequest) {
   const { response, supabase, userId } = await updateSession(request)
@@ -11,31 +17,47 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  let role: UserRole | null = await getRoleFromCache(request, userId)
-
-  if (!role) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', userId)
-      .single()
-
-    const fetchedRole = profile?.role as UserRole | undefined
-    if (!fetchedRole) {
-      return NextResponse.redirect(new URL('/auth/login', request.url))
-    }
-
-    role = fetchedRole
-    await setRoleCacheCookie(response, userId, role)
+  if (MEMBERSHIP_EXEMPT_PATHS.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))) {
+    return response
   }
 
-  const requestedRole = ROLE_ROUTES.find((r) => path.startsWith(`/${r}`))
-  if (requestedRole && requestedRole !== role) {
-    return NextResponse.redirect(new URL(roleDashboardPath(role), request.url))
+  const activeCookie = await parseActiveMembershipCookie(request)
+  if (!activeCookie || activeCookie.userId !== userId) {
+    return NextResponse.redirect(new URL('/select-membership', request.url))
+  }
+
+  const validMembership = await validateMembershipById(
+    supabase,
+    activeCookie.membershipId,
+    userId
+  )
+
+  if (!validMembership) {
+    const redirectResponse = NextResponse.redirect(
+      new URL('/select-membership', request.url)
+    )
+    return redirectResponse
+  }
+
+  if (
+    validMembership.role !== activeCookie.role ||
+    validMembership.organizationId !== activeCookie.organizationId ||
+    validMembership.propertyId !== activeCookie.propertyId
+  ) {
+    await setActiveMembershipCookie(response, validMembership)
+  }
+
+  const requestedRole = roleFromPath(path)
+  if (requestedRole && requestedRole !== validMembership.role) {
+    return NextResponse.redirect(
+      new URL(membershipDashboardPath(validMembership.role), request.url)
+    )
   }
 
   if (path === '/') {
-    return NextResponse.redirect(new URL(roleDashboardPath(role), request.url))
+    return NextResponse.redirect(
+      new URL(membershipDashboardPath(validMembership.role), request.url)
+    )
   }
 
   return response

@@ -1,21 +1,19 @@
-# 02 — System Architecture
+# 02 - System Architecture
 
 ## 1. Overview
 
-Habio is a full-stack SaaS application built on the following foundational services:
+Habio is a multi-property dormitory management SaaS built on Next.js and Supabase. A single deployment serves many organizations, and each organization can own many properties, buildings, and rooms.
 
 | Layer | Technology |
 |---|---|
-| Frontend / SSR | Next.js 16 (App Router), React 19, Tailwind CSS 4, shadcn/ui |
-| Backend (BFF) | Next.js Server Components, Server Actions, Route Handlers |
-| Database | Supabase (PostgreSQL 15) |
-| Auth | Supabase Auth (email/password, cookie-based sessions) |
-| Realtime | Supabase Realtime (WebSocket channels) |
-| Storage | Supabase Storage (maintenance ticket attachments) |
+| Frontend / SSR | Next.js App Router, React, Tailwind, shadcn/ui |
+| Backend | Server Components, Server Actions, Route Handlers |
+| Database | Supabase Postgres with RLS |
+| Auth | Supabase Auth with cookie-based sessions |
+| Realtime | Supabase Realtime |
+| Storage | Supabase Storage for ticket attachments |
 | Messaging | LINE Messaging API |
-| Hosting | Vercel (Next.js), Supabase Cloud |
-
----
+| Hosting | Vercel and Supabase Cloud |
 
 ## 2. High-Level Architecture
 
@@ -23,313 +21,250 @@ Habio is a full-stack SaaS application built on the following foundational servi
 graph TB
     subgraph clients [Clients]
         browser[Browser]
-        line[LINE App]
+        lineApp[LINE App]
     end
 
-    subgraph vercel [Vercel Edge / Node]
-        middleware[Next.js Middleware\nauth guard + role redirect]
-        serverComponents[Server Components\nSSR data fetch]
-        serverActions[Server Actions\nmutations]
-        routeHandlers[Route Handlers\nwebhooks / API]
+    subgraph nextApp [Next.js App]
+        middleware[Middleware session and membership guard]
+        serverComponents[Server Components data reads]
+        serverActions[Server Actions mutations]
+        routeHandlers[Route Handlers webhooks and callbacks]
     end
 
-    subgraph supabase [Supabase Cloud]
-        authService[Auth Service\nsessions + JWT]
-        postgres[(PostgreSQL\nRLS enforced)]
-        realtime[Realtime\nWebSocket]
-        storage[Storage\nattachments]
-    end
-
-    subgraph line [LINE Platform]
-        lineApi[LINE Messaging API]
+    subgraph supabase [Supabase]
+        authService[Auth sessions]
+        postgres[(Postgres with RLS)]
+        realtime[Realtime]
+        storage[Storage]
     end
 
     browser -->|HTTPS| middleware
     middleware --> serverComponents
     middleware --> serverActions
     middleware --> routeHandlers
-    serverComponents -->|server client| postgres
-    serverActions -->|server client| postgres
-    serverActions -->|push notification| lineApi
-    routeHandlers -->|webhook ingest| lineApi
-    browser -->|Realtime WS| realtime
-    realtime --> postgres
-    line -->|webhook POST| routeHandlers
+    serverComponents --> postgres
+    serverActions --> postgres
+    routeHandlers --> postgres
+    browser --> realtime
     authService --> postgres
+    storage --> postgres
+    lineApp -->|webhook POST| routeHandlers
 ```
 
----
+## 3. Identity and Authorization
 
-## 3. Request Lifecycle
+Supabase Auth identifies the user. Habio authorization is resolved from `memberships`.
 
-### 3.1 Authenticated Page Request
+- `profiles`: display and contact data only.
+- `memberships`: role, organization scope, property scope, active/deactivated state.
+- `invitations`: pending access grants for staff and tenant activation.
+- `tenant_profiles`: tenant lease and room metadata.
+
+A user can hold multiple active memberships, so the app must track an active membership context for route and UI state.
+
+## 3.1 User Identity Layer
+
+Supabase Auth creates a user in `auth.users`. Habio stores provider-specific identity records in `user_identities` — one row per linked provider.
+
+```mermaid
+graph TD
+    authUser["auth.users\n(Supabase Auth)"]
+    emailId["user_identities\nprovider=email"]
+    lineId["user_identities\nprovider=line"]
+    membership["memberships\n(role + org + property)"]
+    org["Organization"]
+    prop["Property"]
+    role["Role"]
+
+    authUser --> emailId
+    authUser --> lineId
+    authUser --> membership
+    membership --> org
+    org --> prop
+    prop --> role
+```
+
+**Core rule:** identity proves who you are; membership proves what you can do. These are independent.
+
+| Concern | Table | Notes |
+|---|---|---|
+| Who the user is | `user_identities` | One row per provider per user |
+| What the user can access | `memberships` | One row per role+org+property grant |
+
+Supported providers: `email`, `line`. Future providers (`google`, `apple`) add rows to `user_identities` with no schema changes required.
+
+LINE identity association requires an explicit link action after authentication. Deactivating a membership does not remove a LINE identity. Removing a LINE identity does not deactivate a membership.
+
+## 3.2 Notification Architecture (Future)
+
+Notifications are stored channel-independently. Delivery state is tracked separately per channel. This allows Phase 5 to wire LINE delivery without schema changes.
+
+```mermaid
+graph LR
+    event["Business Event\n(e.g. ticket assigned)"]
+    notif["notifications\n(event_type, user_id, title)"]
+    inApp["notification_deliveries\nchannel=in_app"]
+    email["notification_deliveries\nchannel=email"]
+    line["notification_deliveries\nchannel=line"]
+
+    event --> notif
+    notif --> inApp
+    notif --> email
+    notif --> line
+```
+
+Notification event types:
+- `maintenance_ticket_assigned`
+- `maintenance_ticket_updated`
+- `housekeeping_task_assigned`
+- `bill_created`
+- `bill_due`
+- `tenant_activated`
+- `meter_reading_approved`
+
+Delivery channels: `in_app` (Phase 1), `email` (Phase 3), `line` (Phase 5).
+
+The `notifications` and `notification_deliveries` tables are created in Phase 0 (schema only). Delivery logic is not implemented until Phase 1 (`in_app`) and Phase 5 (`line`).
+
+## 4. Authenticated Request Lifecycle
 
 ```mermaid
 sequenceDiagram
     participant Browser
     participant Middleware
-    participant ServerComponent
     participant SupabaseAuth
-    participant PostgreSQL
+    participant Postgres
+    participant Page
 
-    Browser->>Middleware: GET /manager/rooms (with session cookie)
-    Middleware->>SupabaseAuth: getClaims() — validate + refresh session
-    SupabaseAuth-->>Middleware: JWT claims (user_id, role via profiles lookup)
-    alt unauthenticated
-        Middleware-->>Browser: 302 → /auth/login
-    else wrong role
-        Middleware-->>Browser: 302 → /[correct-role]/dashboard
-    else authorised
-        Middleware->>ServerComponent: forward request
-        ServerComponent->>PostgreSQL: query rooms WHERE property_id = ? (RLS filters)
-        PostgreSQL-->>ServerComponent: rows
-        ServerComponent-->>Browser: HTML + inline RSC payload
+    Browser->>Middleware: GET /manager/properties
+    Middleware->>SupabaseAuth: getClaims from session cookie
+    SupabaseAuth-->>Middleware: user id
+    Middleware->>Middleware: parse active membership cookie
+    Middleware->>Postgres: validate membership by id (PK lookup)
+    Postgres-->>Middleware: active membership valid
+    alt no session
+        Middleware-->>Browser: redirect /auth/login
+    else invalid or missing cookie
+        Middleware-->>Browser: redirect /select-membership
+    else wrong role prefix
+        Middleware-->>Browser: redirect /{activeRole}/dashboard
+    else authorized context
+        Middleware->>Page: continue request
+        Page->>Postgres: query with RLS
+        Postgres-->>Page: scoped rows
     end
 ```
 
-### 3.2 Mutation via Server Action
+## 5. Authentication Flows
+
+### 5.1 Owner Registration
 
 ```mermaid
 sequenceDiagram
-    participant Browser
-    participant ServerAction
-    participant PostgreSQL
-    participant LINEApi
+    participant Owner
+    participant Auth
+    participant App
+    participant DB
 
-    Browser->>ServerAction: POST (form action / useTransition)
-    ServerAction->>PostgreSQL: INSERT / UPDATE (RLS validated)
-    PostgreSQL-->>ServerAction: result row
-    ServerAction->>PostgreSQL: INSERT notifications row
-    PostgreSQL->>Realtime: broadcast notification event
-    Realtime-->>Browser: push update (WebSocket)
-    ServerAction->>LINEApi: pushMessage() if user has LINE connection
-    ServerAction-->>Browser: revalidatePath + updated state
+    Owner->>Auth: register email and password
+    Auth-->>App: authenticated user id
+    App->>DB: create profile
+    App->>DB: create organization
+    App->>DB: create first property
+    App->>DB: create owner membership with property_id null
+    App-->>Owner: redirect /owner/dashboard
 ```
 
----
+The first user of an organization becomes `owner`. This is the only self-registration path that creates Habio access directly.
 
-## 4. Authentication Flow
+### 5.2 Invitation Acceptance
+
+Managers, technicians, and housekeepers do not self-register into an organization.
 
 ```mermaid
-flowchart TD
-    A[User visits any route] --> B{Session cookie present?}
-    B -- No --> C[Redirect to /auth/login]
-    B -- Yes --> D[middleware: getClaims]
-    D --> E{Claims valid?}
-    E -- No / expired --> F[Refresh session\nset new cookie]
-    F --> G{Refresh successful?}
-    G -- No --> C
-    G -- Yes --> H[Read profiles.role]
-    E -- Yes --> H
-    H --> I{Route matches role?}
-    I -- No --> J[Redirect to /role/dashboard]
-    I -- Yes --> K[Render page]
+sequenceDiagram
+    participant Inviter
+    participant App
+    participant DB
+    participant Invitee
+    participant Auth
+
+    Inviter->>App: invite user with email role property
+    App->>DB: insert pending invitation with token_hash
+    App-->>Invitee: email invite link
+    Invitee->>App: open invite token
+    App->>DB: validate pending unexpired hash
+    Invitee->>Auth: create password or sign in
+    App->>DB: create membership from invitation
+    App->>DB: mark invitation accepted
+    App-->>Invitee: redirect role dashboard
 ```
 
-### Session Storage
+### 5.3 Tenant Activation
 
-- Supabase Auth issues a JWT (access token) + refresh token
-- Both stored as HTTP-only cookies via `@supabase/ssr` `setAll` / `getAll` cookie adapters
-- `getClaims()` is called at the top of every middleware invocation to refresh tokens before any data fetch — never skipped
-- Role is **not** embedded in the JWT; it is read from `profiles.role` on the server via a privileged lookup after claims are validated
+Managers create tenants and assign rooms. Tenants receive an activation link and set a password.
 
----
+```mermaid
+sequenceDiagram
+    participant Manager
+    participant App
+    participant DB
+    participant Tenant
+    participant Auth
 
-## 5. Multi-Tenancy Model
+    Manager->>App: create tenant and assign room
+    App->>DB: insert tenant activation invitation
+    App-->>Tenant: send activation link
+    Tenant->>Auth: create password
+    App->>DB: create tenant membership
+    App->>DB: create tenant_profile
+    App->>DB: mark room occupied
+    App->>DB: mark invitation accepted
+    App-->>Tenant: redirect /tenant/dashboard
+```
 
-Habio uses a **shared database, shared schema** multi-tenancy model:
+## 6. Middleware and Context Cookie
 
-- Every table that belongs to a property includes a `property_id` column
-- Row Level Security policies on every table restrict reads and writes to rows the authenticated user owns or is assigned to
-- A manager only sees data for properties where `properties.manager_id = auth.uid()`
-- There is no schema-per-tenant isolation; isolation is purely via RLS
+`habio-active-membership` is an HMAC-signed cache containing:
 
----
+- `user_id`
+- `membership_id`
+- `organization_id`
+- `property_id`
+- `role`
+- `expires_at`
 
-## 6. LINE Messaging API Integration
+The cookie supports fast route redirects, but it is not a security boundary. On the default request path, middleware validates the signed `membership_id` with a single primary-key lookup (`validateMembershipById`). The full membership list loads only on `/select-membership` or after an explicit context switch. Server actions revalidate writes against the database.
+
+## 7. Data Access Pattern
+
+Server Components and Server Actions should include the active membership context in query filters for performance, but RLS remains authoritative.
 
 ```mermaid
 flowchart LR
-    subgraph habio [Habio Platform]
-        serverAction[Server Action]
-        webhookHandler[Route Handler\n/api/webhooks/line]
-        lineClient[LINE SDK Client\nsrc/lib/line/client.ts]
-        notificationsTbl[(notifications)]
-        lineConnectionsTbl[(line_connections)]
-    end
-
-    subgraph line [LINE Platform]
-        lineChannel[LINE Official Account]
-        lineUser[User LINE App]
-    end
-
-    serverAction -- "push notification trigger" --> lineClient
-    lineClient -- "pushMessage(lineUserId, messages)" --> lineChannel
-    lineChannel -- "deliver" --> lineUser
-    lineUser -- "follow / message event" --> lineChannel
-    lineChannel -- "POST webhook" --> webhookHandler
-    webhookHandler -- "upsert line_connections" --> lineConnectionsTbl
-    webhookHandler -- "read user notification" --> notificationsTbl
+    activeMembership[Active Membership] --> uiFilters[UI Filters]
+    uiFilters --> serverQuery[Server Query]
+    serverQuery --> rls[RLS Membership Policies]
+    rls --> rows[Scoped Rows]
 ```
 
-**Outbound (Habio → LINE):**
-1. A Server Action triggers a notification (e.g., bill issued, ticket assigned)
-2. Server Action inserts a row into `notifications`
-3. After DB write, Server Action checks `line_connections` for the target user
-4. If a LINE connection exists, calls LINE SDK `pushMessage()` with the notification body
-5. Failure to send LINE message is non-fatal — in-app notification is always persisted
+## 8. Realtime and Notifications
 
-**Inbound (LINE → Habio):**
-1. User follows the LINE Official Account or sends a message
-2. LINE platform POSTs a webhook event to `/api/webhooks/line`
-3. Route Handler verifies HMAC-SHA256 signature using `LINE_CHANNEL_SECRET`
-4. On `follow` event: upsert `line_connections` linking `line_user_id` to `profiles.id`
-5. On `message` event (future): allow tenants to query bill status or submit basic tickets via chat
+Realtime subscriptions must be scoped to the authenticated user or active property:
 
----
+- Notifications: `user_id = auth.uid()`.
+- Maintenance tickets: property managers see assigned property tickets; technicians see assigned tickets.
+- Housekeeping tasks: managers see property tasks; housekeepers see assigned tasks.
+- Meter readings: managers and housekeepers use property-scoped membership checks.
 
-## 7. Realtime Architecture
+## 9. Storage
 
-Supabase Realtime is used for two scenarios:
+Ticket attachments remain in Supabase Storage. Storage policies must mirror `maintenance_tickets` access: tenant owns the ticket, assigned technician can read related attachments, and owner/manager can access tickets in scoped properties.
 
-| Channel | Event | Subscriber |
-|---|---|---|
-| `notifications:user_id=<uid>` | `INSERT` on `notifications` | All roles — drives notification badge count |
-| `tickets:property_id=<pid>` | `INSERT`, `UPDATE` on `maintenance_tickets` | Manager — live ticket board updates |
-| `tasks:assigned_to=<uid>` | `INSERT`, `UPDATE` on `housekeeping_tasks` | Housekeeper — live task list |
+## 10. Security Constraints
 
-Clients subscribe using the Supabase browser client inside a `useEffect` hook. The subscription is established after initial page load and torn down on unmount.
-
----
-
-## 8. Storage Architecture
-
-Supabase Storage is used for maintenance ticket photo attachments:
-
-- Bucket: `ticket-attachments` (private)
-- Path pattern: `{property_id}/{ticket_id}/{filename}`
-- Upload: client-side via signed upload URL issued by a Server Action
-- Access: time-limited signed download URL generated on-demand
-- Max file size: 10 MB per attachment, max 5 attachments per ticket
-
----
-
-## 9. Deployment Architecture
-
-```mermaid
-graph LR
-    subgraph github [GitHub]
-        repo[habio-web repo]
-    end
-    subgraph vercel [Vercel]
-        preview[Preview Deployment\nPR branches]
-        production[Production\nmain branch]
-    end
-    subgraph supabase [Supabase Cloud]
-        devProject[Dev Project]
-        prodProject[Prod Project]
-    end
-
-    repo -- "PR push" --> preview
-    repo -- "merge to prod" --> production
-    preview --> devProject
-    production --> prodProject
-```
-
-- **Production**: `prod` branch auto-deploys to Vercel production; points to production Supabase project
-- **Preview**: Every PR gets a Vercel preview URL; points to the development Supabase project
-- **Migrations**: Applied via Supabase CLI in CI before deployment (`supabase db push`)
-- **Secrets**: Stored in Vercel environment variables; never committed
-
----
-
-## 10. Key Architectural Constraints
-
-| Constraint | Rationale |
-|---|---|
-| No client-side data fetching for initial page load | All initial data is server-rendered via Server Components to avoid layout shift and improve TTI |
-| Server Actions for all mutations | Avoids a separate REST API layer; actions run on the server, RLS is always enforced |
-| `getClaims()` must be first call in middleware | Supabase requirement — skipping causes random session termination |
-| Role not in JWT | Role changes take effect immediately without requiring token rotation |
-| RLS as final enforcement layer | Middleware redirects are UX conveniences; RLS is the security guarantee |
-
----
-
-## 11. Role Cache Cookie
-
-Without caching, every HTTP request incurs two Supabase calls: `getClaims()` (local) and a `SELECT role FROM profiles` DB round-trip. At 100 concurrent users navigating 5 pages/minute this produces 500 DB queries/minute purely for role lookups.
-
-To eliminate the repeat DB fetch, the resolved role is stored in a short-lived, HMAC-signed HTTP-only cookie alongside the session cookie.
-
-### Design
-
-```
-Cookie name:  habio-role-cache
-Value:        base64url( JSON { role, uid, exp } ) . HMAC-SHA256( payload, ROLE_CACHE_SECRET )
-TTL:          10 minutes (Max-Age=600, same SameSite/Secure attributes as session cookie)
-```
-
-### Middleware Logic (with cache)
-
-```typescript
-// src/middleware.ts
-export async function middleware(request: NextRequest) {
-  // Step 1: refresh session (required first per Supabase SSR docs)
-  const response = await updateSession(request)
-  const supabase = createServerClient(...)
-
-  // Step 2: validate session
-  const { data } = await supabase.auth.getClaims()
-  const userId = data?.claims?.sub
-  if (!userId) {
-    return NextResponse.redirect(new URL('/auth/login', request.url))
-  }
-
-  // Step 3: check role cache cookie (skip DB if valid)
-  let role = getRoleCacheFromCookie(request, userId)
-
-  if (!role) {
-    // Cache miss: fetch from DB and set cookie on response
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', userId)
-      .single()
-    role = profile?.role
-    setRoleCacheCookie(response, userId, role)
-  }
-
-  // Step 4: role-prefix enforcement (unchanged)
-  const roleRoutes = ['manager', 'tenant', 'technician', 'housekeeper']
-  const requestedRole = roleRoutes.find(r => request.nextUrl.pathname.startsWith(`/${r}`))
-  if (requestedRole && requestedRole !== role) {
-    return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
-  }
-
-  if (request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
-  }
-
-  return response
-}
-```
-
-### Cache Invalidation
-
-| Event | Action |
-|---|---|
-| Role change (manager promotes a user) | Server Action clears `habio-role-cache` cookie by setting `Max-Age=0` |
-| Session expiry / sign-out | Auth cookie cleared; cache cookie also cleared in `signOut` action |
-| Cache TTL expiry (10 min) | Next middleware invocation triggers DB re-fetch automatically |
-
-### Environment Variable
-
-| Variable | Description |
-|---|---|
-| `ROLE_CACHE_SECRET` | 32-byte random secret used to HMAC-sign the cache payload. Server-only — never `NEXT_PUBLIC_`. |
-
-### Security Properties
-
-- HMAC signature prevents client tampering with the cached role
-- Short TTL (10 min) bounds the window for a stale role after a change
-- RLS remains the authoritative enforcement layer — a stale cache at worst causes a wrong-role redirect, never data leakage
+- Never trust `raw_user_meta_data`, route prefix, email domain, or client-selected organization IDs for authorization.
+- All public tables use RLS.
+- Invitation tokens are single-use and stored as hashes.
+- Server-only flows use the service role key only in Route Handlers or Server Actions and never expose it to clients.
+- `SECURITY DEFINER` helper functions must include `auth.uid()` predicates and fixed `search_path`.

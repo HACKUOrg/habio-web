@@ -1,574 +1,404 @@
-# 04 — RBAC Model
+# 04 - RBAC Model
 
 ## 1. Overview
 
-Habio uses a **two-layer access control** model:
+Habio uses membership-based RBAC. Identity is a Supabase Auth user; authorization is one or more rows in `memberships`.
 
 | Layer | Mechanism | Purpose |
 |---|---|---|
-| **Layer 1 — Route Guard** | Next.js Middleware | UX-level redirect; prevents wrong-role users from seeing other role's UI |
-| **Layer 2 — Data Enforcement** | Supabase RLS (PostgreSQL) | Security guarantee; a compromised or misconfigured frontend cannot leak data |
+| Route guard | Next.js middleware | UX-level redirect and active membership validation |
+| Server actions | Explicit permission checks | Transactional business rules and invitation acceptance |
+| Data enforcement | Supabase RLS | Authoritative row-level isolation |
 
-The role is stored in `profiles.role` and is **never embedded in the JWT**. This means role changes take effect immediately without requiring token re-issuance. Both layers read the role from the database on each request.
+Roles are not stored in `profiles`, JWT claims, or user metadata. Middleware and server actions read active memberships from the database or from a short-lived, signed active-membership cookie that is always revalidated against the database before sensitive mutations.
 
----
+## 2. Roles and Scope
 
-## 2. Role Definitions
+| Role | Scope | Who creates it | Description |
+|---|---|---|---|
+| `owner` | Organization | Self-registration first user flow | Full access to an organization and all properties |
+| `manager` | Property | Owner invitation | Manages assigned properties, rooms, tenants, billing, tasks, and maintenance |
+| `technician` | Property | Owner or manager invitation | Handles assigned maintenance jobs in assigned properties |
+| `housekeeper` | Property | Owner or manager invitation | Handles assigned cleaning tasks and meter readings |
+| `tenant` | Property and room | Manager activation flow | Views own room, bills, and requests maintenance |
 
-| Role | Value | Description |
+A user may have multiple memberships. Examples:
+
+- User A: manager of Property A, technician of Property B.
+- User B: housekeeper of Property A and Property B.
+- User C: tenant of Room A101.
+
+## 2.1 Identity vs Authorization
+
+Habio separates identity from authorization. They are stored in different tables and are fully independent.
+
+| Concern | Table | Managed by |
 |---|---|---|
-| Manager | `manager` | Administers one or more properties. Full CRUD within their properties. |
-| Tenant | `tenant` | Lives in a room. Read-only on most data; can create maintenance tickets. |
-| Technician | `technician` | Handles assigned maintenance tickets. No billing or housekeeping access. |
-| Housekeeper | `housekeeper` | Handles assigned housekeeping tasks. No billing or ticket access. |
+| Who the user is | `user_identities` | Auth provider linkage |
+| What the user can access | `memberships` | Owner/manager invitation flow |
 
----
+A user may link any number of identity providers (email, LINE, Google, Apple). Each link is a row in `user_identities(provider, provider_user_id)`.
 
-## 3. Feature Permission Matrix
+**Rules:**
+- LINE identity identifies the user. Membership authorizes the user.
+- Linking a LINE account does not create or modify any membership.
+- Deactivating a membership (`deactivated_at`) does not remove identity rows.
+- Removing a LINE identity does not deactivate any membership.
+- A user with a LINE identity but no active membership has no access.
 
-| Feature | Manager | Tenant | Technician | Housekeeper |
-|---|:---:|:---:|:---:|:---:|
-| **Properties** | | | | |
-| View own properties | CRUD | — | — | — |
-| **Rooms** | | | | |
-| View rooms | CRUD | own room only | assigned ticket rooms | assigned task rooms |
-| Archive room | CRUD | — | — | — |
-| **Tenants** | | | | |
-| View tenant list | R (own property) | — | — | — |
-| Manage tenants | CRUD | own profile only | — | — |
-| **Billing** | | | | |
-| Generate / edit bills | CRUD | — | — | — |
-| View bills | R (all in property) | own bills only | — | — |
-| Mark bill paid | U | — | — | — |
-| **Maintenance Tickets** | | | | |
-| Create ticket | CU | C | — | — |
-| View tickets | R (all in property) | own tickets only | assigned only | — |
-| Assign ticket | U | — | — | — |
-| Update status | U | — | U (assigned) | — |
-| Add comment | C | C (own tickets) | C (assigned) | — |
-| **Housekeeping** | | | | |
-| Create / assign task | CRUD | — | — | — |
-| View tasks | R (all in property) | — | — | assigned only |
-| Update task status | U | — | — | U (assigned) |
-| **Notifications** | | | | |
-| View own notifications | R | R | R | R |
-| Mark read | U | U | U | U |
-| **Profiles** | | | | |
-| View own profile | RU | RU | RU | RU |
-| View other profiles | R (own property) | — | — | — |
-| **Property Staff** | | | | |
-| Add / remove staff | CRUD | — | — | — |
-| View own membership | — | — | R | R |
+```
+User
+├─ Email Identity   (user_identities, provider='email')
+└─ LINE Identity    (user_identities, provider='line')
+     ↓
+  Membership → Organization → Property → Role
+```
 
-Legend: **C** = Create, **R** = Read, **U** = Update, **D** = Delete, **—** = No access
+Authorization always resolves through `memberships`. Never authorize based on identity provider or identity metadata.
 
----
+## 3. Permission Matrix
 
-## 4. Next.js Middleware — Route Guard
+| Feature | Owner | Manager | Technician | Housekeeper | Tenant |
+|---|:---:|:---:|:---:|:---:|:---:|
+| Organization profile | CRUD | R | - | - | - |
+| Billing plan | CRUD | - | - | - | - |
+| Properties | CRUD all org | R assigned | R assigned | R assigned | R own |
+| Property membership list | CRUD | R assigned | R own | R own | R own |
+| Invite manager | C | - | - | - | - |
+| Invite technician | C | C assigned | - | - | - |
+| Invite housekeeper | C | C assigned | - | - | - |
+| Create tenant activation | C | C assigned | - | - | - |
+| Buildings and rooms | CRUD all org | CRUD assigned | R job rooms | R task rooms | R own room |
+| Tenant profiles | CRUD all org | CRUD assigned | - | - | R own |
+| Billing periods | CRUD all org | CRUD assigned | - | R assigned | - |
+| Meter readings | R/U all org | R/U assigned | - | C/U assigned | - |
+| Bills | CRUD all org | CRUD assigned | - | - | R own |
+| Maintenance tickets | R/U all org | R/U assigned | R/U assigned jobs | - | C/R own |
+| Housekeeping tasks | CRUD all org | CRUD assigned | - | R/U assigned | - |
+| Notifications | R/U own | R/U own | R/U own | R/U own | R/U own |
+| Profiles | R org users | R assigned-property users | R own | R own | R own |
 
-### 4.1 Route Namespace Design
+Legend: C = create, R = read, U = update, D = delete, - = no access.
 
-Each role owns a dedicated URL prefix under `/(dashboard)`:
+## 4. Active Membership Context
 
-| Role | URL Prefix |
+The UI must expose a property/role switcher when a user has more than one active membership. The selected membership controls route namespace and default property filters.
+
+Recommended cookie:
+
+| Cookie | Purpose |
 |---|---|
-| Manager | `/manager/...` |
-| Tenant | `/tenant/...` |
-| Technician | `/technician/...` |
-| Housekeeper | `/housekeeper/...` |
+| `habio-active-membership` | HMAC-signed payload containing `user_id`, `membership_id`, `role`, `organization_id`, `property_id`, and short expiry |
 
-### 4.2 Middleware Logic
+The cookie is a cache, not an authority. RLS still decides data access, and server actions must re-check membership state for writes.
 
-```
-src/middleware.ts
-```
+## 5. Route Guard
 
-```
-1. All requests → updateSession() to refresh Supabase session cookie
-2. If no valid session → redirect to /auth/login
-3. Read profiles.role for authenticated user (server client)
-4. If request path starts with /[role]/ and role does not match → redirect to /[actual-role]/dashboard
-5. Pass through to Next.js router
-```
+Role routes:
 
-### 4.3 Middleware Pseudocode
+| Role | URL prefix |
+|---|---|
+| `owner` | `/owner/...` |
+| `manager` | `/manager/...` |
+| `technician` | `/technician/...` |
+| `housekeeper` | `/housekeeper/...` |
+| `tenant` | `/tenant/...` |
+
+Middleware flow (fast path validates a single membership by primary key; full membership list loads only on cache miss):
 
 ```typescript
-// src/middleware.ts
 export async function middleware(request: NextRequest) {
-  // Step 1: refresh session
   const response = await updateSession(request)
-
-  // Step 2: validate session
-  const supabase = createServerClient(...)
-  const { data } = await supabase.auth.getClaims()
-  const userId = data?.claims?.sub
+  const userId = await readUserIdFromClaims(request)
 
   if (!userId) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  // Step 3: fetch role (server component reads this from profiles)
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', userId)
-    .single()
-
-  const role = profile?.role
-  const path = request.nextUrl.pathname
-
-  // Step 4: role-prefix enforcement
-  const roleRoutes = ['manager', 'tenant', 'technician', 'housekeeper']
-  const requestedRole = roleRoutes.find(r => path.startsWith(`/${r}`))
-
-  if (requestedRole && requestedRole !== role) {
-    return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+  const activeCookie = await parseActiveMembershipCookie(request)
+  if (!activeCookie || activeCookie.userId !== userId) {
+    return NextResponse.redirect(new URL('/select-membership', request.url))
   }
 
-  // Step 5: root redirect
-  if (path === '/') {
-    return NextResponse.redirect(new URL(`/${role}/dashboard`, request.url))
+  const valid = await validateMembershipById(activeCookie.membershipId, userId)
+  if (!valid) {
+    return NextResponse.redirect(new URL('/select-membership', request.url))
+  }
+
+  const requestedRole = roleFromPath(request.nextUrl.pathname)
+  if (requestedRole && requestedRole !== activeCookie.role) {
+    return NextResponse.redirect(new URL(`/${activeCookie.role}/dashboard`, request.url))
   }
 
   return response
 }
-
-export const config = {
-  // api/webhooks must be excluded: LINE platform POSTs without a session cookie.
-  // Middleware evaluating !userId would redirect it to /auth/login (302),
-  // causing LINE to mark every delivery as failed and retry indefinitely.
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|auth|api/webhooks).*)'],
-}
 ```
 
-### 4.4 Public Routes (no auth required)
+`loadActiveMemberships(userId)` runs only on `/select-membership` and after an explicit context switch — not on every authenticated request. `validateMembershipById` is a single primary-key lookup and stays `O(1)` regardless of how many memberships the user holds.
 
-| Path | Description |
-|---|---|
-| `/auth/login` | Sign-in page |
-| `/auth/callback` | Supabase OAuth / magic link callback |
-| `/api/webhooks/line` | LINE webhook (validated by signature, not session) |
+Public routes include `/auth/login`, `/auth/register`, `/auth/callback`, `/auth/invite/[token]`, `/auth/activate/[token]`, and webhook endpoints such as `/api/webhooks/line`.
 
----
+## 6. Supabase RLS Strategy
 
-## 5. Row Level Security Policies
+### 6.1 Helper Functions
 
-### 5.1 Helper Functions
+Use helper functions to centralize membership checks and avoid policy duplication.
 
 ```sql
--- Returns the role of the currently authenticated user
-CREATE OR REPLACE FUNCTION public.current_user_role()
-RETURNS user_role LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
-AS $$
-  SELECT role FROM public.profiles WHERE id = auth.uid()
+create function public.is_org_owner(p_org_id uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.memberships m
+    where m.user_id = (select auth.uid())
+      and m.organization_id = p_org_id
+      and m.property_id is null
+      and m.role = 'owner'
+      and m.deactivated_at is null
+  );
 $$;
 
--- Returns true if the current user manages the given property
-CREATE OR REPLACE FUNCTION public.is_property_manager(p_property_id uuid)
-RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
-AS $$
-  SELECT EXISTS (
-    SELECT 1 FROM public.properties
-    WHERE id = p_property_id AND manager_id = auth.uid()
+create function public.has_property_role(p_property_id uuid, p_role membership_role)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.memberships m
+    where m.user_id = (select auth.uid())
+      and m.property_id = p_property_id
+      and m.role = p_role
+      and m.deactivated_at is null
+  );
+$$;
+
+create function public.can_access_property(p_property_id uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.properties p
+    where p.id = p_property_id
+      and (
+        public.is_org_owner(p.organization_id)
+        or exists (
+          select 1 from public.memberships m
+          where m.user_id = (select auth.uid())
+            and m.property_id = p_property_id
+            and m.deactivated_at is null
+        )
+      )
+  );
+$$;
+```
+
+`SECURITY DEFINER` helpers are used to avoid recursive RLS lookups on `memberships`. They must include an `auth.uid()` predicate, use a fixed `search_path`, and have explicit execute grants reviewed in migration.
+
+`can_access_property` is for one-time Server Action permission checks only. Do not use it in row-level `USING` clauses — it joins `properties` and calls `is_org_owner` per row. RLS policies should inline `is_org_owner(organization_id)` and `has_property_role(property_id, ...)` against denormalized scope columns instead.
+
+### 6.2 Policy Patterns
+
+`memberships`:
+
+```sql
+create policy "members can view own memberships"
+on public.memberships
+for select
+to authenticated
+using (user_id = (select auth.uid()));
+
+create policy "owners can view org memberships"
+on public.memberships
+for select
+to authenticated
+using (public.is_org_owner(organization_id));
+```
+
+`properties`:
+
+```sql
+create policy "members can view accessible properties"
+on public.properties
+for select
+to authenticated
+using (
+  public.is_org_owner(organization_id)
+  or exists (
+    select 1 from public.memberships m
+    where m.user_id = (select auth.uid())
+      and m.property_id = properties.id
+      and m.deactivated_at is null
   )
-$$;
+);
+```
 
--- Returns true if the current user is a tenant of the given property
-CREATE OR REPLACE FUNCTION public.is_property_tenant(p_property_id uuid)
-RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
-AS $$
-  SELECT EXISTS (
-    SELECT 1 FROM public.tenants
-    WHERE property_id = p_property_id
-      AND user_id = auth.uid()
-      AND lease_status = 'active'
-      AND archived_at IS NULL
+`rooms`:
+
+```sql
+create policy "members can view scoped rooms"
+on public.rooms
+for select
+to authenticated
+using (
+  public.is_org_owner(
+    (select p.organization_id from public.properties p where p.id = property_id)
   )
-$$;
+  or exists (
+    select 1 from public.memberships m
+    where m.user_id = (select auth.uid())
+      and m.property_id = rooms.property_id
+      and m.deactivated_at is null
+  )
+  or exists (
+    select 1
+    from public.tenant_profiles tp
+    where tp.user_id = (select auth.uid())
+      and tp.room_id = rooms.id
+      and tp.lease_status = 'active'
+      and tp.archived_at is null
+  )
+);
 ```
 
-### 5.2 `profiles`
+`invitations`:
 
 ```sql
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-
--- Users can read their own profile
-CREATE POLICY "profiles: own select"
-  ON public.profiles FOR SELECT
-  TO authenticated
-  USING (id = (SELECT auth.uid()));
-
--- Users can update their own profile, but cannot change their own role.
--- The WITH CHECK subquery re-reads the persisted role and asserts it is
--- unchanged, closing the privilege-escalation path via a direct UPDATE.
-CREATE POLICY "profiles: own update"
-  ON public.profiles FOR UPDATE
-  TO authenticated
-  USING (id = (SELECT auth.uid()))
-  WITH CHECK (
-    id = (SELECT auth.uid()) AND
-    role = (SELECT role FROM public.profiles WHERE id = (SELECT auth.uid()))
-  );
-
--- Managers can read profiles of users in their properties
-CREATE POLICY "profiles: manager read property members"
-  ON public.profiles FOR SELECT
-  TO authenticated
-  USING (
-    public.current_user_role() = 'manager' AND
-    EXISTS (
-      SELECT 1 FROM public.properties p
-      LEFT JOIN public.tenants t ON t.property_id = p.id
-      WHERE p.manager_id = (SELECT auth.uid())
-        AND (t.user_id = profiles.id OR profiles.id = (SELECT auth.uid()))
-    )
-  );
+create policy "owners and managers can create invitations"
+on public.invitations
+for insert
+to authenticated
+with check (
+  public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+);
 ```
 
-### 5.3 `properties`
+`tenant_profiles`:
 
 ```sql
-ALTER TABLE public.properties ENABLE ROW LEVEL SECURITY;
-
--- Managers can CRUD their own properties
-CREATE POLICY "properties: manager full access"
-  ON public.properties FOR ALL
-  USING (manager_id = auth.uid())
-  WITH CHECK (manager_id = auth.uid());
-
--- Tenants, technicians, and housekeepers can read properties they are associated with
-CREATE POLICY "properties: members read"
-  ON public.properties FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.tenants
-      WHERE property_id = properties.id
-        AND user_id = auth.uid()
-        AND lease_status = 'active'
-    ) OR
-    EXISTS (
-      SELECT 1 FROM public.maintenance_tickets
-      WHERE property_id = properties.id
-        AND assigned_to = auth.uid()
-    ) OR
-    EXISTS (
-      SELECT 1 FROM public.housekeeping_tasks
-      WHERE property_id = properties.id
-        AND assigned_to = auth.uid()
-    )
-  );
+create policy "tenant profile scoped read"
+on public.tenant_profiles
+for select
+to authenticated
+using (
+  user_id = (select auth.uid())
+  or public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+);
 ```
 
-### 5.4 `rooms`
+`bills`:
 
 ```sql
-ALTER TABLE public.rooms ENABLE ROW LEVEL SECURITY;
-
--- Managers: full access to rooms in their properties
-CREATE POLICY "rooms: manager full access"
-  ON public.rooms FOR ALL
-  USING (public.is_property_manager(property_id))
-  WITH CHECK (public.is_property_manager(property_id));
-
--- Tenants: read their own room
-CREATE POLICY "rooms: tenant reads own room"
-  ON public.rooms FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.tenants
-      WHERE room_id = rooms.id
-        AND user_id = auth.uid()
-        AND lease_status = 'active'
-    )
-  );
-
--- Technicians: read rooms they have an assigned ticket for
-CREATE POLICY "rooms: technician reads assigned rooms"
-  ON public.rooms FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.maintenance_tickets
-      WHERE room_id = rooms.id
-        AND assigned_to = auth.uid()
-        AND status NOT IN ('closed')
-    )
-  );
-
--- Housekeepers: read rooms they have an assigned task for
-CREATE POLICY "rooms: housekeeper reads assigned rooms"
-  ON public.rooms FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.housekeeping_tasks
-      WHERE room_id = rooms.id
-        AND assigned_to = auth.uid()
-        AND status IN ('pending', 'in_progress')
-    )
-  );
+create policy "bill scoped read"
+on public.bills
+for select
+to authenticated
+using (
+  public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+  or exists (
+    select 1 from public.tenant_profiles tp
+    where tp.id = bills.tenant_profile_id
+      and tp.user_id = (select auth.uid())
+  )
+);
 ```
 
-### 5.5 `tenants`
+`maintenance_tickets`:
 
 ```sql
-ALTER TABLE public.tenants ENABLE ROW LEVEL SECURITY;
-
--- Managers: full access within their properties
-CREATE POLICY "tenants: manager full access"
-  ON public.tenants FOR ALL
-  USING (public.is_property_manager(property_id))
-  WITH CHECK (public.is_property_manager(property_id));
-
--- Tenants: read own tenant record
-CREATE POLICY "tenants: read own record"
-  ON public.tenants FOR SELECT
-  USING (user_id = auth.uid());
+create policy "maintenance scoped read"
+on public.maintenance_tickets
+for select
+to authenticated
+using (
+  public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+  or assigned_to = (select auth.uid())
+  or exists (
+    select 1 from public.tenant_profiles tp
+    where tp.id = maintenance_tickets.tenant_profile_id
+      and tp.user_id = (select auth.uid())
+  )
+);
 ```
 
-### 5.6 `bills`
+`billing_periods`:
 
 ```sql
-ALTER TABLE public.bills ENABLE ROW LEVEL SECURITY;
-
--- Managers: full access within their properties
-CREATE POLICY "bills: manager full access"
-  ON public.bills FOR ALL
-  USING (public.is_property_manager(property_id))
-  WITH CHECK (public.is_property_manager(property_id));
-
--- Tenants: read own bills
-CREATE POLICY "bills: tenant reads own bills"
-  ON public.bills FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.tenants
-      WHERE id = bills.tenant_id AND user_id = auth.uid()
-    )
-  );
+create policy "billing period scoped read"
+on public.billing_periods
+for select
+to authenticated
+using (
+  public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+);
 ```
 
-### 5.7 `bill_line_items`
+`meter_readings`:
 
 ```sql
-ALTER TABLE public.bill_line_items ENABLE ROW LEVEL SECURITY;
-
--- Accessible if the parent bill is accessible
-CREATE POLICY "bill_line_items: inherit bill access"
-  ON public.bill_line_items FOR ALL
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.bills b
-      WHERE b.id = bill_line_items.bill_id
-        AND (
-          public.is_property_manager(b.property_id) OR
-          EXISTS (
-            SELECT 1 FROM public.tenants t
-            WHERE t.id = b.tenant_id AND t.user_id = auth.uid()
-          )
-        )
-    )
-  );
+create policy "meter reading scoped read"
+on public.meter_readings
+for select
+to authenticated
+using (
+  public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+  or public.has_property_role(property_id, 'housekeeper')
+);
 ```
 
-### 5.8 `maintenance_tickets`
+`housekeeping_tasks`:
 
 ```sql
-ALTER TABLE public.maintenance_tickets ENABLE ROW LEVEL SECURITY;
-
--- Managers: full access within their properties
-CREATE POLICY "tickets: manager full access"
-  ON public.maintenance_tickets FOR ALL
-  USING (public.is_property_manager(property_id))
-  WITH CHECK (public.is_property_manager(property_id));
-
--- Tenants: read own tickets
--- Separated from INSERT/UPDATE so that FOR ALL does not implicitly grant DELETE.
-CREATE POLICY "tickets: tenant select own"
-  ON public.maintenance_tickets FOR SELECT
-  TO authenticated
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.tenants
-      WHERE id = maintenance_tickets.tenant_id AND user_id = (SELECT auth.uid())
-    )
-  );
-
--- Tenants: create tickets for rooms they are actively leasing
-CREATE POLICY "tickets: tenant insert own"
-  ON public.maintenance_tickets FOR INSERT
-  TO authenticated
-  WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.tenants
-      WHERE id = maintenance_tickets.tenant_id
-        AND user_id = (SELECT auth.uid())
-        AND lease_status = 'active'
-        AND archived_at IS NULL
-    )
-  );
-
--- Tenants cannot update tickets (status changes belong to manager/technician).
--- No UPDATE policy for tenants is intentional.
-
--- Technicians: read and update assigned tickets
-CREATE POLICY "tickets: technician reads and updates assigned"
-  ON public.maintenance_tickets FOR SELECT
-  USING (assigned_to = auth.uid());
-
-CREATE POLICY "tickets: technician updates assigned"
-  ON public.maintenance_tickets FOR UPDATE
-  USING (assigned_to = auth.uid())
-  WITH CHECK (assigned_to = auth.uid());
+create policy "housekeeping scoped read"
+on public.housekeeping_tasks
+for select
+to authenticated
+using (
+  public.is_org_owner(organization_id)
+  or public.has_property_role(property_id, 'manager')
+  or assigned_to = (select auth.uid())
+);
 ```
 
-### 5.9 `maintenance_comments`
+### 6.3 Cross-Organization Isolation
 
-```sql
-ALTER TABLE public.maintenance_comments ENABLE ROW LEVEL SECURITY;
+Every policy must satisfy one of these predicates:
 
--- Readable if the user can read the parent ticket
-CREATE POLICY "comments: readable with ticket"
-  ON public.maintenance_comments FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.maintenance_tickets t
-      WHERE t.id = maintenance_comments.ticket_id
-        AND (
-          public.is_property_manager(t.property_id) OR
-          t.assigned_to = auth.uid() OR
-          EXISTS (
-            SELECT 1 FROM public.tenants tn
-            WHERE tn.id = t.tenant_id AND tn.user_id = auth.uid()
-          )
-        )
-    )
-  );
+- Ownership through `memberships(role = 'owner', organization_id = row.organization_id)`.
+- Property membership through `memberships(property_id = row.property_id)`.
+- Direct user ownership for personal rows such as `profiles`, `notifications`, `line_connections`, or a tenant's own `tenant_profiles`.
 
--- Insertable by anyone who can read the ticket
-CREATE POLICY "comments: insert by ticket participants"
-  ON public.maintenance_comments FOR INSERT
-  WITH CHECK (
-    user_id = auth.uid() AND
-    EXISTS (
-      SELECT 1 FROM public.maintenance_tickets t
-      WHERE t.id = maintenance_comments.ticket_id
-        AND (
-          public.is_property_manager(t.property_id) OR
-          t.assigned_to = auth.uid() OR
-          EXISTS (
-            SELECT 1 FROM public.tenants tn
-            WHERE tn.id = t.tenant_id AND tn.user_id = auth.uid()
-          )
-        )
-    )
-  );
-```
+Never authorize by email domain, user metadata, current route, or client-selected organization IDs.
 
-### 5.10 `housekeeping_tasks`
+## 7. Server Action Rules
 
-```sql
-ALTER TABLE public.housekeeping_tasks ENABLE ROW LEVEL SECURITY;
+- Owner signup is the only direct registration flow that creates an organization.
+- Manager, technician, and housekeeper creation requires a valid pending invitation.
+- Tenant creation is manager-driven and creates an activation invitation tied to room/lease data.
+- Assignment actions must verify the assignee has the right active membership for the target property.
+- Writes that create multiple related rows should run in one database transaction or RPC.
 
--- Managers: full access within their properties
-CREATE POLICY "tasks: manager full access"
-  ON public.housekeeping_tasks FOR ALL
-  USING (public.is_property_manager(property_id))
-  WITH CHECK (public.is_property_manager(property_id));
+## 8. Risks and Recommendations
 
--- Housekeepers: read and update assigned tasks
-CREATE POLICY "tasks: housekeeper reads assigned"
-  ON public.housekeeping_tasks FOR SELECT
-  USING (assigned_to = auth.uid());
-
-CREATE POLICY "tasks: housekeeper updates assigned"
-  ON public.housekeeping_tasks FOR UPDATE
-  USING (assigned_to = auth.uid())
-  WITH CHECK (assigned_to = auth.uid());
-```
-
-### 5.11 `notifications`
-
-```sql
-ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
-
--- Users can read their own notifications
-CREATE POLICY "notifications: own select"
-  ON public.notifications FOR SELECT
-  TO authenticated
-  USING (user_id = (SELECT auth.uid()));
-
--- Users can mark their own notifications as read (UPDATE only).
--- INSERT is intentionally omitted: notifications must be created server-side
--- via the service role key to prevent users from injecting fake alerts.
--- DELETE is intentionally omitted: notification history is immutable from
--- the client; archival is handled by a server-side pg_cron job.
-CREATE POLICY "notifications: own update"
-  ON public.notifications FOR UPDATE
-  TO authenticated
-  USING (user_id = (SELECT auth.uid()))
-  WITH CHECK (user_id = (SELECT auth.uid()));
-```
-
-### 5.12 `line_connections`
-
-```sql
-ALTER TABLE public.line_connections ENABLE ROW LEVEL SECURITY;
-
--- Users can read their own LINE connection status (e.g., to show "connected" in UI)
-CREATE POLICY "line_connections: own select"
-  ON public.line_connections FOR SELECT
-  TO authenticated
-  USING (user_id = (SELECT auth.uid()));
-
--- INSERT, UPDATE, and DELETE are intentionally omitted.
--- All writes go through the LINE webhook route handler using the service role key:
--- - INSERT/UPDATE on 'follow' event (links line_user_id to profiles.id)
--- - UPDATE is_active = false on 'unfollow' event
--- Allowing client-side INSERT would let a user claim an arbitrary line_user_id
--- before the real owner connects, hijacking that user's LINE notifications.
-```
-
-### 5.13 `property_staff`
-
-```sql
-ALTER TABLE public.property_staff ENABLE ROW LEVEL SECURITY;
-
--- Managers: full CRUD for staff in their own properties.
--- This allows managers to add/remove technicians and housekeepers.
-CREATE POLICY "property_staff: manager full access"
-  ON public.property_staff FOR ALL
-  TO authenticated
-  USING (public.is_property_manager(property_id))
-  WITH CHECK (public.is_property_manager(property_id));
-
--- Staff: read their own membership rows (e.g., to know which properties they are assigned to)
-CREATE POLICY "property_staff: member select own"
-  ON public.property_staff FOR SELECT
-  TO authenticated
-  USING (user_id = (SELECT auth.uid()));
-```
-
-**Impact on existing technician/housekeeper RLS policies:**
-The `rooms`, `maintenance_tickets`, and `housekeeping_tasks` policies already rely on `assigned_to = auth.uid()`. The `property_staff` table does not replace those policies — it is enforced at the **application layer** (Server Actions) to prevent a manager from assigning work to staff who do not belong to their property. The RLS policies remain the security backstop.
-
----
-
-## 6. Service Role Usage
-
-Certain operations require bypassing RLS using the Supabase **service role key**:
-
-| Operation | Reason |
-|---|---|
-| LINE webhook handler — link `line_user_id` to `user_id` | No authenticated session in webhook context |
-| Trigger-based `sync_room_status` | Runs as `SECURITY DEFINER` |
-| Background bill overdue detection (cron) | Not user-initiated |
-
-The service role key is **only used in server-side code** (Route Handlers, Supabase Edge Functions) and is never exposed to the client.
-
----
-
-## 7. RLS Testing Strategy
-
-- Every table policy has a corresponding test in `supabase/tests/` using `pgTAP`
-- Tests run in CI via `supabase test db`
-- Each test instantiates a mock user for each role and verifies allowed/denied operations
+- RLS recursion: membership policies that query `memberships` directly can recurse. Use audited helper functions.
+- RLS performance: do not use `can_access_property` in row-level `USING` clauses; inline `is_org_owner(organization_id)` against denormalized columns.
+- Cookie staleness: active membership cookies must be short-lived and revalidated via `validateMembershipById` after membership changes.
+- Invitation theft: store `token_hash`, set a TTL, mark tokens single-use, and avoid logging raw tokens.
+- Multi-role UX: users need an explicit role/property switcher before entering role dashboards.
+- Deactivation: use `deactivated_at` on memberships instead of deleting rows; last-owner deactivation is blocked by trigger.
+- Co-ownership: schema supports multiple owners but product rules for transfer and primary billing contact are undecided (see OQ-07 in `07-risks-and-decisions.md`).
+- Tests: add pgTAP coverage for cross-org denial, cross-property denial, multi-role access, invitation acceptance, revocation, last-owner guard, and tenant self-service limits.
