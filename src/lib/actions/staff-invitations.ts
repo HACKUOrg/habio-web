@@ -237,30 +237,22 @@ export async function getAvailableRooms(propertyId: string) {
   return data ?? []
 }
 
-export type RevokeInvitationActionState = {
-  error?: string
-  success?: boolean
-}
-
-export async function revokeInvitation(
-  _prevState: RevokeInvitationActionState,
-  formData: FormData
-): Promise<RevokeInvitationActionState> {
+export async function revokeInvitation(formData: FormData): Promise<void> {
   const invitationId = String(formData.get('invitationId') ?? '').trim()
   if (!invitationId) {
-    return { error: 'Invitation ID is required.' }
+    return
   }
 
   const supabase = await createClient()
   const { data: claims } = await supabase.auth.getClaims()
   const userId = claims?.claims?.sub
   if (!userId) {
-    return { error: 'You must be signed in.' }
+    return
   }
 
   const active = await getActiveMembershipForUser(userId)
   if (!active || (active.role !== 'owner' && active.role !== 'manager')) {
-    return { error: 'Not authorized to revoke invitations.' }
+    return
   }
 
   const { data: invitation, error: fetchError } = await supabase
@@ -270,16 +262,16 @@ export async function revokeInvitation(
     .maybeSingle()
 
   if (fetchError || !invitation) {
-    return { error: 'Invitation not found.' }
+    return
   }
 
   if (active.role === 'owner' && invitation.organization_id !== active.organizationId) {
-    return { error: 'Invitation does not belong to your organization.' }
+    return
   }
 
   if (active.role === 'manager') {
     if (!active.propertyId || invitation.property_id !== active.propertyId) {
-      return { error: 'Invitation does not belong to your property.' }
+      return
     }
   }
 
@@ -290,7 +282,7 @@ export async function revokeInvitation(
     .eq('status', 'pending')
 
   if (updateError) {
-    return { error: updateError.message }
+    return
   }
 
   await recordAuditEvent(supabase, {
@@ -305,7 +297,6 @@ export async function revokeInvitation(
   })
 
   revalidatePath(`/${active.role}/staff/invite`)
-  return { success: true }
 }
 
 export async function listPendingInvitations(

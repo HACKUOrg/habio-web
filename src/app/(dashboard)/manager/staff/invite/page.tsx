@@ -63,7 +63,7 @@ export default async function ManagerInviteStaffPage() {
                         — {MEMBERSHIP_ROLE_LABELS[inv.role]}
                       </span>
                     </span>
-                    <form action={revokeInvitation.bind(null, {})}>
+                    <form action={revokeInvitation}>
                       <input type="hidden" name="invitationId" value={inv.id} />
                       <Button type="submit" variant="destructive" size="sm">
                         Revoke

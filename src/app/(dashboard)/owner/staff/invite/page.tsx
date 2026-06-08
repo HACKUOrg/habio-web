@@ -60,7 +60,7 @@ export default async function OwnerInviteStaffPage() {
                         {inv.properties?.name ? ` @ ${inv.properties.name}` : ''}
                       </span>
                     </span>
-                    <form action={revokeInvitation.bind(null, {})}>
+                    <form action={revokeInvitation}>
                       <input type="hidden" name="invitationId" value={inv.id} />
                       <Button type="submit" variant="destructive" size="sm">
                         Revoke
