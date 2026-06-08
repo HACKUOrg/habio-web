@@ -3,7 +3,7 @@
 
 BEGIN;
 
-SELECT plan(40);
+SELECT plan(44);
 
 -- ============================================================
 -- Schema integrity: enums
@@ -39,6 +39,10 @@ SELECT has_table('public', 'organization_subscriptions', 'organization_subscript
 SELECT has_table('public', 'usage_counters', 'usage_counters table exists');
 SELECT has_table('public', 'notifications', 'notifications table exists');
 SELECT has_table('public', 'notification_deliveries', 'notification_deliveries table exists');
+SELECT has_table('public', 'move_in_transactions', 'move_in_transactions table exists');
+SELECT has_table('public', 'move_out_transactions', 'move_out_transactions table exists');
+SELECT has_table('public', 'meter_snapshots', 'meter_snapshots table exists');
+SELECT has_table('public', 'inspection_items', 'inspection_items table exists');
 
 -- ============================================================
 -- Schema integrity: archive tables + RPCs
