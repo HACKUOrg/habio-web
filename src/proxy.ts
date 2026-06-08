@@ -9,7 +9,7 @@ import { updateSession } from '@/lib/supabase/middleware'
 
 const MEMBERSHIP_EXEMPT_PATHS = ['/select-membership']
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { response, supabase, userId } = await updateSession(request)
   const path = request.nextUrl.pathname
 
