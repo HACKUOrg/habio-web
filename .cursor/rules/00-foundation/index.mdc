@@ -1,0 +1,280 @@
+---
+description: Handbook index
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Engineering Handbook
+
+## Purpose
+
+The hubIO Engineering Standards define the engineering knowledge, architectural principles, and governance model used to design, build, and evolve the hubIO platform.
+
+The handbook exists to ensure engineering decisions remain consistent as the platform, engineering team, and business continue to grow.
+
+Rather than prescribing implementation techniques, these standards define the long-term principles that guide engineering decisions across the entire product.
+
+The handbook should be treated as a living engineering knowledge system.
+
+---
+
+# Handbook Philosophy
+
+Engineering standards exist to create consistency rather than restriction.
+
+Every document defines a single engineering responsibility and should be considered part of a larger architectural system.
+
+Together, the standards establish a common engineering language that enables engineers to make independent decisions while remaining aligned with the overall platform architecture.
+
+Engineering knowledge should evolve continuously while preserving consistency across the product.
+
+---
+
+# Engineering Hierarchy
+
+The handbook is organized into layered engineering domains.
+
+Each layer builds upon the layers beneath it.
+
+```
+Engineering Constitution
+        │
+        ▼
+Engineering Glossary
+        │
+        ▼
+Foundation
+        │
+        ▼
+Design
+        │
+        ▼
+Frontend
+        │
+        ▼
+Engineering
+        │
+        ▼
+Platform
+        │
+        ▼
+Business
+        │
+        ▼
+Operations
+```
+
+Higher layers may depend on lower layers.
+
+Lower layers should never depend on higher layers.
+
+---
+
+# Handbook Structure
+
+## Foundation
+
+Defines the engineering philosophy of the organization.
+
+Documents include:
+
+* Constitution
+* Glossary
+* Product
+* Project
+* Review
+
+Foundation establishes the language and principles used by every other engineering standard.
+
+---
+
+## Design
+
+Defines user experience, visual language, accessibility, and interaction principles.
+
+Design standards describe how users experience the platform rather than how engineers implement it.
+
+---
+
+## Frontend
+
+Defines application architecture for the user interface.
+
+Frontend standards establish consistent principles for components, forms, dashboards, state ownership within the UI, and framework usage.
+
+---
+
+## Engineering
+
+Defines platform-independent engineering architecture.
+
+These standards describe how software should be structured regardless of implementation technology.
+
+Examples include:
+
+* Architecture
+* Database
+* API
+* Security
+* Validation
+* Performance
+
+Engineering standards form the technical foundation of the platform.
+
+---
+
+## Platform
+
+Defines responsibilities provided by the underlying technology platform.
+
+Platform standards describe how infrastructure capabilities support business architecture while remaining independent of business logic.
+
+Examples include:
+
+* Authentication
+* Storage
+* Realtime
+* Background Processing
+* Integrations
+
+---
+
+## Business
+
+Defines business architecture.
+
+Business standards describe how organizations, permissions, workflows, notifications, commercial capabilities, and customer interactions operate throughout the platform.
+
+These standards represent the business model rather than implementation details.
+
+---
+
+## Operations
+
+Defines engineering operations.
+
+Operational standards establish consistent engineering practices for collaboration, monitoring, documentation, and long-term platform evolution.
+
+---
+
+# Reading Order
+
+Engineers should read the handbook in dependency order.
+
+Recommended sequence:
+
+1. Constitution
+2. Glossary
+3. Foundation
+4. Design
+5. Frontend
+6. Engineering
+7. Platform
+8. Business
+9. Operations
+
+Reading higher-level documents before understanding lower-level principles may result in inconsistent engineering decisions.
+
+---
+
+# Document Responsibilities
+
+Every Engineering Standard owns exactly one engineering responsibility.
+
+A document should define its own domain without duplicating responsibilities owned by another standard.
+
+When information belongs to another document, the owning standard should be referenced instead of redefining the same concept.
+
+Single Responsibility applies to documentation as much as software architecture.
+
+---
+
+# Rule Relationships
+
+Engineering Standards are intended to complement one another.
+
+Documents should extend existing knowledge rather than repeat it.
+
+The relationship between standards should follow these principles:
+
+* Constitution defines engineering philosophy.
+* Glossary defines shared terminology.
+* Foundation establishes organizational context.
+* Design defines user experience.
+* Frontend defines application architecture.
+* Engineering defines technical architecture.
+* Platform defines infrastructure responsibilities.
+* Business defines business capabilities.
+* Operations defines engineering practices.
+
+Each layer contributes to a complete engineering system.
+
+---
+
+# Maintaining the Handbook
+
+The handbook is expected to evolve.
+
+Engineering Standards should be updated whenever:
+
+* Engineering understanding improves.
+* Platform architecture evolves.
+* Business capabilities change.
+* Organizational practices mature.
+
+Outdated standards should be revised rather than supplemented with conflicting guidance.
+
+The handbook should remain internally consistent throughout its evolution.
+
+---
+
+# Adding New Standards
+
+New standards should be introduced only when they represent a distinct engineering responsibility.
+
+Before creating a new document, evaluate:
+
+* Does an existing standard already own this responsibility?
+* Does the new topic justify an independent engineering domain?
+* Can the information strengthen an existing document instead?
+* Will the new standard improve clarity across the handbook?
+
+New standards should simplify engineering knowledge rather than increase documentation complexity.
+
+---
+
+# Engineering Governance
+
+The Engineering Constitution remains the highest authority within the handbook.
+
+Every Engineering Standard extends the Constitution by applying its principles to a specific engineering domain.
+
+When conflicts arise:
+
+1. Constitution
+2. Glossary
+3. Engineering Standards
+
+Higher-level documents always take precedence over lower-level documents.
+
+Engineering decisions should remain aligned with the governance model defined by the handbook.
+
+---
+
+# Handbook Quality
+
+The Engineering Handbook remains healthy when:
+
+* Every document owns a single responsibility.
+* Terminology remains consistent.
+* Standards reference one another rather than duplicate content.
+* Engineering principles remain technology-independent.
+* Documentation evolves alongside the platform.
+* Engineering knowledge remains understandable by future contributors.
+* Governance remains consistent across every engineering domain.
+
+The hubIO Engineering Handbook serves as the authoritative engineering knowledge system for the platform.

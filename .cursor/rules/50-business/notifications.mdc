@@ -1,0 +1,240 @@
+---
+description: Notifications Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Notifications Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Communication Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Workflows Standards
+* Realtime Standards
+
+**Related Standards**
+
+* Background Jobs Standards
+* Integrations Standards
+* LINE OA Standards
+* Authentication Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the notification engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent principles for communicating meaningful business events to users while preserving operational awareness, reducing unnecessary interruptions, and supporting effective business workflows.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Notification philosophy
+* Business communication
+* Event-driven communication
+* Delivery consistency
+* Notification governance
+* Communication evolution
+
+It intentionally excludes delivery channels, messaging providers, templates, transport technologies, and implementation-specific notification mechanisms, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to business communication, ensuring operational events are delivered consistently while preserving business context and user confidence.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Workflows Standards
+* Realtime Standards
+* Background Jobs Standards
+* Integrations Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Notification architecture
+* Business communication
+* Event-driven communication
+* Delivery governance
+* Communication consistency
+
+It does not define communication channels, message providers, notification templates, or implementation-specific delivery technologies.
+
+---
+
+# Notification Philosophy
+
+Notifications communicate business events.
+
+Their responsibility is to improve operational awareness by informing the right participants about meaningful business changes at the appropriate time.
+
+Notifications should support business workflows rather than compete for user attention.
+
+Communication should always provide operational value.
+
+---
+
+# Notification Design Principles
+
+Every notification decision should prioritize:
+
+* Business relevance over delivery frequency
+* Operational awareness over technical events
+* Timeliness over immediacy
+* Clarity over message volume
+* User productivity over interruption
+
+Notifications should strengthen business workflows rather than create unnecessary distractions.
+
+---
+
+# Business Events
+
+Notifications should originate from meaningful business events.
+
+Events should communicate changes that affect operational decisions, responsibilities, deadlines, or business outcomes.
+
+Technical implementation details should not generate user-facing notifications unless they have direct operational significance.
+
+Business events remain the source of notification intent.
+
+---
+
+# Communication Responsibilities
+
+Notifications should clearly communicate:
+
+* What happened.
+* Why it matters.
+* Who should act.
+* What action is expected.
+* When attention is required.
+
+Communication should reduce uncertainty while encouraging timely operational decisions.
+
+---
+
+# Operational Awareness
+
+Notifications should improve awareness without overwhelming users.
+
+The platform should communicate information that enables users to remain informed about business operations without requiring continuous manual monitoring.
+
+Operational awareness should strengthen productivity rather than increase cognitive load.
+
+---
+
+# Delivery Consistency
+
+Equivalent business events should be communicated consistently across every delivery channel.
+
+Consistency should be maintained across:
+
+* Business terminology
+* Communication intent
+* Event ownership
+* Delivery expectations
+* User understanding
+
+Communication consistency builds trust throughout the platform.
+
+---
+
+# Notification Evolution
+
+Communication architecture should evolve alongside business workflows.
+
+New notification capabilities should reinforce existing communication principles rather than introduce fragmented messaging behaviors.
+
+Evolution should improve operational awareness while preserving consistency across the platform.
+
+---
+
+# Notification Governance
+
+Notification decisions should be intentional.
+
+Before introducing a new notification, evaluate:
+
+* Does this communicate a meaningful business event?
+* Does it improve operational awareness?
+* Is user action expected?
+* Can an existing notification satisfy the requirement?
+* Will this improve the overall communication experience?
+
+Notifications should become increasingly valuable rather than increasingly frequent.
+
+---
+
+# Notification Quality Gates
+
+Notification architecture remains healthy when:
+
+* Notifications communicate meaningful business events.
+* Operational awareness is improved.
+* Communication supports business workflows.
+* Delivery remains consistent across the platform.
+* User attention is respected.
+* Notification architecture evolves intentionally.
+* Communication strengthens operational confidence.
+* Notification decisions remain aligned with the Engineering Constitution.
+
+This document defines the notification engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

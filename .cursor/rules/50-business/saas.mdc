@@ -1,0 +1,251 @@
+---
+description: SaaS Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+SaaS Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Product Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Architecture Standards
+
+**Related Standards**
+
+* Database Standards
+* Authentication Standards
+* Permissions Standards
+* Billing Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the Software-as-a-Service (SaaS) engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles that enable hubIO to operate as a scalable multi-tenant business platform while preserving tenant isolation, operational flexibility, and long-term product evolution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* SaaS philosophy
+* Multi-tenant architecture
+* Organization ownership
+* Product scalability
+* Platform governance
+* SaaS evolution
+
+It intentionally excludes subscription models, billing implementation, authentication technologies, pricing strategy, and infrastructure deployment, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to the SaaS product model, ensuring business capabilities remain scalable, isolated, and maintainable across every customer organization.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Product Standards
+* Architecture Standards
+* Database Standards
+* Authentication Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* SaaS architecture
+* Multi-tenant principles
+* Organization ownership
+* Product scalability
+* SaaS governance
+
+It does not define subscription plans, billing logic, deployment environments, or implementation-specific tenant management.
+
+---
+
+# SaaS Philosophy
+
+hubIO is a multi-tenant business platform.
+
+Its responsibility is to deliver a consistent product experience while allowing every organization to operate independently within its own business context.
+
+The platform should provide shared capabilities without compromising organizational isolation, operational flexibility, or data ownership.
+
+Scalability should emerge from architecture rather than customer-specific customization.
+
+---
+
+# SaaS Design Principles
+
+Every SaaS decision should prioritize:
+
+* Shared platform over customer-specific implementation
+* Tenant isolation over operational convenience
+* Product consistency over customization
+* Configurability over code duplication
+* Long-term scalability over short-term exceptions
+
+The platform should evolve as a single product serving many organizations rather than many products serving individual customers.
+
+---
+
+# Multi-Tenant Architecture
+
+Every business operation belongs to exactly one organization.
+
+Organizations represent the highest business boundary within the platform.
+
+Business capabilities should operate consistently regardless of organization size, number of properties, or operational complexity.
+
+Multi-tenancy should remain transparent to users while remaining explicit within the architecture.
+
+---
+
+# Organization Ownership
+
+Organizations own their business information, operational workflows, configuration, and platform usage.
+
+Ownership should remain clearly separated between organizations.
+
+Business data, operational events, permissions, and configuration should never cross organizational boundaries unless explicitly supported by product design.
+
+Organization ownership forms the foundation of trust throughout the platform.
+
+---
+
+# Product Consistency
+
+Every organization should experience the same product architecture.
+
+Differences between organizations should result from configuration and business data rather than alternative implementations.
+
+Consistent product behavior simplifies engineering while improving maintainability and customer confidence.
+
+The platform should remain recognizable regardless of tenant-specific configuration.
+
+---
+
+# Platform Scalability
+
+The platform should scale with business growth.
+
+Growth may include:
+
+* More organizations
+* More users
+* More properties
+* More operational data
+* More business capabilities
+* More integrations
+
+Scalability should preserve architectural consistency while supporting increasing operational complexity.
+
+---
+
+# Configurability
+
+Organizations should adapt the platform through configuration rather than customization.
+
+Configuration allows organizations to express different operational preferences while preserving a shared product architecture.
+
+Configurable behavior should strengthen platform flexibility without introducing divergent product experiences.
+
+---
+
+# SaaS Evolution
+
+The SaaS architecture should evolve continuously alongside the product.
+
+New business capabilities should strengthen existing multi-tenant principles rather than introduce organization-specific behavior.
+
+Product evolution should improve scalability while preserving tenant isolation and architectural consistency.
+
+---
+
+# SaaS Governance
+
+SaaS decisions should be intentional.
+
+Before introducing a new platform capability, evaluate:
+
+* Does this benefit the shared product?
+* Does tenant isolation remain intact?
+* Can configuration satisfy this requirement?
+* Will this improve long-term scalability?
+* Does it preserve product consistency?
+
+The platform should become increasingly scalable without becoming increasingly customized.
+
+---
+
+# SaaS Quality Gates
+
+SaaS architecture remains healthy when:
+
+* Every business operation belongs to a single organization.
+* Tenant isolation remains uncompromised.
+* Product behavior remains consistent across organizations.
+* Configuration is preferred over customization.
+* Platform scalability supports long-term growth.
+* Multi-tenant architecture remains understandable.
+* SaaS evolution strengthens the shared product.
+* SaaS decisions remain aligned with the Engineering Constitution.
+
+This document defines the SaaS engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

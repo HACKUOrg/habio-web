@@ -1,0 +1,274 @@
+---
+description: Accessibility Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Accessibility Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Accessibility
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Design Standards
+* UX Standards
+
+**Related Standards**
+
+* Typography Standards
+* Colors Standards
+* Motion & Animation Standards
+* Frontend Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the accessibility standards that ensure every user can successfully interact with the hubIO platform regardless of ability, device, or input method.
+
+Its purpose is to establish accessibility as a core engineering quality attribute that improves usability, inclusivity, and long-term product quality while remaining aligned with the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Accessibility philosophy
+* Accessibility principles
+* Semantic structure
+* Keyboard accessibility
+* Assistive technology support
+* Accessible interactions
+* Accessibility governance
+
+It intentionally excludes component-specific implementation details and testing procedures, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to accessibility, ensuring every feature remains usable, understandable, and inclusive by design.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Design Standards
+* UX Standards
+* Typography Standards
+* Colors Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Accessibility principles
+* Semantic structure
+* Keyboard interaction
+* Assistive technology support
+* Accessibility governance
+
+It does not define component implementations or framework-specific techniques.
+
+---
+
+# Accessibility Philosophy
+
+Accessibility is a fundamental characteristic of engineering quality rather than an optional enhancement.
+
+Accessible interfaces improve usability for everyone by reducing friction, improving clarity, and supporting different ways of interacting with the product.
+
+Accessibility should always prioritize:
+
+* Inclusivity
+* Clarity
+* Consistency
+* Predictability
+* Robustness
+
+Accessibility should be considered from the beginning of product design rather than added after implementation.
+
+---
+
+# Accessibility Principles
+
+Every feature should follow these principles.
+
+## Perceivable
+
+Information should be available through multiple forms of communication.
+
+Visual presentation should never be the only way users receive important information.
+
+---
+
+## Operable
+
+Every interaction should be fully usable regardless of the user's preferred input method.
+
+Users should never require a mouse to complete critical workflows.
+
+---
+
+## Understandable
+
+Interfaces should behave consistently and communicate clearly.
+
+Users should never need to guess how an interaction works.
+
+---
+
+## Robust
+
+Interfaces should remain compatible with modern browsers, assistive technologies, and future platform improvements.
+
+Accessibility should remain stable as the product evolves.
+
+---
+
+# Semantic Structure
+
+Semantic HTML should form the foundation of every interface.
+
+Prefer native HTML elements before introducing custom implementations.
+
+Document structure should communicate meaning through:
+
+* Landmarks
+* Headings
+* Forms
+* Tables
+* Lists
+* Buttons
+* Links
+
+Semantic structure should improve accessibility naturally rather than relying on additional attributes.
+
+---
+
+# Keyboard Accessibility
+
+Every feature should be fully operable using only the keyboard.
+
+Keyboard interaction should provide:
+
+* Predictable navigation
+* Visible focus
+* Logical focus order
+* Reliable shortcuts
+* Escape mechanisms where appropriate
+
+Keyboard users should experience the same functionality as pointer users.
+
+---
+
+# Assistive Technology Support
+
+The interface should remain compatible with screen readers and other assistive technologies.
+
+Support should include:
+
+* Accessible names
+* Accessible descriptions
+* Meaningful landmarks
+* Proper heading hierarchy
+* Appropriate ARIA usage
+
+Native HTML should always be preferred over custom accessibility solutions whenever practical.
+
+---
+
+# Accessible Interactions
+
+Interactive components should communicate their purpose, state, and outcome clearly.
+
+Every interaction should provide:
+
+* Clear labels
+* Immediate feedback
+* Meaningful errors
+* Predictable behavior
+* Accessible status changes
+
+Accessibility should improve confidence rather than increase interaction complexity.
+
+---
+
+# Accessibility Governance
+
+Accessibility should evolve intentionally alongside the product.
+
+Before introducing a new interaction pattern, evaluate:
+
+* Does it remain keyboard accessible?
+* Does it support assistive technologies?
+* Does it preserve semantic structure?
+* Will it remain understandable for all users?
+* Does it introduce unnecessary accessibility debt?
+
+Accessibility improvements should strengthen the overall system rather than solve isolated cases.
+
+---
+
+# Accessibility Quality Gates
+
+The accessibility system remains healthy when:
+
+* Semantic HTML is consistently used.
+* Keyboard navigation remains complete.
+* Focus management remains predictable.
+* Interfaces remain understandable without relying on color.
+* Assistive technologies remain supported.
+* Accessibility remains consistent across supported devices.
+* New interaction patterns preserve accessibility.
+* Accessibility decisions remain aligned with the Design Standards.
+
+This document defines the accessibility standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

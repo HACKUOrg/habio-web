@@ -1,0 +1,257 @@
+---
+description: Storage Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Storage Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Storage Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Supabase Standards
+* Security Standards
+
+**Related Standards**
+
+* Authentication Standards
+* Database Standards
+* API Standards
+* Integrations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the storage engineering standards for the hubIO platform.
+
+Its purpose is to establish a consistent architecture for managing files and binary assets while preserving business ownership, security, scalability, and long-term maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Storage philosophy
+* Asset ownership
+* Storage boundaries
+* Storage lifecycle
+* Storage governance
+* Storage evolution
+
+It intentionally excludes storage providers, object storage APIs, upload mechanisms, content delivery networks, and implementation-specific file management techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to persistent file storage, ensuring binary assets remain organized, secure, and aligned with the platform's business architecture.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Supabase Standards
+* Security Standards
+* Database Standards
+* API Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Storage architecture
+* Asset ownership
+* Storage lifecycle
+* Storage governance
+* Binary asset management
+
+It does not define upload workflows, storage providers, file transfer technologies, or implementation-specific storage APIs.
+
+---
+
+# Storage Philosophy
+
+Storage exists to preserve business assets.
+
+Its responsibility is to maintain files that support business operations while ensuring those assets remain securely associated with the business domains that own them.
+
+Files should be treated as business resources rather than independent technical objects.
+
+Storage should strengthen the integrity of business information throughout its lifecycle.
+
+---
+
+# Storage Design Principles
+
+Every storage decision should prioritize:
+
+* Business ownership over technical organization
+* Security over convenience
+* Lifecycle management over indefinite retention
+* Consistency over isolated implementation
+* Long-term maintainability over platform-specific optimization
+
+Storage should remain an infrastructure capability that supports business domains without defining them.
+
+---
+
+# Asset Ownership
+
+Every stored asset should have a clearly identifiable business owner.
+
+Ownership should correspond to the business capability responsible for creating and maintaining the asset.
+
+Files should never exist independently of their associated business context.
+
+Clear ownership improves governance, security, and lifecycle management.
+
+---
+
+# Storage Boundaries
+
+Storage responsibilities should remain independent from application workflows.
+
+Business domains determine when assets are created, updated, or removed.
+
+The storage platform is responsible for preserving those assets safely without assuming responsibility for business processes.
+
+Clear boundaries reduce coupling while improving maintainability.
+
+---
+
+# Asset Lifecycle
+
+Every stored asset progresses through a lifecycle.
+
+Storage architecture should support:
+
+* Asset creation
+* Asset association
+* Asset availability
+* Asset replacement
+* Asset archival
+* Asset removal
+
+Lifecycle management should remain intentional throughout the lifetime of each business asset.
+
+---
+
+# Business Context
+
+Stored assets should always remain associated with meaningful business information.
+
+Binary files become valuable only when they support business capabilities such as maintenance, inspections, billing, communication, or operational reporting.
+
+Storage should preserve this relationship throughout the asset lifecycle.
+
+Business context should never be lost during storage operations.
+
+---
+
+# Storage Consistency
+
+Equivalent business assets should be managed consistently throughout the platform.
+
+Consistency should be maintained across:
+
+* Ownership
+* Lifecycle
+* Security
+* Accessibility
+* Retention
+
+Consistent storage practices simplify engineering while improving operational confidence.
+
+---
+
+# Storage Evolution
+
+Storage architecture should evolve alongside business capabilities.
+
+New asset types should strengthen existing storage principles rather than introduce isolated organizational models.
+
+Platform evolution should improve scalability while preserving business ownership and architectural consistency.
+
+---
+
+# Storage Governance
+
+Storage decisions should be intentional.
+
+Before introducing a new category of stored assets, evaluate:
+
+* Does this asset have a clearly defined business owner?
+* Does an existing storage model already support this requirement?
+* Does the lifecycle remain understandable?
+* Does this strengthen storage consistency?
+* Will this improve long-term maintainability?
+
+Storage architecture should become more cohesive over time rather than increasingly fragmented.
+
+---
+
+# Storage Quality Gates
+
+Storage architecture remains healthy when:
+
+* Every asset has a clearly defined business owner.
+* Storage boundaries remain independent from business workflows.
+* Asset lifecycles remain intentional.
+* Business context is preserved.
+* Storage practices remain consistent across the platform.
+* Storage evolves with business capabilities.
+* Asset management strengthens long-term maintainability.
+* Storage decisions remain aligned with the Engineering Constitution.
+
+This document defines the storage engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

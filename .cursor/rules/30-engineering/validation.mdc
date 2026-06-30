@@ -1,0 +1,266 @@
+---
+description: Validation Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Validation Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Validation Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Security Standards
+
+**Related Standards**
+
+* API Standards
+* Database Standards
+* Forms Standards
+* TypeScript Standards
+* Authentication Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the validation engineering standards for the hubIO platform.
+
+Its purpose is to ensure all information entering the platform is verified according to business rules, architectural boundaries, and trust requirements before becoming part of the trusted domain.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Validation philosophy
+* Trust boundaries
+* Business validation
+* Data integrity
+* Validation consistency
+* Validation governance
+
+It intentionally excludes validation libraries, framework-specific implementations, user interface behavior, and language-specific techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to validation, ensuring business integrity is preserved through explicit verification rather than implicit assumptions.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Security Standards
+* API Standards
+* Forms Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Validation architecture
+* Trust verification
+* Business rule verification
+* Data integrity
+* Validation governance
+
+It does not define user interface validation behavior, implementation libraries, or framework-specific validation techniques.
+
+---
+
+# Validation Philosophy
+
+Validation establishes trust.
+
+Its responsibility is to determine whether information is sufficiently reliable to become part of the platform's trusted business domain.
+
+Validation should confirm both technical correctness and business correctness.
+
+Information should never be considered trustworthy solely because it originates from a familiar client, service, or user.
+
+Trust must always be earned through validation.
+
+---
+
+# Validation Design Principles
+
+Every validation decision should prioritize:
+
+* Business integrity over convenience
+* Explicit verification over assumption
+* Consistency over isolated implementation
+* Prevention over correction
+* Maintainability over duplicated logic
+
+Validation should strengthen architectural boundaries rather than compensate for weak design.
+
+---
+
+# Trust Boundaries
+
+Validation should occur whenever information crosses a trust boundary.
+
+Examples include:
+
+* User input
+* Client requests
+* External integrations
+* Background processing
+* Imported data
+* Internal service communication
+
+Each trust boundary should establish an appropriate level of verification before information continues through the system.
+
+---
+
+# Business Validation
+
+Business validation verifies that information satisfies operational rules.
+
+Successful validation means the information represents a meaningful and permitted business operation—not merely that it follows a particular format.
+
+Business rules should remain independent of presentation, transport, and storage technologies.
+
+Validation should protect business capabilities rather than technical implementation.
+
+---
+
+# Data Integrity
+
+Validation protects the quality of business data.
+
+Information should remain internally consistent, complete, and compatible with the rules of its business domain.
+
+Integrity should be preserved throughout the entire lifecycle of information, from initial input to long-term persistence.
+
+Validation should prevent invalid states from entering the trusted domain.
+
+---
+
+# Validation Consistency
+
+Equivalent business rules should be enforced consistently throughout the platform.
+
+Validation behavior should remain predictable regardless of:
+
+* User interface
+* API consumer
+* Background process
+* Integration
+* Internal service
+
+Business rules should not produce different outcomes based solely on where the information originated.
+
+---
+
+# Validation Responsibilities
+
+Validation should confirm:
+
+* Identity of incoming information
+* Structural correctness
+* Business correctness
+* Domain consistency
+* Operational legitimacy
+
+Validation should not become responsible for authorization, persistence, workflow orchestration, or business execution.
+
+Clear responsibilities improve architectural clarity while reducing unnecessary coupling.
+
+---
+
+# Validation Evolution
+
+Validation architecture should evolve alongside the business domain.
+
+New business capabilities should extend existing validation principles rather than introduce inconsistent verification strategies.
+
+Validation improvements should simplify trust decisions while strengthening long-term maintainability.
+
+The validation model should become increasingly expressive without becoming increasingly complex.
+
+---
+
+# Validation Governance
+
+Validation decisions should be intentional.
+
+Before introducing new validation rules, evaluate:
+
+* Does this protect a genuine business rule?
+* Does an equivalent rule already exist?
+* Is this the correct trust boundary?
+* Does this strengthen business integrity?
+* Can the validation remain independent of implementation technology?
+
+Validation should become more consistent over time rather than increasingly fragmented.
+
+---
+
+# Validation Quality Gates
+
+Validation architecture remains healthy when:
+
+* Trust boundaries are explicitly verified.
+* Business integrity is consistently protected.
+* Invalid information cannot enter the trusted domain.
+* Validation responsibilities remain clearly defined.
+* Business rules are enforced consistently across the platform.
+* Validation evolves with the business domain.
+* Validation architecture remains independent of implementation technology.
+* Validation decisions remain aligned with the Engineering Constitution.
+
+This document defines the validation engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

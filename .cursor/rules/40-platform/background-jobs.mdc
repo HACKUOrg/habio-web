@@ -1,0 +1,256 @@
+---
+description: Background Jobs Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Background Jobs Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Background Processing
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Supabase Standards
+* API Standards
+
+**Related Standards**
+
+* Realtime Standards
+* Performance Standards
+* Notifications Standards
+* Integrations Standards
+* Logging Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the background processing engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles for executing asynchronous work while preserving business consistency, operational reliability, and long-term maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Background processing philosophy
+* Asynchronous execution
+* Job ownership
+* Processing consistency
+* Background governance
+* Platform evolution
+
+It intentionally excludes scheduling technologies, queue implementations, execution frameworks, infrastructure configuration, and platform-specific background processing mechanisms, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to asynchronous processing, ensuring deferred work remains reliable, observable, and aligned with business architecture.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Supabase Standards
+* API Standards
+* Performance Standards
+* Logging Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Background processing architecture
+* Asynchronous execution principles
+* Job ownership
+* Processing governance
+* Execution consistency
+
+It does not define execution platforms, scheduling systems, queue technologies, retry mechanisms, or implementation-specific job orchestration.
+
+---
+
+# Background Processing Philosophy
+
+Background processing exists to perform business work that should not delay the user's immediate experience.
+
+Its responsibility is to complete deferred business activities reliably while preserving business integrity and operational consistency.
+
+Asynchronous execution should improve responsiveness without changing the business outcome.
+
+The timing of execution may differ, but the correctness of the business operation must remain unchanged.
+
+---
+
+# Background Processing Design Principles
+
+Every background processing decision should prioritize:
+
+* Business correctness over execution speed
+* Reliability over throughput
+* Predictability over implementation convenience
+* Independent execution over unnecessary coupling
+* Long-term maintainability over platform-specific optimization
+
+Background processing should simplify user workflows while preserving architectural clarity.
+
+---
+
+# Asynchronous Execution
+
+Background processing should execute work that is independent from immediate user interaction.
+
+Deferred execution should improve user experience without compromising business consistency.
+
+The platform should clearly distinguish between work that requires immediate completion and work that may be completed later.
+
+Execution timing should support business objectives rather than technical limitations.
+
+---
+
+# Job Ownership
+
+Every background job should belong to a clearly defined business capability.
+
+Ownership should determine:
+
+* Why the job exists
+* Which business outcome it supports
+* Which domain is responsible for its execution
+* Which events indicate successful completion
+
+Jobs should reinforce domain ownership rather than create hidden dependencies across business capabilities.
+
+---
+
+# Business Consistency
+
+Background execution should preserve the same business rules as synchronous execution.
+
+Deferred processing must never bypass validation, authorization, or business constraints simply because work occurs later.
+
+Business integrity should remain independent of execution timing.
+
+Users should receive equivalent outcomes regardless of whether work completes immediately or asynchronously.
+
+---
+
+# Operational Reliability
+
+Background processing should remain observable and predictable throughout its lifecycle.
+
+Execution should support operational confidence by making progress, outcomes, and failures understandable to engineering teams.
+
+Reliable background processing strengthens overall platform resilience.
+
+Operational visibility should remain an architectural responsibility.
+
+---
+
+# Processing Consistency
+
+Equivalent business activities should follow consistent asynchronous execution principles.
+
+Consistency should be maintained across:
+
+* Job ownership
+* Business outcomes
+* Execution lifecycle
+* Operational visibility
+* Completion expectations
+
+Consistent processing reduces complexity while improving long-term maintainability.
+
+---
+
+# Background Evolution
+
+Background processing architecture should evolve alongside business capabilities.
+
+New asynchronous workflows should strengthen existing execution principles rather than introduce isolated processing models.
+
+Platform evolution should improve scalability while preserving architectural consistency.
+
+---
+
+# Background Governance
+
+Background processing decisions should be intentional.
+
+Before introducing a new background job, evaluate:
+
+* Does this improve the user experience?
+* Can the business operation safely execute asynchronously?
+* Does the job belong to a clearly defined business capability?
+* Does it preserve business consistency?
+* Will future engineers understand why this work is deferred?
+
+Background processing should become more intentional over time rather than increasingly fragmented.
+
+---
+
+# Background Jobs Quality Gates
+
+Background processing architecture remains healthy when:
+
+* Deferred work preserves business integrity.
+* Job ownership remains clearly defined.
+* Asynchronous execution improves user experience.
+* Operational reliability remains predictable.
+* Processing behavior remains consistent across the platform.
+* Background workflows evolve alongside business capabilities.
+* Execution remains observable and maintainable.
+* Background processing decisions remain aligned with the Engineering Constitution.
+
+This document defines the background processing engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

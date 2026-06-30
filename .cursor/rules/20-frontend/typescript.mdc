@@ -1,0 +1,239 @@
+---
+description: TypeScript Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+TypeScript Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Type System
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Frontend Standards
+
+**Related Standards**
+
+* Database Standards
+* API Standards
+* Validation Standards
+* Next.js Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines how TypeScript is used throughout the hubIO platform.
+
+Its purpose is to ensure the type system accurately represents business concepts, strengthens architectural boundaries, and enables safe evolution of the application as the platform grows.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Type system philosophy
+* Domain modeling
+* Type ownership
+* Type boundaries
+* Runtime validation relationship
+* Type governance
+
+It intentionally excludes language syntax, framework-specific APIs, utility type implementation, and coding conventions, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to the platform's type system, ensuring business rules are represented explicitly while maintaining long-term maintainability and architectural consistency.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Architecture Standards
+* Database Standards
+* API Standards
+* Validation Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Type architecture
+* Domain modeling
+* Type consistency
+* Type boundaries
+* Runtime type strategy
+* Type governance
+
+It does not define language syntax, formatting conventions, or implementation-specific TypeScript features.
+
+---
+
+# Type System Philosophy
+
+The type system represents the language of the business.
+
+Types should describe business concepts, operational rules, and application boundaries instead of merely satisfying the compiler.
+
+A well-designed type system improves communication between engineers, documents architectural intent, and reduces opportunities for invalid application states.
+
+Types should become increasingly valuable as the platform evolves.
+
+---
+
+# Domain Modeling
+
+Business entities should be represented through explicit domain models.
+
+Types should reflect the language used throughout the product rather than technical implementation details.
+
+Business terminology should remain consistent across the database, APIs, frontend, and supporting services.
+
+The type system should reinforce a shared understanding of the business domain throughout the platform.
+
+---
+
+# Type Ownership
+
+Every business concept should have a clearly defined source of truth.
+
+Shared domain models should evolve consistently while avoiding unnecessary duplication across modules.
+
+Type ownership should reinforce architectural boundaries rather than encourage widespread coupling.
+
+The location of a type should reflect the responsibility of the business capability it represents.
+
+---
+
+# Type Boundaries
+
+Types should communicate responsibilities between architectural layers.
+
+Application boundaries should expose stable contracts while allowing internal implementation to evolve independently.
+
+Each boundary should make valid interactions explicit and reduce ambiguity between modules.
+
+Clear type boundaries improve maintainability and reduce unintended dependencies.
+
+---
+
+# Runtime Validation
+
+Compile-time safety does not replace runtime validation.
+
+The type system should work together with validation to establish confidence in external data.
+
+Information originating outside the application's trust boundary should be validated before becoming part of the business domain.
+
+Runtime validation protects the integrity established by the type system.
+
+---
+
+# Type Consistency
+
+Equivalent business concepts should be represented consistently throughout the platform.
+
+Consistency should be maintained across:
+
+* Domain models
+* API contracts
+* Database representations
+* User interface models
+* Validation schemas
+
+Consistent types reduce translation effort while strengthening architectural clarity.
+
+---
+
+# Evolution Strategy
+
+The type system should evolve alongside the business domain.
+
+Changes should improve expressiveness while preserving architectural stability.
+
+Business growth should strengthen shared domain models rather than introduce fragmented representations of the same concept.
+
+Refactoring should simplify the overall type system instead of increasing abstraction.
+
+---
+
+# Type Governance
+
+Type architecture should evolve intentionally.
+
+Before introducing new models or abstractions, evaluate:
+
+* Does this represent a genuine business concept?
+* Does an equivalent model already exist?
+* Will this strengthen architectural boundaries?
+* Can the existing model evolve instead?
+* Will future engineers understand this representation?
+
+The type system should become more expressive over time without becoming more complicated.
+
+---
+
+# TypeScript Quality Gates
+
+The type system remains healthy when:
+
+* Business concepts are represented explicitly.
+* Domain models remain consistent across the platform.
+* Architectural boundaries are clearly expressed.
+* Runtime validation protects external data.
+* Type ownership remains well defined.
+* Shared models evolve without unnecessary duplication.
+* The type system supports long-term maintainability.
+* Type decisions remain aligned with the Engineering Constitution.
+
+This document defines the TypeScript engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

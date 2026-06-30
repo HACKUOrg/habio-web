@@ -1,0 +1,268 @@
+---
+description: Next.js Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Next.js Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Next.js Platform
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Frontend Standards
+* Architecture Standards
+
+**Related Standards**
+
+* TypeScript Standards
+* State Management Standards
+* Performance Standards
+* Security Standards
+* Authentication Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines how Next.js is used throughout the hubIO platform.
+
+Its purpose is to establish consistent architectural decisions that maximize the capabilities of the App Router while maintaining scalability, security, and long-term maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Next.js architecture
+* Rendering strategy
+* Server and Client responsibilities
+* Data fetching principles
+* Routing architecture
+* Rendering performance
+* Platform governance
+
+It intentionally excludes React fundamentals, component design, styling conventions, and business implementation, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to the Next.js platform by establishing consistent architectural patterns that improve scalability, maintainability, and operational reliability.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Architecture Standards
+* Frontend Standards
+* Security Standards
+* Performance Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Next.js architecture
+* Rendering strategy
+* Routing architecture
+* Data delivery
+* Platform performance
+* Platform governance
+
+It does not define business workflows, reusable components, or application-specific implementations.
+
+---
+
+# Next.js Philosophy
+
+Next.js is the application platform for hubIO.
+
+Its purpose is not simply rendering React applications but providing an architecture that delivers secure, scalable, and performant business software.
+
+The framework should be used according to its architectural strengths rather than treating it as a traditional client-side application framework.
+
+Every engineering decision should maximize server capabilities before introducing client-side complexity.
+
+---
+
+# Platform Principles
+
+Every Next.js implementation should prioritize:
+
+* Server-first architecture
+* Progressive rendering
+* Secure execution
+* Predictable routing
+* Long-term maintainability
+
+Framework capabilities should simplify application architecture instead of introducing additional abstraction.
+
+---
+
+# Rendering Strategy
+
+Rendering decisions should be intentional.
+
+Server rendering should be the default approach whenever business requirements permit.
+
+Client rendering should exist only when browser capabilities or interactive experiences require it.
+
+Rendering strategies should minimize unnecessary JavaScript while preserving responsive user experiences.
+
+---
+
+# Server and Client Responsibilities
+
+Server and client responsibilities should remain clearly separated.
+
+The server should own:
+
+* Business execution
+* Data access
+* Security
+* Authorization
+* Server mutations
+
+The client should own:
+
+* User interaction
+* Presentation state
+* Immediate feedback
+* Browser capabilities
+
+Business responsibilities should not migrate to the client solely for implementation convenience.
+
+---
+
+# Routing Architecture
+
+Application routing should represent business capabilities rather than technical organization.
+
+Layouts should provide shared application structure while individual routes remain focused on a single business responsibility.
+
+Navigation should remain predictable, scalable, and consistent throughout the platform.
+
+Route organization should simplify future product growth rather than reflect temporary implementation needs.
+
+---
+
+# Data Delivery
+
+Business data should originate as close to the server as practical.
+
+Data delivery should reduce unnecessary network requests while maintaining consistency throughout the application.
+
+Fetching strategies should support predictable rendering, efficient updates, and scalable operational workflows.
+
+---
+
+# Performance Strategy
+
+Platform performance should result from architectural decisions rather than isolated optimization.
+
+Rendering, caching, streaming, and resource delivery should work together to minimize perceived waiting time while reducing unnecessary client-side execution.
+
+Performance should remain an architectural responsibility throughout the lifetime of the platform.
+
+---
+
+# Security Integration
+
+Security should be enforced by platform architecture rather than individual implementations.
+
+Authentication, authorization, and tenant isolation should execute on the server before application data becomes available.
+
+Client-side validation should improve user experience but never replace server-side enforcement.
+
+---
+
+# Platform Evolution
+
+Next.js capabilities will continue to evolve.
+
+The platform should adopt new architectural improvements only when they strengthen maintainability, consistency, and developer productivity.
+
+Technology adoption should remain intentional rather than following framework trends.
+
+Stable architectural patterns should be preferred over experimental implementation techniques.
+
+---
+
+# Platform Governance
+
+Next.js architecture should evolve consistently across the platform.
+
+Before introducing new framework patterns, evaluate:
+
+* Does this align with the App Router architecture?
+* Does it simplify the application?
+* Does it reduce client-side complexity?
+* Will it improve long-term maintainability?
+* Does it remain consistent with existing platform architecture?
+
+Framework-specific decisions should strengthen the platform rather than create competing implementation styles.
+
+---
+
+# Next.js Quality Gates
+
+Next.js architecture remains healthy when:
+
+* Rendering strategies remain intentional.
+* Server and client responsibilities remain clearly separated.
+* Routing reflects business architecture.
+* Data delivery remains efficient and predictable.
+* Platform performance is driven by architectural decisions.
+* Security is enforced server-side.
+* New framework capabilities strengthen existing architecture.
+* Platform decisions remain aligned with the Engineering Constitution.
+
+This document defines the Next.js engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

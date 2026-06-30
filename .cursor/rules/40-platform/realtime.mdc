@@ -1,0 +1,253 @@
+---
+description: Realtime Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Realtime Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Realtime Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Supabase Standards
+* State Standards
+
+**Related Standards**
+
+* API Standards
+* Authentication Standards
+* Background Jobs Standards
+* Notifications Standards
+* Performance Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the realtime engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles for propagating business events across the platform while preserving consistency, scalability, and operational reliability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Realtime philosophy
+* Event propagation
+* Synchronization principles
+* Consistency model
+* Realtime governance
+* Realtime evolution
+
+It intentionally excludes messaging technologies, transport protocols, platform-specific realtime services, and implementation-specific synchronization techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to realtime communication, ensuring business events are distributed consistently while preserving architectural boundaries and business integrity.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Supabase Standards
+* State Standards
+* API Standards
+* Performance Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Realtime architecture
+* Event propagation
+* Synchronization principles
+* Realtime consistency
+* Realtime governance
+
+It does not define messaging providers, transport mechanisms, event brokers, or implementation-specific realtime technologies.
+
+---
+
+# Realtime Philosophy
+
+Realtime communication exists to maintain a shared understanding of business activity.
+
+Its responsibility is to ensure users and systems receive meaningful business updates without requiring unnecessary manual synchronization.
+
+Realtime should communicate changes that improve operational awareness rather than simply increasing update frequency.
+
+The objective is shared business awareness, not continuous technical activity.
+
+---
+
+# Realtime Design Principles
+
+Every realtime decision should prioritize:
+
+* Business relevance over update frequency
+* Consistency over immediacy
+* Predictability over continuous synchronization
+* Architectural boundaries over direct coupling
+* Operational awareness over technical implementation
+
+Realtime should improve collaboration without increasing architectural complexity.
+
+---
+
+# Business Events
+
+Realtime communication should originate from meaningful business events.
+
+Business events represent changes that affect operational understanding or require timely awareness.
+
+Technical implementation details should not become realtime events unless they have direct business significance.
+
+Business events should remain the language of realtime communication.
+
+---
+
+# Event Propagation
+
+Events should propagate through clearly defined architectural boundaries.
+
+Business domains publish meaningful events without assuming knowledge of downstream consumers.
+
+Consumers respond according to their own responsibilities.
+
+Loose coupling improves maintainability while supporting future platform evolution.
+
+---
+
+# Synchronization
+
+Realtime synchronization should preserve a consistent understanding of business state.
+
+Synchronization should improve operational awareness without becoming the authoritative source of business truth.
+
+The source of truth remains within the business domain.
+
+Realtime communication distributes awareness—not ownership.
+
+---
+
+# Operational Awareness
+
+Realtime capabilities should improve the platform's ability to communicate meaningful operational changes.
+
+Users should receive timely visibility into business activities that influence decisions, collaboration, or ongoing workflows.
+
+Operational awareness should reduce unnecessary manual refreshes while preserving predictable system behavior.
+
+---
+
+# Realtime Consistency
+
+Equivalent business events should be communicated consistently throughout the platform.
+
+Consistency should be maintained across:
+
+* Event meaning
+* Event ownership
+* Event lifecycle
+* Consumer expectations
+* Business terminology
+
+Consistent event communication improves reliability while reducing implementation complexity.
+
+---
+
+# Realtime Evolution
+
+Realtime architecture should evolve alongside business capabilities.
+
+New event types should strengthen existing communication principles rather than introduce isolated synchronization models.
+
+Evolution should improve collaboration while preserving architectural consistency.
+
+Realtime capabilities should remain understandable as the platform grows.
+
+---
+
+# Realtime Governance
+
+Realtime decisions should be intentional.
+
+Before introducing a new realtime capability, evaluate:
+
+* Does this represent a meaningful business event?
+* Does the event improve operational awareness?
+* Can existing event flows satisfy the requirement?
+* Does it preserve architectural boundaries?
+* Will future engineers understand the event model?
+
+Realtime architecture should become more coherent over time rather than increasingly fragmented.
+
+---
+
+# Realtime Quality Gates
+
+Realtime architecture remains healthy when:
+
+* Business events remain meaningful.
+* Event ownership remains clearly defined.
+* Synchronization preserves business consistency.
+* Operational awareness improves user workflows.
+* Realtime communication respects architectural boundaries.
+* Event models evolve consistently.
+* Collaboration improves without unnecessary complexity.
+* Realtime decisions remain aligned with the Engineering Constitution.
+
+This document defines the realtime engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

@@ -1,0 +1,262 @@
+---
+description: Security Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Security Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Security Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* API Standards
+
+**Related Standards**
+
+* Authentication Standards
+* Validation Standards
+* Database Standards
+* Deployment Standards
+* Integrations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the security engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural security principles that protect business operations, customer data, and platform integrity while supporting long-term scalability and maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Security philosophy
+* Trust boundaries
+* Security ownership
+* Defense strategy
+* Security governance
+* Security architecture
+
+It intentionally excludes authentication mechanisms, authorization implementation, encryption technologies, infrastructure configuration, and framework-specific security features, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to platform security, ensuring every architectural decision preserves confidentiality, integrity, and availability without compromising maintainability or product evolution.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* API Standards
+* Database Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Security architecture
+* Trust boundaries
+* Security principles
+* Platform protection
+* Security governance
+
+It does not define authentication flows, permission models, infrastructure hardening, or implementation-specific security controls.
+
+---
+
+# Security Philosophy
+
+Security is a foundational architectural responsibility.
+
+It exists to preserve trust between the platform, its customers, and every business operation performed within hubIO.
+
+Security should be designed into the platform from the beginning rather than introduced as a corrective measure after implementation.
+
+Every architectural decision should strengthen the platform's ability to protect business integrity while maintaining a usable and understandable product.
+
+---
+
+# Security Design Principles
+
+Every security decision should prioritize:
+
+* Business trust over implementation convenience
+* Prevention over recovery
+* Explicit trust over assumption
+* Least privilege over unrestricted access
+* Defense in depth over single-layer protection
+
+Security should become stronger through architecture rather than through isolated technical controls.
+
+---
+
+# Trust Boundaries
+
+Every interaction within the platform crosses one or more trust boundaries.
+
+Boundaries define where information, users, services, or external systems transition between different levels of trust.
+
+Trust should never be assumed when information crosses an architectural boundary.
+
+Every boundary should establish appropriate verification before allowing business operations to continue.
+
+---
+
+# Business Integrity
+
+Security protects business operations as much as technical systems.
+
+Business rules should remain enforceable regardless of client behavior, integration strategy, or user interface implementation.
+
+Operational correctness should never depend solely on trusted clients or well-behaved consumers.
+
+Business integrity should remain the responsibility of the platform.
+
+---
+
+# Data Protection
+
+Information should be protected according to its business value.
+
+Access to business information should remain intentional, auditable, and consistent with organizational responsibilities.
+
+The platform should expose only the information required to complete legitimate business operations.
+
+Protection mechanisms should preserve confidentiality without unnecessarily restricting productivity.
+
+---
+
+# Least Privilege
+
+Every user, service, and integration should receive only the capabilities required to fulfill its intended responsibilities.
+
+Permissions should be granted intentionally rather than inherited broadly.
+
+Reducing unnecessary privilege limits operational risk while improving system predictability.
+
+Least privilege should guide every security decision throughout the platform.
+
+---
+
+# Defense in Depth
+
+Platform security should consist of multiple complementary layers rather than relying on a single control.
+
+Failures within one layer should not automatically compromise business integrity.
+
+Security controls should reinforce one another across architecture, services, APIs, data, and infrastructure.
+
+Resilient systems assume individual protections may fail and are designed accordingly.
+
+---
+
+# Security Boundaries
+
+Architectural boundaries should prevent unrelated domains from accessing or modifying information outside their responsibilities.
+
+Business capabilities should communicate through well-defined contracts instead of unrestricted internal access.
+
+Boundary integrity preserves both maintainability and security.
+
+Strong boundaries reduce the impact of implementation defects.
+
+---
+
+# Security Evolution
+
+Security architecture should evolve continuously alongside the platform.
+
+New business capabilities should strengthen the existing security model rather than introduce isolated exceptions.
+
+Security improvements should enhance architectural consistency while minimizing operational disruption.
+
+The platform should become increasingly resilient as it grows.
+
+---
+
+# Security Governance
+
+Security decisions should be intentional.
+
+Before introducing a new capability, integration, or architectural pattern, evaluate:
+
+* Does this cross a new trust boundary?
+* Is ownership clearly defined?
+* Are business rules protected independently of the client?
+* Does this increase unnecessary privilege?
+* Can the existing security architecture satisfy the requirement?
+
+Security architecture should become more consistent over time rather than more complicated.
+
+---
+
+# Security Quality Gates
+
+Security architecture remains healthy when:
+
+* Trust boundaries remain clearly defined.
+* Business integrity is protected independently of clients.
+* Data protection aligns with business ownership.
+* Least privilege guides access decisions.
+* Defense in depth protects critical operations.
+* Security boundaries preserve architectural separation.
+* Security evolves without introducing inconsistent exceptions.
+* Security decisions remain aligned with the Engineering Constitution.
+
+This document defines the security engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

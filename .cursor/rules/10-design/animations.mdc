@@ -1,0 +1,306 @@
+---
+description: Animations Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Motion & Animation Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Motion Design
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Design Standards
+* UX Standards
+
+**Related Standards**
+
+* Components Standards
+* Accessibility Standards
+* Frontend Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the motion and animation standards that establish a responsive, predictable, and consistent interaction language across the hubIO platform.
+
+Its purpose is to ensure that motion communicates change, supports usability, and improves perceived performance while remaining aligned with the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Motion philosophy
+* Motion principles
+* Motion language
+* Animation hierarchy
+* Motion timing
+* Motion performance
+* Motion accessibility
+* Motion governance
+
+It intentionally excludes component-specific animation behavior and implementation details, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to motion design, ensuring every animation improves usability, reinforces clarity, and remains consistent throughout the product.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Design Standards
+* UX Standards
+* Accessibility Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Motion language
+* Animation principles
+* Motion timing
+* Motion performance
+* Motion accessibility
+* Motion governance
+
+It does not define component-specific animations or implementation details.
+
+---
+
+# Motion Philosophy
+
+Motion is a communication system rather than visual decoration.
+
+Every animation should help users understand changes, maintain spatial awareness, and interact with confidence.
+
+Well-designed motion should feel natural, subtle, and purposeful.
+
+Good motion should prioritize:
+
+* Clarity
+* Continuity
+* Feedback
+* Performance
+* Consistency
+
+Users should perceive the interface as responsive rather than animated.
+
+---
+
+# Motion Principles
+
+Every animation should follow these principles.
+
+## Purpose Before Decoration
+
+Every animation must communicate meaningful change.
+
+Avoid decorative motion that does not improve usability.
+
+---
+
+## Continuity
+
+Motion should preserve users' understanding of how the interface changes.
+
+Transitions should maintain spatial relationships whenever possible.
+
+---
+
+## Consistency
+
+Animations should follow a shared motion language throughout the product.
+
+Interaction timing and behavior should remain predictable.
+
+---
+
+## Performance
+
+Motion should enhance responsiveness without reducing application performance.
+
+Animations should remain lightweight and efficient.
+
+---
+
+## Accessibility
+
+Motion should remain comfortable for every user.
+
+Reduced-motion preferences should always be respected.
+
+---
+
+# Motion Language
+
+The overall motion language of hubIO should feel:
+
+* Fast
+* Calm
+* Confident
+* Intentional
+* Professional
+* Minimal
+
+Reference products include:
+
+* Linear
+* Raycast
+* Vercel
+* Notion
+* Arc Browser
+
+Motion should reinforce product quality without attracting unnecessary attention.
+
+---
+
+# Animation Hierarchy
+
+Not every interaction deserves the same visual emphasis.
+
+Animation priority should generally follow:
+
+1. Workflow transitions
+2. Page transitions
+3. Layout changes
+4. Component interactions
+5. Micro-interactions
+6. Decorative motion
+
+Higher-priority interactions may receive greater visual emphasis.
+
+Decorative motion should remain minimal.
+
+---
+
+# Motion Timing
+
+Animation timing should remain consistent across the application.
+
+General guidance:
+
+* Micro interactions: 100–150ms
+* Interactive controls: 150–200ms
+* Component transitions: 180–250ms
+* Page transitions: 250–350ms
+
+Animations should rarely exceed 400ms.
+
+Fast feedback improves perceived responsiveness.
+
+---
+
+# Motion Performance
+
+Motion should prioritize rendering efficiency.
+
+Prefer animations based on:
+
+* Transform
+* Opacity
+
+Avoid animating layout properties that trigger unnecessary reflows whenever practical.
+
+Motion should improve the user experience without increasing rendering cost.
+
+---
+
+# Motion Accessibility
+
+Motion should remain accessible for all users.
+
+Every implementation should:
+
+* Respect `prefers-reduced-motion`
+* Minimize unnecessary movement
+* Avoid continuous looping animations
+* Preserve visible focus indicators
+* Maintain usability when motion is reduced
+
+Accessibility should never be sacrificed for visual effects.
+
+---
+
+# Motion Governance
+
+The motion system should evolve intentionally.
+
+Before introducing a new animation pattern, evaluate:
+
+* Can an existing motion pattern solve the problem?
+* Does the animation improve usability?
+* Will it remain consistent across modules?
+* Does it improve perceived performance?
+* Will it increase maintenance complexity?
+
+Motion should evolve through refinement rather than introducing additional animation styles.
+
+---
+
+# Motion Quality Gates
+
+The motion system remains healthy when:
+
+* Motion communicates meaningful changes.
+* Animation timing remains consistent.
+* Motion language remains cohesive.
+* Performance remains efficient.
+* Reduced-motion preferences are respected.
+* Motion supports user workflows.
+* New animation patterns are introduced intentionally.
+* Motion remains aligned with the Design Standards.
+
+This document defines the motion standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

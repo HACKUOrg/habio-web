@@ -1,0 +1,254 @@
+---
+description: Permissions Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Permissions Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Authorization Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* SaaS Standards
+* Authentication Standards
+
+**Related Standards**
+
+* Security Standards
+* Workflows Standards
+* API Standards
+* Database Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the authorization engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent principles for granting access to business capabilities while preserving organizational boundaries, business integrity, and long-term maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Authorization philosophy
+* Permission architecture
+* Access boundaries
+* Role responsibilities
+* Authorization governance
+* Permission evolution
+
+It intentionally excludes authentication technologies, identity providers, access token implementation, and framework-specific authorization mechanisms, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to authorization, ensuring business capabilities are accessed according to clearly defined responsibilities while preserving security and architectural consistency.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* SaaS Standards
+* Authentication Standards
+* Security Standards
+* Workflows Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Authorization architecture
+* Permission model
+* Access boundaries
+* Role responsibilities
+* Authorization governance
+
+It does not define authentication, identity verification, permission storage, or implementation-specific access control technologies.
+
+---
+
+# Authorization Philosophy
+
+Authorization determines what authenticated identities are allowed to do.
+
+Its responsibility is to protect business capabilities by ensuring every operation is performed only by identities with the appropriate responsibilities.
+
+Authorization exists to preserve business integrity rather than simply restrict system access.
+
+Permissions should reflect operational responsibilities instead of technical implementation.
+
+---
+
+# Authorization Design Principles
+
+Every authorization decision should prioritize:
+
+* Business responsibility over technical implementation
+* Least privilege over unrestricted access
+* Explicit permission over implicit inheritance
+* Consistency over special-case exceptions
+* Long-term maintainability over convenience
+
+Authorization should reinforce business architecture rather than compensate for weak application design.
+
+---
+
+# Permission Architecture
+
+Permissions should represent business capabilities.
+
+Every permission should describe a meaningful business operation rather than a user interface action or technical implementation detail.
+
+Permission models should remain understandable to both engineers and product stakeholders.
+
+Business capabilities should evolve without requiring fundamental changes to the authorization architecture.
+
+---
+
+# Role Responsibilities
+
+Roles exist to group related operational responsibilities.
+
+A role represents the expected responsibilities of a user within an organization.
+
+Roles should simplify authorization while remaining independent of individual users.
+
+Responsibilities should remain stable even as individual permissions evolve.
+
+---
+
+# Access Boundaries
+
+Authorization should preserve organizational and architectural boundaries.
+
+Permissions should never allow identities to operate outside the responsibilities intentionally granted by the platform.
+
+Every protected business capability should verify authorization before execution.
+
+Boundary enforcement should remain consistent across every interaction channel.
+
+---
+
+# Business Integrity
+
+Authorization protects business operations.
+
+Access decisions should preserve operational correctness regardless of client application, integration method, or user interface.
+
+Business rules should never depend on trusted clients or hidden user interface controls.
+
+Authorization should consistently enforce business responsibilities throughout the platform.
+
+---
+
+# Authorization Consistency
+
+Equivalent business capabilities should enforce authorization consistently.
+
+Consistency should be maintained across:
+
+* User interfaces
+* APIs
+* Background processing
+* Realtime communication
+* External integrations
+
+Authorization behavior should remain predictable regardless of how business capabilities are accessed.
+
+---
+
+# Authorization Evolution
+
+Authorization architecture should evolve alongside business capabilities.
+
+New permissions should strengthen existing responsibility models rather than introduce fragmented access strategies.
+
+Evolution should improve clarity while preserving consistency throughout the platform.
+
+Authorization should become more expressive without becoming more complicated.
+
+---
+
+# Authorization Governance
+
+Authorization decisions should be intentional.
+
+Before introducing a new permission or role, evaluate:
+
+* Does this represent a meaningful business capability?
+* Can an existing permission satisfy the requirement?
+* Does this preserve least privilege?
+* Will future engineers understand the responsibility model?
+* Does it strengthen long-term maintainability?
+
+Authorization architecture should become more coherent over time rather than increasingly fragmented.
+
+---
+
+# Permissions Quality Gates
+
+Authorization architecture remains healthy when:
+
+* Permissions represent business capabilities.
+* Roles reflect operational responsibilities.
+* Least privilege guides access decisions.
+* Access boundaries remain clearly defined.
+* Business integrity is consistently protected.
+* Authorization evolves alongside business capabilities.
+* Responsibility models remain understandable.
+* Authorization decisions remain aligned with the Engineering Constitution.
+
+This document defines the authorization engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

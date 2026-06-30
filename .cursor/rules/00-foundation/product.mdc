@@ -1,0 +1,449 @@
+---
+description: Product Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Product Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Product Foundation
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+- Engineering Constitution
+
+**Related Standards**
+
+- Project Standards
+- Architecture Standards
+- UX Standards
+- Design Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the identity and vision of hubIO.
+
+It establishes the shared context for every engineering decision without redefining engineering principles already established by the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+- Product vision
+- Product scope
+- Target users
+
+It intentionally excludes implementation-specific engineering guidance.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It provides product-specific context while relying on the Constitution for engineering philosophy, decision making, and quality expectations.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+- Project Standards
+- Architecture Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+- Product vision
+- Product scope
+- Business Domain
+- Personas
+- Product Principles
+- Product Terminology
+
+It does not define implementation standards.
+
+# Product Overview
+
+hubIO is a modern multi-tenant Property Management SaaS designed to simplify daily operations for apartment owners and property management teams.
+
+The goal is not to build another traditional ERP.
+
+The goal is to create an operating system that makes property management effortless.
+
+Every feature should reduce manual work, increase operational visibility, and improve communication between owners, managers, technicians, housekeepers, and tenants.
+
+---
+
+## Business Domain
+
+hubIO operates in the Property Management Software domain, focusing on operational efficiency rather than accounting or enterprise resource planning.
+
+The product combines multiple domains into a single platform:
+
+* Property Management
+* Facility Operations
+* Rental Management
+* Maintenance Management
+* Housekeeping Operations
+* Workflow Automation
+* Customer Communication
+* Multi-tenant SaaS
+
+The primary objective is to centralize day-to-day property operations into one modern operating system that reduces manual work, improves collaboration, and provides complete operational visibility across every property.
+
+---
+
+# Vision
+
+hubIO should become the central operating platform for residential property management.
+
+Users should be able to manage every property from one application.
+
+The product should feel modern, lightweight, and intelligent.
+
+Avoid building complicated enterprise software.
+
+Instead, build software that people actually enjoy using.
+
+---
+
+# Core Product Principles
+
+Every product decision should align with the following principles.
+
+## Dashboard-First
+
+The dashboard is the operational center of the product. Users should immediately understand the health and status of their properties.
+
+## Workflow-Oriented
+
+The product should guide users through complete operational workflows rather than isolated features.
+
+## Multi-Tenant by Default
+
+Every feature must be designed to support multiple properties without architectural changes.
+
+## Simplicity over Complexity
+
+Prefer simple, intuitive workflows over feature-heavy interfaces. Complexity should be hidden whenever possible.
+
+## Mobile-First Operations
+
+Field workers such as technicians and housekeepers primarily use mobile devices. Operational workflows should remain efficient on smaller screens.
+
+## Data-Driven Decisions
+
+Present meaningful operational data that helps users make decisions quickly. Reports and dashboards should prioritize clarity over decoration.
+
+## Automation over Manual Work
+
+Whenever appropriate, the product should automate repetitive operational tasks to reduce human effort and improve consistency.
+
+## Consistent User Experience
+
+Every module should feel like part of the same product by maintaining consistent navigation, interactions, terminology, and visual language.
+
+---
+
+# Product Characteristics
+
+hubIO is:
+
+✓ SaaS
+
+✓ Multi-tenant
+
+✓ Mobile Friendly
+
+✓ Dashboard First
+
+✓ Data Driven
+
+✓ Workflow Oriented
+
+It is NOT
+
+✗ ERP
+
+✗ Accounting Software
+
+✗ Marketing Website
+
+---
+
+# Target Users
+
+## Owner
+
+Owns one or multiple properties.
+
+Needs:
+
+Revenue
+
+Occupancy
+
+Payments
+
+Reports
+
+Business overview
+
+---
+
+## Property Manager
+
+Manages daily operations.
+
+Needs:
+
+Tenant management
+
+Room management
+
+Maintenance
+
+Billing
+
+Tasks
+
+---
+
+## Technician
+
+Receives maintenance tickets.
+
+Updates work progress.
+
+Uploads photos.
+
+Completes jobs.
+
+Uses mobile devices most of the time.
+
+---
+
+## Housekeeper
+
+Receives cleaning tasks.
+
+Marks rooms completed.
+
+Uploads room photos.
+
+Uses mobile devices.
+
+---
+
+## Tenant
+
+Mainly interacts through LINE OA.
+
+Can
+
+Report issues
+
+View invoices
+
+Receive announcements
+
+Pay bills
+
+Rarely logs into the web dashboard.
+
+---
+
+# Product Modules
+
+Current modules include
+
+Authentication
+
+Property Management
+
+Building Management
+
+Room Management
+
+Tenant Management
+
+Maintenance
+
+Housekeeping
+
+Billing
+
+Dashboard
+
+Analytics
+
+Notifications
+
+LINE OA Integration
+
+Settings
+
+Future modules should integrate naturally into this ecosystem.
+
+---
+
+# Design Philosophy
+
+The interface should feel like
+
+Linear
+
+Stripe Dashboard
+
+Raycast
+
+Vercel
+
+Notion
+
+Avoid traditional enterprise software appearance.
+
+Avoid outdated admin templates.
+
+Prioritize whitespace.
+
+Use clean typography.
+
+Reduce visual noise.
+
+---
+
+# User Experience Principles
+
+Every page should answer these questions immediately.
+
+Where am I?
+
+What can I do here?
+
+What should I do next?
+
+What changed?
+
+Every primary action must be obvious.
+
+Avoid confusing navigation.
+
+Never hide important actions.
+
+---
+
+# Data Presentation Principles
+
+This is a data-heavy application.
+
+Data should always be easier to scan than to decorate.
+
+Use:
+
+Tables
+
+Cards
+
+Lists
+
+Badges
+
+Status Indicators
+
+Charts only when they provide value.
+
+Avoid unnecessary visualizations.
+
+---
+
+# Multi-Tenant Context
+
+Everything belongs to a Property.
+
+Never assume a single property.
+
+Every entity should be associated with a property when applicable.
+
+Future support for organizations owning hundreds of properties should be possible without redesigning the architecture.
+
+---
+
+# User Interface Expectations
+
+Every screen should include appropriate states.
+
+Loading State
+
+Empty State
+
+Error State
+
+Success State
+
+Permission Denied State (when applicable)
+
+Responsive Layout
+
+Keyboard Accessibility
+
+---
+
+# Product Quality Gates
+
+The project remains healthy when:
+
+- The product vision remains consistent.
+- Multi-tenant assumptions remain valid.
+- New features align with the product scope.
+- Engineering Standards remain consistent.
+- Documentation accurately reflects the current product direction.
+
+This document defines product direction.
+
+Implementation standards are defined by the Engineering Constitution and the relevant Engineering Standards.

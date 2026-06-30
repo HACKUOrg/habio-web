@@ -1,0 +1,257 @@
+---
+description: API Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+API Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+API Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Architecture Standards
+
+**Related Standards**
+
+* Database Standards
+* Validation Standards
+* Authentication Standards
+* Security Standards
+* Integrations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the API engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent service boundaries, stable contracts, and predictable communication between platform components while supporting long-term scalability and maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* API philosophy
+* API architecture
+* Service boundaries
+* Contract design
+* API consistency
+* API governance
+
+It intentionally excludes transport protocols, framework-specific implementation, serialization formats, and endpoint implementation details, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to application programming interfaces, ensuring service communication remains reliable, consistent, and aligned with the platform architecture.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Product Standards
+* Architecture Standards
+* Database Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* API architecture
+* Service contracts
+* Service boundaries
+* Communication consistency
+* API governance
+
+It does not define business workflows, validation rules, authentication mechanisms, or framework-specific implementation.
+
+---
+
+# API Philosophy
+
+APIs are architectural contracts between independent parts of the platform.
+
+Their purpose is to expose business capabilities through stable, understandable, and predictable interfaces rather than exposing internal implementation details.
+
+Well-designed APIs reduce coupling, simplify integration, and allow services to evolve independently while preserving compatibility.
+
+APIs should communicate business intent before technical implementation.
+
+---
+
+# API Design Principles
+
+Every API should prioritize:
+
+* Business capabilities over database operations
+* Stable contracts over implementation convenience
+* Explicit communication over implicit behavior
+* Consistency over individual optimization
+* Evolution over replacement
+
+APIs should represent business operations instead of infrastructure concerns.
+
+---
+
+# Service Boundaries
+
+Every API should belong to a clearly defined business boundary.
+
+Boundaries establish ownership, reduce coupling, and protect domain responsibilities.
+
+Services should communicate through explicit contracts while remaining independent from each other's internal implementation.
+
+Cross-domain communication should occur intentionally rather than through unrestricted access.
+
+---
+
+# Contract Design
+
+API contracts define the shared language between producers and consumers.
+
+Contracts should communicate:
+
+* Business intent
+* Operational expectations
+* Data ownership
+* Supported interactions
+
+Consumers should depend on contracts rather than implementation details.
+
+Stable contracts allow implementations to evolve without disrupting dependent systems.
+
+---
+
+# Communication Consistency
+
+Equivalent business operations should behave consistently throughout the platform.
+
+Consistency should be maintained across:
+
+* Resource identification
+* Business terminology
+* Request behavior
+* Response behavior
+* Error communication
+
+Predictable communication improves developer productivity while reducing integration complexity.
+
+---
+
+# Data Ownership
+
+APIs should expose information owned by their respective business domains.
+
+Ownership should remain unambiguous throughout the platform.
+
+Services may consume information from other domains but should avoid assuming ownership of external data.
+
+Clear ownership strengthens architectural boundaries while reducing duplication.
+
+---
+
+# API Evolution
+
+APIs should evolve incrementally.
+
+Changes should preserve compatibility whenever practical while allowing business capabilities to expand over time.
+
+Breaking changes should be considered exceptional architectural events rather than routine development activities.
+
+Evolution should strengthen platform stability instead of introducing fragmentation.
+
+---
+
+# Integration Readiness
+
+APIs should support communication beyond internal application boundaries.
+
+Contracts should remain understandable by external systems while preserving security, consistency, and business integrity.
+
+Internal and external integrations should share the same architectural principles even when implementation strategies differ.
+
+---
+
+# API Governance
+
+API architecture should evolve intentionally.
+
+Before introducing a new endpoint, contract, or service boundary, evaluate:
+
+* Does this represent a genuine business capability?
+* Does an existing API already provide this capability?
+* Does the contract expose business intent rather than implementation?
+* Will this strengthen architectural boundaries?
+* Can the existing contract evolve instead?
+
+APIs should become more cohesive over time instead of increasing communication complexity.
+
+---
+
+# API Quality Gates
+
+API architecture remains healthy when:
+
+* Business capabilities are clearly represented.
+* Service boundaries remain well defined.
+* Contracts remain stable and understandable.
+* Data ownership remains explicit.
+* Communication remains predictable across the platform.
+* APIs evolve without unnecessary fragmentation.
+* Integrations preserve architectural consistency.
+* API decisions remain aligned with the Engineering Constitution.
+
+This document defines the API engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

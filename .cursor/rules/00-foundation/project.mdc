@@ -1,0 +1,489 @@
+---
+description: Project Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Project Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Project Foundation
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+
+**Related Standards**
+
+* Product Standards
+* Architecture Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines how the hubIO repository is organized, configured, developed, and maintained.
+
+It establishes the shared development context for every engineer and AI assistant without redefining engineering principles already established by the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Repository organization
+* Technology stack
+* Development environment
+* Repository conventions
+* Development workflow
+* Release workflow
+
+It intentionally excludes product strategy and implementation-specific engineering guidance.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It provides repository-specific context while relying on the Constitution for engineering philosophy, decision making, and quality expectations.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Product Standards
+* Architecture Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Repository structure
+* Development environment
+* Technology stack
+* Repository conventions
+* Development workflow
+* Release workflow
+
+It does not define product strategy or implementation standards.
+
+---
+
+# Repository Overview
+
+The hubIO repository contains the complete source code, configuration, documentation, and engineering assets required to develop, test, and deploy the platform.
+
+The repository is designed to support long-term scalability, maintainability, and collaborative development while serving as the single source of truth for the entire product.
+
+The repository should remain:
+
+* Well-structured
+* Consistent
+* Predictable
+* Easy to navigate
+* Easy to maintain
+* AI-friendly
+
+Every file, directory, and configuration should have a clear responsibility.
+
+Avoid unnecessary complexity, duplicated logic, and ambiguous project organization.
+
+Repository organization should prioritize long-term maintainability over short-term convenience.
+
+---
+
+# Repository Structure
+
+The repository should be organized into clearly defined domains with strict separation of responsibilities.
+
+Each directory must own a single engineering concern and avoid overlapping responsibilities with other modules.
+
+The repository structure should encourage modular development and make features easy to locate, understand, and extend.
+
+A typical repository includes:
+
+* Application source code
+* Shared components
+* Shared libraries
+* Database resources
+* Static assets
+* Documentation
+* Engineering Standards
+* Configuration files
+* Build and deployment configuration
+* Development tooling
+
+Engineering Standards under `.cursor/rules` are considered part of the repository and should evolve together with the source code.
+
+Repository organization should remain stable as the product grows, minimizing disruptive structural changes.
+
+---
+
+# Technology Stack
+
+Technology choices should remain intentional, stable, and aligned with the long-term goals of the product.
+
+New technologies should only be introduced when they provide clear architectural, operational, or developer experience benefits.
+
+The project currently uses the following technology stack.
+
+## Frontend
+
+* Next.js (App Router)
+* TypeScript
+* React
+* Tailwind CSS
+* shadcn/ui
+* Motion
+* React Hook Form
+* Zod
+* TanStack Table
+* Lucide Icons
+
+## Backend
+
+* Supabase
+* PostgreSQL
+
+## Hosting
+
+* Vercel
+
+## Development Tooling
+
+* Cursor
+* Git
+* GitHub
+* ESLint
+* Prettier
+
+Technology selection should prioritize:
+
+* Stability
+* Maintainability
+* Developer Experience
+* Performance
+* Scalability
+* Strong community support
+
+Avoid introducing overlapping frameworks, unnecessary dependencies, or technologies that duplicate existing capabilities.
+
+---
+
+# Development Environment
+
+Every engineer should be able to reproduce the same development environment with minimal setup.
+
+Development environments should remain consistent across all contributors to reduce environment-specific issues.
+
+The local environment should provide:
+
+* Fast startup
+* Hot reload
+* Reliable debugging
+* Consistent formatting
+* Static analysis
+* Type checking
+
+Development should always be performed against local environment variables rather than production configuration.
+
+Configuration should remain deterministic and reproducible.
+
+---
+
+# Environment Variables
+
+Environment configuration must remain external to the source code.
+
+Sensitive values must never be committed into the repository.
+
+Environment variables should be:
+
+* Clearly documented
+* Named consistently
+* Grouped by responsibility
+* Validated during application startup when appropriate
+
+Recommended categories include:
+
+* Application
+* Database
+* Authentication
+* Storage
+* Third-party Integrations
+* Analytics
+* Feature Flags
+
+Example environment files:
+
+* `.env.local`
+* `.env.example`
+
+The `.env.example` file should document every required environment variable without exposing sensitive values.
+
+---
+
+# Package Management
+
+The project should maintain a consistent dependency management strategy across the entire repository.
+
+Only one package manager should be used throughout the project to ensure deterministic installations and reproducible builds.
+
+Package dependencies should remain:
+
+* Necessary
+* Well-maintained
+* Actively supported
+* Compatible with the current technology stack
+
+Avoid adding dependencies that duplicate existing functionality or introduce unnecessary complexity.
+
+Dependencies should be reviewed regularly and updated in a controlled manner.
+
+Development dependencies should remain separate from production dependencies whenever possible.
+
+---
+
+# Development Scripts
+
+Repository scripts should provide a consistent interface for common development tasks.
+
+Every script should have a single, well-defined responsibility and produce predictable results.
+
+Typical development scripts include:
+
+* Development server
+* Production build
+* Preview build
+* Linting
+* Formatting
+* Type checking
+* Testing
+* Database generation or migration
+* Seed data
+* Cleanup tasks
+
+Scripts should be documented and named consistently across the project.
+
+Automation should always be preferred over manual execution whenever possible.
+
+---
+
+# Branch Strategy
+
+The repository follows a trunk-based development workflow with short-lived feature branches.
+
+Branches should remain focused on a single change or feature.
+
+Recommended branch naming:
+
+* `feature/<name>`
+* `fix/<name>`
+* `refactor/<name>`
+* `docs/<name>`
+* `chore/<name>`
+* `release/<version>`
+
+Avoid long-lived branches that diverge significantly from the main branch.
+
+The default branch should always remain stable and deployable.
+
+---
+
+# Commit Convention
+
+Commit history should communicate intent clearly and remain easy to understand.
+
+Each commit should represent a single logical change.
+
+Recommended commit types:
+
+* feat
+* fix
+* refactor
+* docs
+* style
+* test
+* chore
+* ci
+* perf
+* revert
+
+Commit messages should:
+
+* Be concise
+* Describe the purpose of the change
+* Use the imperative mood
+* Avoid unrelated modifications within a single commit
+
+A clean commit history improves code reviews, debugging, and release management.
+
+---
+
+# Pull Request Workflow
+
+Every Pull Request should represent a complete, reviewable unit of work.
+
+Pull Requests exist to improve software quality through collaboration, knowledge sharing, and engineering review.
+
+Each Pull Request should:
+
+* Address a single objective
+* Be easy to review
+* Include meaningful descriptions
+* Reference related issues when applicable
+* Pass all automated quality checks
+
+Before requesting review, every Pull Request should:
+
+* Build successfully
+* Pass linting
+* Pass type checking
+* Pass all tests
+* Follow the Engineering Constitution
+* Comply with all applicable Engineering Standards
+
+Large Pull Requests should be divided into smaller, independently reviewable changes whenever possible.
+
+---
+
+# Release Strategy
+
+Releases should be predictable, repeatable, and low risk.
+
+Every release should represent a stable state of the repository.
+
+The release process should prioritize:
+
+* Stability
+* Backward compatibility
+* Deployment confidence
+* Minimal operational disruption
+
+Breaking changes should be intentional, documented, and communicated before release.
+
+Feature development should be completed and validated before becoming part of a production release.
+
+Every production deployment should be traceable to a specific version of the repository.
+
+---
+
+# Deployment Overview
+
+The project uses automated deployment pipelines to ensure consistent releases.
+
+Deployment should be:
+
+* Automated
+* Repeatable
+* Observable
+* Recoverable
+
+Environment-specific configuration should remain outside the application source code.
+
+Production deployments should occur only after all quality gates have been satisfied.
+
+Deployment processes should support rapid rollback when unexpected issues occur.
+
+Operational monitoring should continue after deployment to detect regressions and system failures.
+
+---
+
+# Configuration Principles
+
+Repository configuration should remain centralized, predictable, and easy to maintain.
+
+Configuration files should:
+
+* Have a single responsibility
+* Follow consistent naming conventions
+* Avoid duplicated settings
+* Be version controlled whenever appropriate
+
+Application behavior should be controlled through configuration rather than source code modifications whenever practical.
+
+Sensitive configuration must remain external to the repository.
+
+Configuration should remain understandable for both engineers and AI assistants.
+
+---
+
+# Development Lifecycle
+
+Development follows an iterative engineering workflow.
+
+Typical lifecycle:
+
+1. Understand requirements.
+2. Review applicable Engineering Standards.
+3. Design the solution.
+4. Implement the feature.
+5. Perform self-review.
+6. Execute automated quality checks.
+7. Submit for review.
+8. Merge after approval.
+9. Deploy through the release pipeline.
+10. Monitor production behavior.
+
+Every engineering activity should begin with understanding the relevant standards before implementation.
+
+---
+
+# Project Quality Gates
+
+The repository remains healthy when:
+
+* Repository structure remains organized.
+* Technology choices remain consistent.
+* Development workflows remain standardized.
+* Configuration remains maintainable.
+* Build and deployment processes remain reliable.
+* Documentation accurately reflects the current repository.
+* Engineering Standards remain synchronized with repository evolution.
+
+This document defines repository and development standards.
+
+Product strategy is defined by the Product Standards.
+
+Implementation standards are defined by the Engineering Constitution and the relevant Engineering Standards.

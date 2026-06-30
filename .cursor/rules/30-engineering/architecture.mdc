@@ -1,0 +1,691 @@
+---
+description: Architecture Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Architecture Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Project Standards
+* Product Standards
+
+**Related Standards**
+
+* Database Standards
+* API Standards
+* State Management Standards
+* Security Standards
+* Performance Standards
+* Frontend Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the architectural standards that govern how hubIO is designed, organized, and evolved.
+
+Its purpose is to establish a consistent architectural foundation that enables maintainability, scalability, and long-term product evolution while remaining aligned with the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Architectural principles
+* System organization
+* Architectural boundaries
+* Layer responsibilities
+* Dependency rules
+* Domain organization
+* Data flow
+* Scalability principles
+* Architectural governance
+
+It intentionally excludes implementation details, coding conventions, and engineering review procedures, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to architectural decision-making, ensuring every implementation contributes to a maintainable, scalable, and consistent software architecture.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Project Standards
+* Product Standards
+* Database Standards
+* Review Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Architectural principles
+* System organization
+* Module boundaries
+* Layer responsibilities
+* Dependency management
+* Domain organization
+* Architectural evolution
+
+It does not define implementation details, coding style, or repository workflow.
+
+---
+
+# Architecture Principles
+
+The architecture of hubIO exists to maximize maintainability, scalability, consistency, and long-term product evolution.
+
+Every architectural decision should reduce complexity rather than introduce it.
+
+Good architecture should:
+
+* Support long-term product evolution.
+* Encourage predictable project organization.
+* Minimize coupling.
+* Maximize cohesion.
+* Promote clear ownership.
+* Enable safe refactoring.
+* Support incremental scalability.
+* Improve engineering consistency.
+
+Architecture should remain understandable even as the product grows.
+
+Every architectural decision should favor long-term maintainability over short-term implementation speed.
+
+The architecture should model the business rather than the underlying technology.
+
+Business capabilities should define system structure, while frameworks and implementation details remain secondary.
+
+Architectural decisions should improve both engineering quality and product evolution.
+
+Complexity should only be introduced when it solves a demonstrated problem.
+
+Consistency should always take precedence over individual implementation preferences.
+
+Architectural decisions should remain stable over time and evolve incrementally rather than through frequent redesign.
+
+---
+
+# System Architecture
+
+hubIO adopts a business-driven, feature-first architecture designed for long-term maintainability and incremental product growth.
+
+The system should be organized around business capabilities rather than technical implementation details.
+
+Every architectural decision should reinforce:
+
+* Clear ownership
+* Predictable organization
+* Independent evolution
+* Explicit responsibilities
+* Minimal coupling
+
+The architecture should remain stable even as new features, developers, and tenants are introduced.
+
+---
+
+# Feature-First Architecture
+
+Features represent business capabilities rather than framework concepts.
+
+Each feature should encapsulate everything required to implement its own business responsibility.
+
+Typical feature boundaries include:
+
+* Authentication
+* Properties
+* Buildings
+* Rooms
+* Tenants
+* Maintenance
+* Housekeeping
+* Billing
+* Dashboard
+* Notifications
+
+Each feature should own its:
+
+* Components
+* Hooks
+* Services
+* Validation
+* Types
+* Business logic
+* API interactions
+* Tests
+
+A feature should remain as self-contained as reasonably possible.
+
+Cross-feature dependencies should occur only through well-defined public interfaces.
+
+---
+
+# Layer Responsibilities
+
+Each feature should organize responsibilities into clearly defined architectural layers.
+
+No architectural layer should assume the responsibilities of another layer.
+
+Responsibilities should remain explicit and predictable throughout the system.
+
+## Presentation Layer
+
+Responsible for:
+
+* Rendering user interfaces
+* User interactions
+* Display formatting
+* Local UI state
+
+The Presentation Layer should never contain business rules.
+
+---
+
+## Application Layer
+
+Responsible for:
+
+* Coordinating workflows
+* Executing use cases
+* Orchestrating services
+* Managing feature-level operations
+
+Application logic coordinates business behavior but does not own business rules.
+
+---
+
+## Domain Layer
+
+Responsible for:
+
+* Business rules
+* Domain models
+* Domain validation
+* Business invariants
+* Domain services
+
+The Domain Layer should remain independent from frameworks, UI libraries, and infrastructure.
+
+Business rules should remain valid regardless of implementation technology.
+
+---
+
+## Infrastructure Layer
+
+Responsible for communicating with external systems.
+
+Examples include:
+
+* Database
+* Supabase
+* Storage
+* Authentication providers
+* Third-party APIs
+* External services
+
+Infrastructure implements technical capabilities without defining business behavior.
+
+---
+
+# Dependency Rules
+
+Dependencies should always flow toward the core business domain.
+
+```text
+Presentation
+      ↓
+Application
+      ↓
+Domain
+      ↓
+Infrastructure
+```
+
+Each layer may depend only on the layer directly beneath it.
+
+Architectural dependencies must never flow upward.
+
+Business logic must never depend on presentation concerns.
+
+Infrastructure should never become the source of business decisions.
+
+Maintaining a consistent dependency direction reduces coupling and improves long-term maintainability.
+
+---
+
+# Module Boundaries
+
+Every module should expose a small, intentional public surface.
+
+Modules should communicate through explicit contracts rather than internal implementation details.
+
+Internal implementation should remain private.
+
+Avoid exposing:
+
+* Internal helpers
+* Private hooks
+* Temporary utilities
+* Internal state
+* Folder structure
+
+Consumers should interact only with documented public exports.
+
+Stable interfaces allow implementations to evolve without affecting dependent modules.
+
+---
+
+# Shared Code Principles
+
+Shared code should exist only when reuse has been demonstrated.
+
+Code should be promoted into shared modules only when it is:
+
+* Used by multiple features
+* Business-independent
+* Stable
+* Well understood
+* Easy to maintain
+
+Avoid creating shared abstractions based on anticipated future reuse.
+
+Premature sharing often increases coupling and reduces feature independence.
+
+Feature ownership should always take precedence over unnecessary generalization.
+
+---
+
+# Data Flow
+
+Data should move through the system in a predictable and unidirectional manner.
+
+Every architectural layer should have a clearly defined responsibility for producing, transforming, or presenting data.
+
+The preferred data flow is:
+
+```text
+Database
+      ↓
+Infrastructure
+      ↓
+Domain
+      ↓
+Application
+      ↓
+Presentation
+      ↓
+User
+```
+
+User interactions travel in the opposite direction.
+
+Avoid circular dependencies, duplicated transformations, and bidirectional synchronization whenever possible.
+
+Business data should flow through the architecture rather than bypassing architectural boundaries.
+
+---
+
+# State Ownership
+
+Every piece of application state must have a single, well-defined owner.
+
+Before introducing state, determine which layer is responsible for maintaining it.
+
+Typical ownership includes:
+
+| State                    | Owner             |
+| ------------------------ | ----------------- |
+| Persistent business data | Database          |
+| Server-fetched data      | Server            |
+| Business workflows       | Application Layer |
+| Form values              | Form              |
+| Temporary UI state       | Component         |
+| Navigation state         | URL               |
+
+State should always be owned by the smallest responsible scope.
+
+Avoid promoting local state into global state without a clear synchronization requirement.
+
+Derived values should be calculated rather than stored whenever possible.
+
+Duplicated state increases maintenance cost and synchronization complexity.
+
+Shared application state | Shared State
+
+---
+
+# Server and Client Responsibilities
+
+Server and Client exist for different responsibilities and should not be treated as interchangeable execution environments.
+
+## Server Responsibilities
+
+The server owns:
+
+* Authentication
+* Authorization
+* Business workflows
+* Database communication
+* Sensitive computations
+* External integrations
+* Initial data loading
+
+Whenever possible, business logic should execute on the server.
+
+---
+
+## Client Responsibilities
+
+The client owns:
+
+* User interactions
+* Local UI state
+* Form behavior
+* Browser APIs
+* Animations
+* Accessibility interactions
+* Optimistic updates
+
+Client-side logic should remain focused on user experience rather than business behavior.
+
+---
+
+## Server-First Principle
+
+Assume every feature should begin on the server.
+
+Move logic to the client only when browser capabilities or interactive behavior require it.
+
+Server Components should remain the default.
+
+Client Components should be introduced intentionally and only when necessary.
+
+---
+
+# Multi-Tenant Architecture
+
+hubIO is designed as a multi-tenant SaaS platform.
+
+Tenant isolation is a foundational architectural requirement rather than an optional capability.
+
+Every architectural decision should assume:
+
+* Multiple organizations
+* Multiple properties
+* Independent users
+* Isolated business data
+
+Tenant boundaries must remain consistent across:
+
+* Database
+* APIs
+* Authorization
+* Storage
+* Realtime
+* Background jobs
+* Notifications
+
+Business logic should never execute without an explicit tenant context.
+
+Implicit tenant assumptions are prohibited.
+
+Every persisted resource should be traceable to its owning tenant whenever applicable.
+
+---
+
+# Domain Boundaries
+
+Business domains should model real business capabilities.
+
+Each domain owns its own business rules, workflows, and data responsibilities.
+
+Examples include:
+
+* Authentication
+* Properties
+* Rooms
+* Tenants
+* Maintenance
+* Housekeeping
+* Billing
+* Notifications
+
+Domains should collaborate through explicit public interfaces.
+
+Business rules must never leak across domain boundaries.
+
+Ownership should remain clear, stable, and easy to understand.
+
+---
+
+# Business Workflow Composition
+
+Complex workflows should be composed from smaller business capabilities rather than implemented as a single large service.
+
+A workflow should have one coordinator responsible for orchestration while each participating domain remains responsible for its own business rules.
+
+Example:
+
+```text
+Tenant Move-In
+
+Validate Room
+        ↓
+Create Occupancy
+        ↓
+Generate Invoice
+        ↓
+Assign Permissions
+        ↓
+Send Notifications
+        ↓
+Write Audit Log
+```
+
+This approach promotes:
+
+* Clear ownership
+* Independent testing
+* Better maintainability
+* Easier feature evolution
+* Reduced coupling
+
+Business workflows should coordinate domains rather than merge their responsibilities.
+
+---
+
+# Scalability Principles
+
+The architecture should support continuous product growth without requiring fundamental redesign.
+
+Scalability should be achieved through clear boundaries, modular design, and predictable responsibilities rather than unnecessary complexity.
+
+Architectural decisions should assume growth in:
+
+* Organizations
+* Properties
+* Buildings
+* Rooms
+* Tenants
+* Maintenance Tickets
+* Billing Records
+* Uploaded Files
+* Integrations
+* Concurrent Users
+
+Every feature should evolve naturally as business requirements expand.
+
+Avoid architectures that solve hypothetical problems before they exist, but ensure current decisions do not prevent future growth.
+
+---
+
+# Performance Architecture
+
+Performance is an architectural concern rather than a post-implementation optimization task.
+
+The system should minimize unnecessary work before attempting to optimize execution speed.
+
+Architectural decisions should prioritize:
+
+* Efficient data access
+* Minimal network requests
+* Server-side execution when appropriate
+* Predictable rendering
+* Reduced client-side JavaScript
+* Progressive loading
+* Intentional caching
+
+Optimize only when measurable improvements benefit users.
+
+Maintainability should never be sacrificed for speculative performance gains.
+
+---
+
+# Security Boundaries
+
+Security should be enforced through architectural boundaries rather than individual implementation decisions.
+
+Every request should independently verify:
+
+* Authentication
+* Authorization
+* Tenant context
+* Input validation
+* Business permissions
+
+Never trust:
+
+* Client-side validation
+* Browser state
+* URL parameters
+* Local storage
+* Hidden form fields
+
+Security should be implemented consistently across every architectural layer.
+
+Failure in one layer should not compromise the entire system.
+
+---
+
+# Reliability Principles
+
+Reliable systems continue producing correct outcomes even when individual components fail.
+
+Architecture should anticipate operational failures and define predictable recovery behavior.
+
+Design should support:
+
+* Graceful degradation
+* Controlled failure handling
+* Safe retries
+* Error isolation
+* Observability
+* Recoverability
+
+Critical business operations should prioritize consistency over convenience.
+
+Failures should be visible, explainable, and recoverable whenever practical.
+
+---
+
+# Architectural Decision Records (ADR)
+
+Significant architectural decisions should be documented using Architectural Decision Records (ADRs).
+
+An ADR captures architectural reasoning rather than implementation details.
+
+An ADR should explain:
+
+* The problem being solved
+* The selected approach
+* Alternative options considered
+* Architectural trade-offs
+* Expected long-term consequences
+
+ADRs should be created for decisions such as:
+
+* New architectural patterns
+* Major infrastructure changes
+* Cross-domain workflows
+* Multi-tenant architecture changes
+* Security model changes
+* Significant dependency changes
+* Breaking architectural changes
+
+Minor implementation decisions do not require an ADR.
+
+Architectural Decision Records should describe why a decision exists rather than how it was implemented.
+
+---
+
+# Architecture Quality Gates
+
+The architecture remains healthy when:
+
+* Business domains remain clearly separated.
+* Architectural responsibilities remain explicit.
+* Module boundaries remain respected.
+* Dependencies follow established architectural rules.
+* Multi-tenant isolation remains intact.
+* Features evolve independently.
+* Shared abstractions remain intentional.
+* Architectural complexity remains justified.
+* Significant architectural decisions are documented.
+* The system continues to support long-term evolution without fundamental redesign.
+* Architectural decisions remain aligned with the Engineering Constitution.
+
+This document defines architectural standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

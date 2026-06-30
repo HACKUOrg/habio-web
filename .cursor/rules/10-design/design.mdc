@@ -1,0 +1,421 @@
+---
+description: Design Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Design Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Design
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Project Standards
+
+**Related Standards**
+
+* UX Standards
+* Typography Standards
+* Colors Standards
+* Animations Standards
+* Accessibility Standards
+* Frontend Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the visual design standards that establish a consistent, modern, and premium user interface across the hubIO platform.
+
+Its purpose is to ensure that every interface communicates clarity, consistency, and professionalism while remaining aligned with the product vision and Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Visual hierarchy
+* Information architecture
+* Dashboard design
+* Design governance
+
+It intentionally excludes typography, color systems, animations, accessibility, and implementation details, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to visual design, ensuring every interface contributes to a coherent, maintainable, and user-centered product experience.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Product Standards
+* UX Standards
+* Frontend Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Design language
+* Visual consistency
+* Layout philosophy
+* Component consistency
+* Visual hierarchy
+* Dashboard design
+* Information architecture
+* Design governance
+
+It does not define typography, colors, animations, accessibility, or implementation details.
+
+---
+
+# Design Philosophy
+
+Design is a communication system rather than visual decoration.
+
+Every interface should help users understand information, make decisions, and complete tasks with minimal cognitive effort.
+
+Good design is:
+
+* Clear
+* Consistent
+* Intentional
+* Predictable
+* Calm
+* Functional
+
+Visual elements should always support usability rather than compete for attention.
+
+Design decisions should prioritize clarity over decoration.
+
+---
+
+# Design Principles
+
+Every interface should follow these principles.
+
+## Clarity
+
+Users should immediately understand:
+
+* Where they are
+* What they can do
+* What requires attention
+* What happens next
+
+Avoid unnecessary visual complexity.
+
+---
+
+## Consistency
+
+Interfaces should behave and appear consistently across every module.
+
+Consistency includes:
+
+* Layout
+* Navigation
+* Components
+* Terminology
+* Interactions
+* Visual patterns
+
+Predictability improves usability.
+
+---
+
+## Simplicity
+
+Prefer fewer interface elements with clearer responsibilities.
+
+Avoid adding controls, actions, or information that do not directly support user goals.
+
+Simple interfaces reduce cognitive load.
+
+---
+
+## Hierarchy
+
+Important information should receive greater visual emphasis.
+
+Hierarchy should be created through:
+
+* Layout
+* Size
+* Weight
+* Spacing
+* Contrast
+
+Avoid relying on color alone.
+
+---
+
+## Balance
+
+Interfaces should feel visually balanced without becoming crowded or empty.
+
+Whitespace is an intentional design element rather than unused space.
+
+Balanced layouts improve readability and reduce visual fatigue.
+
+---
+
+## Purposeful Design
+
+Every visual element should have a clear reason for existing.
+
+Avoid decorative elements that do not improve usability, comprehension, or product identity.
+
+Good design removes unnecessary elements before introducing new ones.
+
+---
+
+# Design Language
+
+hubIO follows a modern software design language inspired by products such as:
+
+* Linear
+* Stripe Dashboard
+* Vercel
+* Raycast
+* Notion
+* Arc Browser
+
+The overall experience should feel:
+
+* Premium
+* Modern
+* Calm
+* Minimal
+* Professional
+* Data-first
+* Dashboard-first
+
+Visual identity should communicate confidence without unnecessary decoration.
+
+The interface should emphasize content and workflows rather than ornamental styling.
+
+Design language should remain stable across all product modules regardless of feature ownership.
+
+---
+
+# Visual Style
+
+The visual identity of hubIO should communicate professionalism, operational clarity, and long-term product maturity.
+
+The overall visual style should remain:
+
+- Modern
+- Minimal
+- Premium
+- Technical
+- Calm
+- Data-first
+
+Avoid visual trends that reduce usability or introduce unnecessary visual noise.
+
+Examples include:
+
+- Heavy gradients
+- Glassmorphism
+- Neumorphism
+- Large decorative illustrations
+- Complex textured backgrounds
+- Excessive corner radius
+
+---
+
+# Layout Philosophy
+
+Layout is the foundation of every interface.
+
+A well-structured layout helps users understand information, navigate workflows, and complete tasks efficiently without unnecessary cognitive effort.
+
+Every layout should prioritize:
+
+* Clarity
+* Consistency
+* Predictability
+* Readability
+* Efficient use of space
+
+Layouts should communicate relationships between information through structure rather than decoration.
+
+Whitespace should be treated as an intentional design element that improves comprehension.
+
+---
+
+# Component Consistency
+
+Components should provide a consistent experience throughout the product.
+
+The same problem should always be solved using the same component pattern whenever practical.
+
+Component APIs should remain predictable for both users and engineers.
+
+Consistency in interaction is as important as consistency in appearance.
+
+Consistency includes:
+
+* Visual appearance
+* Interaction behavior
+* Naming
+* States
+* Spacing
+* Placement
+
+Existing components should be reused before introducing new variations.
+
+New component patterns should only be introduced when existing patterns cannot satisfy the design requirements.
+
+---
+
+# Dashboard Design Principles
+
+The dashboard is the operational center of hubIO.
+
+Every dashboard should help users understand the current state of their operations within a few seconds.
+
+Dashboard design should prioritize:
+
+* Operational awareness
+* Important metrics
+* Actionable information
+* Task prioritization
+* Clear status indicators
+
+Avoid decorative widgets that do not support decision-making.
+
+Information should become progressively more detailed as users navigate deeper into the workflow.
+
+---
+
+# Information Architecture
+
+Information should be organized according to user goals rather than technical implementation.
+
+Related information should remain grouped together.
+
+Hierarchy should naturally guide users from overview to detail.
+
+Information should be prioritized according to business importance rather than implementation order.
+
+Every screen should clearly distinguish:
+
+* Primary information
+* Supporting information
+* Secondary actions
+* System feedback
+
+Avoid overwhelming users with excessive information on a single screen.
+
+Progressive disclosure should be preferred whenever complexity cannot be avoided.
+
+---
+
+# Responsive Design Philosophy
+
+Responsive design should preserve usability rather than simply resize layouts.
+
+Every supported screen size should provide a complete and intuitive experience.
+
+Design should adapt to different devices while maintaining:
+
+* Navigation consistency
+* Information hierarchy
+* Readability
+* Efficient workflows
+
+Critical business operations should remain accessible regardless of screen size.
+
+Responsive behavior should simplify interactions instead of hiding essential functionality.
+
+---
+
+# Design Governance
+
+The design system should evolve intentionally.
+
+Design changes should improve consistency rather than introduce unnecessary variation.
+
+Before introducing a new design pattern, evaluate:
+
+* Can an existing pattern solve the problem?
+* Does the new pattern improve usability?
+* Is the pattern reusable?
+* Does it remain consistent with the existing design language?
+* Will it increase long-term maintenance complexity?
+
+Design evolution should be incremental and preserve a unified product experience.
+
+Design debt should be resolved through refinement of existing patterns rather than introducing additional variations.
+
+---
+
+# Design Quality Gates
+
+The design remains healthy when:
+
+* Visual language remains consistent.
+* Layouts communicate information clearly.
+* Components behave consistently.
+* Dashboards prioritize operational efficiency.
+* Information hierarchy remains intuitive.
+* Responsive behavior preserves usability.
+* New patterns are introduced intentionally.
+* Design decisions remain aligned with the Product Standards.
+* Visual style remains aligned with the product identity.
+* Design patterns remain reusable across modules.
+
+This document defines the visual design standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

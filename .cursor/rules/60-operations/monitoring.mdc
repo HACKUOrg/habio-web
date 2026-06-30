@@ -1,0 +1,240 @@
+---
+description: Monitoring Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Monitoring Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Operational Monitoring
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Logging Standards
+* Performance Standards
+
+**Related Standards**
+
+* Deployment Standards
+* Background Jobs Standards
+* Realtime Standards
+* Security Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the monitoring engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent principles for evaluating platform health, operational stability, and service reliability while enabling engineering teams to detect, understand, and respond to meaningful operational changes.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Monitoring philosophy
+* Platform health
+* Service reliability
+* Operational awareness
+* Monitoring governance
+* Monitoring evolution
+
+It intentionally excludes monitoring platforms, metrics systems, dashboards, alerting technologies, tracing, and implementation-specific monitoring solutions, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to operational monitoring, ensuring platform health remains measurable, understandable, and aligned with business objectives.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Logging Standards
+* Performance Standards
+* Deployment Standards
+* Security Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Monitoring architecture
+* Platform health
+* Service reliability
+* Operational awareness
+* Monitoring governance
+
+It does not define monitoring platforms, alerting tools, telemetry collection, tracing systems, or implementation-specific monitoring technologies.
+
+---
+
+# Monitoring Philosophy
+
+Monitoring exists to provide confidence in platform operations.
+
+Its responsibility is to continuously evaluate whether the platform is performing as expected while enabling engineering teams to identify meaningful deviations before they affect business operations.
+
+Monitoring should communicate the health of the platform rather than simply report technical measurements.
+
+Operational confidence should be built through meaningful visibility into system behavior.
+
+---
+
+# Monitoring Design Principles
+
+Every monitoring decision should prioritize:
+
+* Business impact over infrastructure detail
+* Operational awareness over metric volume
+* Meaningful signals over excessive measurement
+* Predictability over reactive investigation
+* Long-term maintainability over isolated instrumentation
+
+Monitoring should strengthen operational confidence rather than overwhelm engineering teams with information.
+
+---
+
+# Platform Health
+
+Platform health represents the current operational condition of the product.
+
+Monitoring should continuously evaluate whether business capabilities remain available, reliable, and responsive.
+
+Health should reflect the ability of the platform to deliver expected business outcomes rather than merely the availability of individual technical components.
+
+---
+
+# Service Reliability
+
+Monitoring should reinforce confidence in service reliability.
+
+Operational visibility should enable engineering teams to determine whether services continue to satisfy expected performance, availability, and business responsibilities.
+
+Reliability should remain measurable throughout the lifecycle of the platform.
+
+---
+
+# Operational Awareness
+
+Monitoring should provide timely awareness of meaningful operational conditions.
+
+Engineering teams should understand:
+
+* Current platform health
+* Service availability
+* Operational trends
+* Emerging risks
+* Significant degradation
+
+Operational awareness should support proactive engineering decisions rather than reactive troubleshooting.
+
+---
+
+# Monitoring Consistency
+
+Equivalent business capabilities should be monitored consistently.
+
+Consistency should be maintained across:
+
+* Health evaluation
+* Service expectations
+* Operational terminology
+* Reliability assessment
+* Business impact
+
+Consistent monitoring simplifies operational decision-making while strengthening platform reliability.
+
+---
+
+# Monitoring Evolution
+
+Monitoring architecture should evolve alongside the platform.
+
+As new business capabilities are introduced, monitoring should expand to preserve operational confidence without introducing unnecessary complexity.
+
+Monitoring improvements should strengthen visibility while maintaining consistency across the platform.
+
+---
+
+# Monitoring Governance
+
+Monitoring decisions should be intentional.
+
+Before introducing new monitoring capabilities, evaluate:
+
+* Does this improve understanding of platform health?
+* Does it represent a meaningful operational signal?
+* Can existing monitoring satisfy this requirement?
+* Will this improve engineering decision-making?
+* Does it strengthen long-term operational reliability?
+
+Monitoring should become increasingly valuable rather than increasingly noisy.
+
+---
+
+# Monitoring Quality Gates
+
+Monitoring architecture remains healthy when:
+
+* Platform health is continuously understandable.
+* Service reliability remains measurable.
+* Operational awareness supports proactive engineering.
+* Monitoring focuses on meaningful business impact.
+* Equivalent services are monitored consistently.
+* Monitoring evolves with the platform.
+* Operational confidence continues to improve.
+* Monitoring decisions remain aligned with the Engineering Constitution.
+
+This document defines the monitoring engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

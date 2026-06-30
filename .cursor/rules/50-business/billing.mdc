@@ -1,0 +1,240 @@
+---
+description: Billing Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Billing Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Commercial Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* SaaS Standards
+* Permissions Standards
+
+**Related Standards**
+
+* Authentication Standards
+* Notifications Standards
+* Integrations Standards
+* Database Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the billing engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles for representing commercial relationships, subscription lifecycle, and platform monetization while preserving business integrity, customer trust, and long-term product scalability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Billing philosophy
+* Commercial ownership
+* Subscription lifecycle
+* Billing consistency
+* Commercial governance
+* Billing evolution
+
+It intentionally excludes payment gateways, taxation rules, accounting systems, pricing implementation, and provider-specific billing technologies, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to commercial operations, ensuring monetization remains aligned with product architecture while preserving customer trust and operational consistency.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* SaaS Standards
+* Permissions Standards
+* Notifications Standards
+* Integrations Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Commercial architecture
+* Subscription lifecycle
+* Billing consistency
+* Commercial governance
+* Revenue representation
+
+It does not define payment providers, invoicing systems, pricing calculations, financial reporting, or implementation-specific payment technologies.
+
+---
+
+# Billing Philosophy
+
+Billing represents the commercial relationship between the platform and its customers.
+
+Its responsibility is to manage commercial agreements in a way that is understandable, predictable, and aligned with the business capabilities delivered by the platform.
+
+Commercial operations should reinforce customer trust rather than introduce unnecessary complexity.
+
+Billing should support the product instead of dictating product architecture.
+
+---
+
+# Billing Design Principles
+
+Every billing decision should prioritize:
+
+* Customer trust over revenue optimization
+* Business transparency over commercial complexity
+* Product consistency over customer-specific arrangements
+* Predictable lifecycle over exceptional handling
+* Long-term maintainability over pricing convenience
+
+Commercial architecture should strengthen the product rather than fragment it.
+
+---
+
+# Commercial Ownership
+
+Commercial relationships belong to organizations rather than individual users.
+
+Subscriptions, service agreements, and platform entitlements should remain clearly associated with the organization that receives business value.
+
+Commercial ownership should remain independent of implementation technology.
+
+---
+
+# Subscription Lifecycle
+
+Commercial relationships progress through a lifecycle.
+
+The architecture should support:
+
+* Service activation
+* Service modification
+* Service renewal
+* Service suspension
+* Service termination
+
+Each stage should preserve business clarity while maintaining customer confidence.
+
+---
+
+# Product Entitlements
+
+Commercial agreements determine which business capabilities become available to an organization.
+
+Entitlements should represent product capabilities rather than technical implementation details.
+
+The relationship between commercial agreements and business capabilities should remain understandable to both engineering and product teams.
+
+---
+
+# Billing Consistency
+
+Equivalent commercial relationships should be represented consistently across the platform.
+
+Consistency should be maintained across:
+
+* Subscription lifecycle
+* Product entitlements
+* Customer communication
+* Commercial terminology
+* Service expectations
+
+Consistent billing architecture improves maintainability while strengthening customer trust.
+
+---
+
+# Billing Evolution
+
+Commercial architecture should evolve alongside the product.
+
+New pricing models, subscription capabilities, or commercial offerings should strengthen existing architectural principles rather than introduce fragmented business models.
+
+Product evolution should preserve commercial consistency while expanding business opportunities.
+
+---
+
+# Billing Governance
+
+Commercial decisions should be intentional.
+
+Before introducing new commercial capabilities, evaluate:
+
+* Does this strengthen the product?
+* Does it improve customer understanding?
+* Does it preserve subscription consistency?
+* Can existing commercial models satisfy this requirement?
+* Will this improve long-term maintainability?
+
+Commercial architecture should become more coherent over time rather than increasingly complex.
+
+---
+
+# Billing Quality Gates
+
+Billing architecture remains healthy when:
+
+* Commercial ownership remains clearly defined.
+* Subscription lifecycles remain understandable.
+* Product entitlements reflect business capabilities.
+* Commercial relationships remain consistent.
+* Customer trust is preserved.
+* Billing evolves alongside the platform.
+* Commercial architecture supports long-term scalability.
+* Billing decisions remain aligned with the Engineering Constitution.
+
+This document defines the billing engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

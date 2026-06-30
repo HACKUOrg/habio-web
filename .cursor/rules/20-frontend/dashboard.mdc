@@ -1,0 +1,259 @@
+---
+description: Dashboard Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Dashboard Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Dashboard Experience
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Frontend Standards
+* UX Standards
+
+**Related Standards**
+
+* Components Standards
+* Tables Standards
+* Design Standards
+* Accessibility Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the dashboard engineering standards for the hubIO platform.
+
+Its purpose is to ensure every dashboard provides a clear operational overview, supports rapid decision-making, and enables users to identify priorities without unnecessary exploration.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Dashboard philosophy
+* Operational information hierarchy
+* Decision-oriented presentation
+* Dashboard composition
+* Role-based dashboard principles
+* Dashboard governance
+
+It intentionally excludes visual styling, component implementation, chart libraries, responsive implementation, and framework-specific techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to operational dashboards, ensuring every dashboard communicates meaningful business information while remaining scalable, understandable, and aligned with the overall product architecture.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Product Standards
+* Frontend Standards
+* UX Standards
+* Design Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Dashboard architecture
+* Operational information hierarchy
+* Dashboard composition
+* Business visibility
+* Decision-oriented presentation
+* Dashboard governance
+
+It does not define chart implementation, reusable components, analytics calculations, or visual styling.
+
+---
+
+# Dashboard Philosophy
+
+A dashboard is the operational control center of the platform.
+
+Its responsibility is not to display as much information as possible, but to help users understand the current state of their business and confidently decide what should happen next.
+
+Every dashboard should answer three questions within a few seconds:
+
+1. What is happening?
+2. What requires my attention?
+3. What should I do next?
+
+If the interface cannot answer these questions immediately, the dashboard should be redesigned.
+
+---
+
+# Dashboard Design Principles
+
+Every dashboard should prioritize:
+
+* Decisions over decoration
+* Business visibility over data volume
+* Operational awareness over visual complexity
+* Actionability over observation
+* Clarity over customization
+
+Dashboards should reduce the time required to understand business conditions rather than increase information density.
+
+---
+
+# Operational Information Hierarchy
+
+Dashboard information should be organized according to operational importance rather than technical relationships.
+
+Information should generally progress from:
+
+* Business health
+* Operational risks
+* Immediate actions
+* Current activities
+* Historical trends
+* Supporting insights
+
+Users should understand the current operational situation before exploring historical analysis.
+
+---
+
+# Business Visibility
+
+Dashboards should continuously communicate the health of the business.
+
+Operational metrics should provide context rather than isolated values.
+
+Every metric, visualization, or summary should help users answer a meaningful business question or support an operational decision.
+
+Information without decision-making value should not occupy dashboard space.
+
+---
+
+# Action-Oriented Experience
+
+Dashboards should encourage action rather than passive observation.
+
+Operational issues requiring attention should be presented before supporting analytics.
+
+Users should naturally transition from understanding the current situation to completing the next appropriate task without navigating multiple unrelated pages.
+
+The dashboard should function as the starting point of daily operations.
+
+---
+
+# Role-Based Dashboards
+
+Different operational roles require different perspectives of the business.
+
+Dashboards should prioritize information according to each user's responsibilities while maintaining a consistent interaction model throughout the platform.
+
+Role-specific customization should improve relevance without fragmenting the overall product experience.
+
+Regardless of role, dashboards should preserve common information hierarchy, terminology, and interaction patterns.
+
+---
+
+# Dashboard Composition
+
+A dashboard should be assembled from reusable operational sections rather than individually designed pages.
+
+Each section should communicate one meaningful aspect of business operations while contributing to the overall understanding of the platform.
+
+Sections should complement one another rather than compete for user attention.
+
+The complete dashboard should communicate a coherent operational story instead of a collection of unrelated widgets.
+
+---
+
+# Dashboard Evolution
+
+Dashboards should evolve alongside business operations.
+
+As new capabilities are introduced, dashboards should strengthen existing operational workflows rather than expand through additional visual complexity.
+
+Historical decisions should remain understandable while allowing the dashboard to adapt to changing business priorities.
+
+Continuous refinement should improve operational clarity without sacrificing consistency.
+
+---
+
+# Dashboard Governance
+
+Dashboard evolution should be intentional.
+
+Before introducing new dashboard content, evaluate:
+
+* Does this information improve operational awareness?
+* Does it help users make better decisions?
+* Is the information immediately actionable?
+* Can an existing dashboard section communicate this instead?
+* Will this improve overall dashboard clarity?
+
+Dashboards should become more focused over time rather than accumulating additional information.
+
+---
+
+# Dashboard Quality Gates
+
+Dashboard engineering remains healthy when:
+
+* Business health is immediately understandable.
+* Operational priorities are clearly visible.
+* Information hierarchy supports rapid decision-making.
+* Dashboard sections communicate meaningful business outcomes.
+* Role-specific experiences remain consistent.
+* Dashboards encourage action instead of passive observation.
+* Additional capabilities strengthen existing operational workflows.
+* Dashboard decisions remain aligned with the Engineering Constitution.
+
+This document defines the dashboard engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

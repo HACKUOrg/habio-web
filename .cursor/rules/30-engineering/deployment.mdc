@@ -1,0 +1,243 @@
+---
+description: Deployment Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Deployment Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Platform Delivery
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Security Standards
+
+**Related Standards**
+
+* Performance Standards
+* Logging Standards
+* Testing Standards
+* API Standards
+* Integrations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the deployment engineering standards for the hubIO platform.
+
+Its purpose is to ensure software is delivered safely, consistently, and predictably while preserving platform stability, business continuity, and engineering confidence.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Deployment philosophy
+* Release architecture
+* Deployment consistency
+* Operational safety
+* Deployment governance
+* Platform evolution
+
+It intentionally excludes deployment platforms, CI/CD tooling, infrastructure configuration, cloud providers, and implementation-specific release automation, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to software delivery, ensuring deployments remain reliable, repeatable, and aligned with the long-term evolution of the platform.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Testing Standards
+* Logging Standards
+* Security Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Deployment architecture
+* Release strategy
+* Operational safety
+* Delivery consistency
+* Deployment governance
+
+It does not define infrastructure providers, deployment pipelines, automation tooling, or environment-specific implementation.
+
+---
+
+# Deployment Philosophy
+
+Deployment is the process of delivering business value safely.
+
+Its responsibility is not simply to publish new software, but to transition the platform from one trusted state to another while preserving reliability for users and operational teams.
+
+Deployments should become routine engineering activities rather than exceptional operational events.
+
+Confidence should come from architecture, testing, and repeatable delivery processes.
+
+---
+
+# Deployment Design Principles
+
+Every deployment decision should prioritize:
+
+* Stability over deployment speed
+* Predictability over operational convenience
+* Repeatability over manual intervention
+* Incremental change over disruptive replacement
+* Recoverability over irreversible deployment
+
+Deployment should strengthen operational confidence rather than increase operational risk.
+
+---
+
+# Release Architecture
+
+Releases should represent coherent business changes rather than unrelated technical modifications.
+
+Every deployment should maintain architectural integrity while allowing the platform to evolve incrementally.
+
+Business capabilities should be delivered in a manner that preserves compatibility with existing workflows whenever practical.
+
+Release boundaries should remain understandable to both engineers and operational stakeholders.
+
+---
+
+# Operational Safety
+
+Deployments should minimize operational disruption.
+
+Platform behavior should remain predictable before, during, and after software delivery.
+
+Operational safety should be considered throughout planning, implementation, verification, and release rather than treated as a final deployment concern.
+
+Reliable delivery protects both customer trust and engineering productivity.
+
+---
+
+# Deployment Consistency
+
+Equivalent deployment activities should follow equivalent engineering principles.
+
+Consistency should be maintained across:
+
+* Release preparation
+* Verification
+* Environment promotion
+* Operational validation
+* Post-deployment evaluation
+
+Consistent delivery reduces uncertainty while improving long-term maintainability.
+
+---
+
+# Recovery Strategy
+
+Every deployment should preserve the ability to recover from unexpected outcomes.
+
+Recovery should be considered a fundamental architectural responsibility rather than an exceptional operational procedure.
+
+The platform should support restoring operational confidence with minimal disruption to business activities.
+
+Reliable recovery strengthens confidence in continuous delivery.
+
+---
+
+# Platform Evolution
+
+Deployment architecture should evolve alongside the platform.
+
+As engineering maturity increases, delivery processes should become increasingly automated, observable, and predictable while preserving operational safety.
+
+Platform evolution should reduce deployment risk without increasing unnecessary complexity.
+
+Continuous improvement should simplify software delivery rather than complicate it.
+
+---
+
+# Deployment Governance
+
+Deployment decisions should be intentional.
+
+Before introducing new deployment strategies or operational changes, evaluate:
+
+* Does this improve delivery reliability?
+* Does it reduce operational risk?
+* Can the existing deployment architecture support the requirement?
+* Will recovery remain predictable?
+* Does it strengthen long-term engineering confidence?
+
+Deployment practices should become more consistent over time rather than increasingly fragmented.
+
+---
+
+# Deployment Quality Gates
+
+Deployment architecture remains healthy when:
+
+* Releases preserve business continuity.
+* Deployment processes remain predictable.
+* Operational safety is maintained throughout delivery.
+* Recovery remains practical and reliable.
+* Deployment activities remain consistent across the platform.
+* Delivery evolves alongside engineering maturity.
+* Deployment strengthens operational confidence.
+* Deployment decisions remain aligned with the Engineering Constitution.
+
+This document defines the deployment engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

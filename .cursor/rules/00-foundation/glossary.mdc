@@ -1,0 +1,392 @@
+---
+description: Engineering Glossary
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Engineering Glossary
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Foundation
+
+**Engineering Domain**
+
+Shared Vocabulary
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Product Standards
+
+**Related Standards**
+
+* Architecture Standards
+* Frontend Standards
+* Database Standards
+* API Standards
+* UX Standards
+
+**Review Cycle**
+
+As Needed
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document establishes the shared engineering vocabulary used throughout the hubIO platform.
+
+Its purpose is to ensure engineers, designers, product managers, and AI assistants communicate using consistent terminology when discussing architecture, product capabilities, business domains, and implementation decisions.
+
+A shared vocabulary reduces ambiguity, improves documentation quality, and strengthens communication across the engineering organization.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Canonical engineering terminology
+* Business vocabulary
+* Product vocabulary
+* Architectural vocabulary
+* Engineering terminology
+* Language governance
+
+It does not define implementation details, business requirements, or development practices.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It establishes a common language that allows every Engineering Standard to communicate architectural intent consistently across the platform.
+
+---
+
+# Required Reading
+
+All Engineering Standards assume the terminology defined in this document.
+
+When terminology conflicts arise, this glossary is the authoritative source.
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Shared engineering vocabulary
+* Canonical terminology
+* Preferred engineering language
+* Terminology governance
+
+It does not replace technical documentation or product documentation.
+
+---
+
+# Glossary Philosophy
+
+Engineering quality depends on shared understanding.
+
+Consistent terminology allows engineering decisions to remain understandable regardless of team, feature, or implementation technology.
+
+Words should communicate precise meaning.
+
+Equivalent concepts should always use the same terminology throughout the platform.
+
+Different terms should never describe the same concept unless explicitly defined by this glossary.
+
+---
+
+# Canonical References
+
+The following terms are defined exclusively by this document.
+
+All Engineering Standards should reference these definitions rather than redefining them.
+
+- Business Capability
+- Component
+- Composition
+- Contract
+- Domain
+- Feature
+- Integration
+- Organization
+- Permission
+- Property
+- Role
+- State
+- User
+- Validation
+- Workflow
+
+---
+
+# Usage
+
+All Engineering Standards should use the terminology defined by this document.
+
+Standards should reference glossary terms rather than redefining equivalent concepts.
+
+When terminology conflicts arise, the definitions in this document take precedence.
+
+---
+
+# Business Vocabulary
+
+## Organization
+
+The highest business boundary within hubIO.
+
+An Organization owns one or more Properties, users, operational data, and business configuration.
+
+All business operations exist within an Organization.
+
+**Do not confuse with**
+
+* Property
+* Tenant
+
+---
+
+## Property
+
+A managed physical location operated by an Organization.
+
+Properties contain operational resources such as rooms, maintenance work, staff assignments, and tenants.
+
+---
+
+## User
+
+A person authenticated within the platform.
+
+Users perform operational tasks according to assigned roles and permissions.
+
+---
+
+## Role
+
+A collection of operational responsibilities assigned to users.
+
+Roles describe what users are responsible for, not how authorization is technically implemented.
+
+---
+
+## Permission
+
+A capability granted to a role that authorizes a specific business action.
+
+Permissions define access to business operations rather than user interface elements.
+
+---
+
+# Product Vocabulary
+
+## Product
+
+The complete hubIO platform.
+
+The Product consists of multiple business capabilities delivered through a unified user experience.
+
+---
+
+## Business Capability
+
+A cohesive set of functionality that delivers measurable business value.
+
+Business capabilities represent what the product provides.
+
+Examples include Property Management, Maintenance Management, Billing, and Housekeeping.
+
+---
+
+## Feature
+
+A concrete implementation that delivers one or more business capabilities.
+
+Features are implementation units within the product.
+
+**Do not confuse with**
+
+* Business Capability
+
+---
+
+## Workflow
+
+A sequence of business activities completed to achieve an operational objective.
+
+Workflows describe user journeys rather than technical implementation.
+
+---
+
+# Architecture Vocabulary
+
+## Domain
+
+A logical business area that owns related responsibilities, rules, and data.
+
+Domains establish architectural boundaries throughout the platform.
+
+---
+
+## Boundary
+
+A clearly defined separation of responsibility between architectural areas.
+
+Boundaries reduce coupling while improving maintainability.
+
+---
+
+## Contract
+
+An agreed interface between two independent parts of the system.
+
+Contracts allow implementations to evolve independently while preserving compatibility.
+
+---
+
+## Composition
+
+The practice of assembling larger capabilities from smaller independent building blocks.
+
+Composition is preferred over specialization throughout the platform.
+
+---
+
+# Engineering Vocabulary
+
+## Component
+
+A reusable presentation building block responsible for a specific user interface concern.
+
+Components should remain independent from business orchestration whenever practical.
+
+---
+
+## Shared Component
+
+A reusable component intended for use across multiple business domains.
+
+Shared components strengthen consistency throughout the platform.
+
+---
+
+## State
+
+Information representing the current condition of an application or business process.
+
+State should have a clearly defined owner and lifecycle.
+
+---
+
+## Validation
+
+The process of verifying that information satisfies business and technical requirements before entering the trusted domain.
+
+Validation protects business integrity.
+
+---
+
+## Integration
+
+Communication between hubIO and external systems.
+
+Integrations extend business capabilities while preserving internal architectural boundaries.
+
+---
+
+# Quality Vocabulary
+
+## Maintainability
+
+The ability of the platform to evolve safely over time.
+
+Engineering decisions should reduce future complexity rather than increase it.
+
+---
+
+## Scalability
+
+The ability of the platform to support increasing business complexity without proportional increases in engineering complexity.
+
+Scalability applies to architecture, teams, and operational growth.
+
+---
+
+## Consistency
+
+The application of shared patterns throughout the platform.
+
+Consistency reduces cognitive effort for both users and engineers.
+
+---
+
+## Reliability
+
+The ability of the platform to behave predictably under expected operating conditions.
+
+Reliable systems inspire operational confidence.
+
+---
+
+# Terminology Governance
+
+Shared vocabulary should evolve intentionally.
+
+Before introducing new terminology, evaluate:
+
+* Does an equivalent term already exist?
+* Does the new term improve clarity?
+* Will it be understood consistently across engineering disciplines?
+* Does it represent a genuinely different concept?
+* Can existing terminology be extended instead?
+
+Terminology should become more precise over time rather than increasingly diverse.
+
+---
+
+# Glossary Quality Gates
+
+The engineering vocabulary remains healthy when:
+
+* Every important concept has one preferred term.
+* Equivalent concepts use consistent language.
+* Architectural terminology remains unambiguous.
+* Product terminology aligns with business understanding.
+* Documentation uses canonical vocabulary.
+* New terminology strengthens rather than fragments communication.
+* Shared language supports long-term maintainability.
+* Terminology decisions remain aligned with the Engineering Constitution.
+
+This document defines the canonical engineering vocabulary for the hubIO platform.
+
+All Engineering Standards should use the terminology established by this glossary whenever applicable.

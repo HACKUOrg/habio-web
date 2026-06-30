@@ -1,0 +1,257 @@
+---
+description: Logging Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Logging Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Operational Visibility
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* API Standards
+
+**Related Standards**
+
+* Security Standards
+* Performance Standards
+* Testing Standards
+* Deployment Standards
+* Integrations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the logging engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent operational visibility by ensuring meaningful events are recorded in a way that supports monitoring, troubleshooting, auditing, and continuous improvement throughout the platform.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Logging philosophy
+* Operational visibility
+* Event ownership
+* Log consistency
+* Audit principles
+* Logging governance
+
+It intentionally excludes logging frameworks, storage technologies, monitoring platforms, and implementation-specific instrumentation, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to operational visibility, ensuring platform behavior remains observable, understandable, and accountable throughout its lifecycle.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Security Standards
+* Testing Standards
+* Performance Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Logging architecture
+* Operational visibility
+* Event consistency
+* Audit philosophy
+* Logging governance
+
+It does not define log storage, observability platforms, monitoring dashboards, or implementation-specific logging libraries.
+
+---
+
+# Logging Philosophy
+
+Logging exists to explain platform behavior.
+
+Its responsibility is not to record every technical event but to capture meaningful operational information that helps engineers understand what happened, why it happened, and what business impact resulted.
+
+Logs should improve understanding rather than increase information volume.
+
+Meaningful visibility is more valuable than excessive detail.
+
+---
+
+# Logging Design Principles
+
+Every logging decision should prioritize:
+
+* Operational insight over event quantity
+* Business context over technical noise
+* Consistency over isolated implementation
+* Clarity over verbosity
+* Long-term maintainability over temporary debugging convenience
+
+Logging should strengthen operational understanding rather than compensate for unclear system behavior.
+
+---
+
+# Operational Visibility
+
+The platform should expose enough operational information to understand its behavior throughout normal operation.
+
+Meaningful events should communicate:
+
+* What occurred
+* Where it occurred
+* Why it occurred
+* What business capability was affected
+* What outcome resulted
+
+Operational visibility should support engineering decisions without overwhelming engineers with unnecessary information.
+
+---
+
+# Event Ownership
+
+Every meaningful event should have a clearly identifiable owner.
+
+Business domains should remain responsible for communicating significant operational events occurring within their boundaries.
+
+Ownership improves accountability while reducing duplicated or conflicting log information.
+
+Logs should reinforce architectural boundaries rather than obscure them.
+
+---
+
+# Business Context
+
+Logs should communicate business meaning before technical implementation.
+
+Operational records should describe business activities in language understandable by engineers, support teams, and operational stakeholders.
+
+Business context transforms logs from technical artifacts into valuable operational information.
+
+---
+
+# Audit Support
+
+Logging contributes to platform accountability.
+
+Important business activities should leave an understandable operational record that supports investigation, compliance, and historical analysis.
+
+Audit capability should emerge naturally from consistent logging practices rather than requiring separate implementation strategies.
+
+Logging should support trust throughout the platform.
+
+---
+
+# Logging Consistency
+
+Equivalent events should be represented consistently across the platform.
+
+Consistency should be maintained across:
+
+* Business terminology
+* Event naming
+* Operational context
+* Event lifecycle
+* Outcome representation
+
+Consistent logs improve troubleshooting while strengthening architectural understanding.
+
+---
+
+# Logging Evolution
+
+Logging architecture should evolve alongside the platform.
+
+As business capabilities expand, operational visibility should become richer without introducing unnecessary complexity.
+
+Logging improvements should strengthen understanding while preserving consistency throughout the platform.
+
+Operational visibility should continuously improve with product maturity.
+
+---
+
+# Logging Governance
+
+Logging decisions should be intentional.
+
+Before introducing new logging behavior, evaluate:
+
+* Does this event provide operational value?
+* Does it communicate meaningful business context?
+* Does similar information already exist?
+* Will this improve troubleshooting or auditing?
+* Does it strengthen architectural visibility?
+
+Logging should become more informative over time rather than simply more verbose.
+
+---
+
+# Logging Quality Gates
+
+Logging architecture remains healthy when:
+
+* Meaningful operational events are consistently recorded.
+* Business context is preserved.
+* Event ownership remains clearly defined.
+* Operational visibility supports troubleshooting.
+* Logging contributes to auditing and accountability.
+* Equivalent events remain consistently represented.
+* Logging evolves with the platform.
+* Logging decisions remain aligned with the Engineering Constitution.
+
+This document defines the logging engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

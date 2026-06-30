@@ -1,0 +1,338 @@
+---
+description: Color Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Color Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Color System
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Design Standards
+
+**Related Standards**
+
+* Typography Standards
+* Accessibility Standards
+* Frontend Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the color standards that establish a meaningful, accessible, and consistent visual language across the hubIO platform.
+
+Its purpose is to ensure that color communicates information, reinforces hierarchy, and strengthens the product identity while remaining aligned with the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Color philosophy
+* Brand colors
+* Semantic colors
+* Surface hierarchy
+* Interactive states
+* Data visualization colors
+* Dark mode
+* Color governance
+
+It intentionally excludes typography, layout, accessibility implementation, and component-specific styling, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to the use of color, ensuring every color choice improves clarity, consistency, and usability rather than visual decoration.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Design Standards
+* Typography Standards
+* Accessibility Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Color system
+* Semantic color usage
+* Brand colors
+* Surface hierarchy
+* Interactive color behavior
+* Theme consistency
+* Color governance
+
+It does not define typography, layout, component structure, or implementation details.
+
+---
+
+# Color Philosophy
+
+Color is a communication system rather than decoration.
+
+Every color should help users understand information, identify actions, recognize status, and navigate the interface with confidence.
+
+Good color usage should prioritize:
+
+* Meaning
+* Consistency
+* Accessibility
+* Hierarchy
+* Brand identity
+
+Color should reinforce understanding rather than compete for attention.
+
+Interfaces should remain understandable even when viewed with limited color perception.
+
+---
+
+# Color Principles
+
+Every color decision should follow these principles.
+
+## Meaning Before Decoration
+
+Every color must have a defined semantic purpose.
+
+Avoid introducing decorative colors that do not improve communication.
+
+---
+
+## Consistency
+
+The same meaning should always use the same semantic color.
+
+Users should build recognition through repetition.
+
+---
+
+## Hierarchy
+
+Hierarchy should be established through layout and typography before color.
+
+Color should enhance hierarchy rather than replace it.
+
+---
+
+## Accessibility
+
+Color should remain readable across supported themes and satisfy accessibility requirements.
+
+Meaning should never depend on color alone.
+
+---
+
+## Brand Expression
+
+Brand colors should strengthen product identity without dominating everyday workflows.
+
+The interface should remain primarily neutral.
+
+---
+
+# Brand Colors
+
+The hubIO visual identity is built around a restrained brand palette.
+
+## Primary
+
+Purple (`#7C3AED`)
+
+Used for:
+
+* Primary actions
+* Active navigation
+* Focus indicators
+* Brand moments
+
+---
+
+## Accent
+
+Rose (`#E11D48`)
+
+Used sparingly for:
+
+* Highlights
+* Premium features
+* Important metrics
+* Special emphasis
+
+Accent colors should never replace semantic system colors.
+
+---
+
+# Semantic Color System
+
+Application code should reference semantic tokens rather than raw color values.
+
+Core semantic roles include:
+
+* Primary
+* Secondary
+* Background
+* Foreground
+* Surface
+* Border
+* Success
+* Warning
+* Destructive
+* Information
+* Muted
+
+Semantic tokens allow themes to evolve without changing component implementations.
+
+---
+
+# Surface Hierarchy
+
+Visual hierarchy should be communicated through subtle surface elevation.
+
+Typical hierarchy:
+
+1. Application background
+2. Sections
+3. Cards
+4. Dialogs
+5. Floating overlays
+
+Surface changes should remain subtle and predictable.
+
+---
+
+# Interactive States
+
+Every interactive element should provide consistent visual feedback.
+
+Supported states include:
+
+* Default
+* Hover
+* Focus
+* Active
+* Selected
+* Disabled
+* Loading
+* Error
+
+State transitions should communicate interaction rather than attract attention.
+
+---
+
+# Data Visualization Colors
+
+Charts and analytical views should prioritize clarity over visual variety.
+
+Color palettes should:
+
+* Remain limited
+* Maintain accessible contrast
+* Preserve consistency across dashboards
+* Support quick comparison
+
+Avoid decorative or rainbow color palettes.
+
+---
+
+# Dark Mode
+
+Dark mode should be treated as a first-class design experience.
+
+Both light and dark themes should maintain:
+
+* Consistent semantic meaning
+* Appropriate contrast
+* Predictable elevation
+* Readable typography
+* Comfortable long-term usage
+
+Dark mode should never be created by simply inverting colors.
+
+---
+
+# Color Governance
+
+The color system should evolve intentionally.
+
+Before introducing a new color or semantic token, evaluate:
+
+* Can an existing semantic token solve the problem?
+* Does the new color communicate a unique meaning?
+* Will it remain consistent across the product?
+* Does it improve usability?
+* Will it increase long-term maintenance complexity?
+
+The semantic color vocabulary should remain small, stable, and predictable.
+
+---
+
+# Color Quality Gates
+
+The color system remains healthy when:
+
+* Semantic colors remain consistent.
+* Brand colors are used intentionally.
+* Interfaces remain primarily neutral.
+* Interactive states remain predictable.
+* Surface hierarchy remains clear.
+* Charts remain easy to interpret.
+* Dark mode maintains equivalent quality.
+* Color usage satisfies accessibility requirements.
+* New semantic colors are introduced intentionally.
+* Color decisions remain aligned with the Design Standards.
+
+This document defines the color standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

@@ -1,0 +1,257 @@
+---
+description: Tables Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Tables Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Data Presentation
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Frontend Standards
+* UX Standards
+
+**Related Standards**
+
+* Components Standards
+* Dashboard Standards
+* Accessibility Standards
+* Performance Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the table engineering standards for the hubIO platform.
+
+Its purpose is to ensure operational data is presented in a way that enables users to understand, compare, filter, and act on information efficiently while maintaining consistency across the platform.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Table philosophy
+* Data presentation
+* Information hierarchy
+* Decision-oriented interaction
+* Table consistency
+* Table governance
+
+It intentionally excludes implementation details, table libraries, reusable components, responsive implementation, and framework-specific techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to operational data presentation, ensuring tables remain understandable, scalable, and aligned with long-term product maintainability.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Frontend Standards
+* UX Standards
+* Dashboard Standards
+* Accessibility Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Operational data presentation
+* Information hierarchy
+* Table interaction principles
+* Decision-oriented interfaces
+* Table consistency
+* Table governance
+
+It does not define reusable table components, data fetching, rendering techniques, or implementation libraries.
+
+---
+
+# Table Philosophy
+
+Tables are operational workspaces rather than collections of data.
+
+Their purpose is to help users understand business information, identify meaningful patterns, and complete operational tasks with confidence.
+
+Well-designed tables reduce the effort required to locate information, compare records, and determine appropriate actions.
+
+Tables should support decision-making instead of encouraging users to inspect individual data points manually.
+
+---
+
+# Table Design Principles
+
+Every table should prioritize:
+
+* Decisions over data volume
+* Scanability over density
+* Clarity over decoration
+* Context over isolated values
+* Productivity over visual complexity
+
+Operational data should become easier to understand as datasets grow larger.
+
+---
+
+# Information Hierarchy
+
+Tables should emphasize the information users need to make decisions.
+
+Business identity should remain immediately recognizable.
+
+Operational status should communicate current conditions.
+
+Supporting information should provide context without overwhelming primary content.
+
+The visual hierarchy should naturally guide users toward the most meaningful information first.
+
+---
+
+# Operational Data
+
+Operational information should always provide business context.
+
+Records should communicate their current condition, significance, and relationship to ongoing workflows.
+
+Users should understand why a record matters before exploring detailed information.
+
+Data that does not support operational awareness should not compete for attention within the primary table.
+
+---
+
+# Table Interaction
+
+Table interactions should reduce the effort required to work with large datasets.
+
+Searching, filtering, sorting, selection, and navigation should function as complementary capabilities rather than independent features.
+
+Users should maintain awareness of the current dataset throughout the interaction process without losing context.
+
+Interaction patterns should remain predictable across every operational module.
+
+---
+
+# Action-Oriented Experience
+
+Tables exist to support operational work.
+
+Users should naturally progress from identifying relevant information to completing meaningful business actions.
+
+Actions should remain closely associated with the records they affect while preserving a clean and understandable interface.
+
+Bulk operations should improve efficiency without introducing unnecessary complexity.
+
+---
+
+# Table Consistency
+
+Equivalent tables throughout the platform should behave consistently.
+
+Consistency should be maintained across:
+
+* Information hierarchy
+* Navigation
+* Search behavior
+* Filtering experience
+* Sorting behavior
+* Selection patterns
+* Business terminology
+
+Consistent interactions reduce learning time and improve operational confidence.
+
+---
+
+# Table Evolution
+
+Operational data will continue to grow as the platform evolves.
+
+Tables should adapt to increasing business complexity without becoming more difficult to understand.
+
+New capabilities should strengthen existing interaction patterns rather than introduce alternative workflows.
+
+Continuous refinement should improve productivity while preserving familiarity.
+
+---
+
+# Table Governance
+
+Table evolution should be intentional.
+
+Before introducing new columns, interactions, or presentation patterns, evaluate:
+
+* Does this improve operational decision-making?
+* Does the information provide business value?
+* Can existing interaction patterns satisfy the requirement?
+* Will this remain understandable as datasets grow?
+* Does it remain consistent with existing operational tables?
+
+Tables should become more efficient over time instead of becoming increasingly complex.
+
+---
+
+# Tables Quality Gates
+
+Table engineering remains healthy when:
+
+* Operational information is immediately understandable.
+* Information hierarchy supports rapid decision-making.
+* Users can efficiently locate relevant records.
+* Interaction patterns remain consistent across the platform.
+* Tables encourage operational productivity.
+* Business context remains clearly represented.
+* Tables scale with increasing operational data.
+* Table decisions remain aligned with the Engineering Constitution.
+
+This document defines the table engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

@@ -1,0 +1,243 @@
+---
+description: Authentication Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Authentication Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Identity Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Security Standards
+* Supabase Standards
+
+**Related Standards**
+
+* API Standards
+* Validation Standards
+* Permissions Standards
+* Integrations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the authentication engineering standards for the hubIO platform.
+
+Its purpose is to establish a consistent identity architecture that verifies users, services, and external systems before they participate in business operations while preserving platform security and long-term maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Authentication philosophy
+* Identity architecture
+* Identity verification
+* Authentication boundaries
+* Authentication governance
+* Identity evolution
+
+It intentionally excludes authorization models, permission management, authentication providers, session technologies, and implementation-specific authentication mechanisms, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to identity verification, ensuring trusted identities are established before access to business capabilities is granted.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Security Standards
+* Supabase Standards
+* API Standards
+* Validation Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Identity architecture
+* Authentication principles
+* Identity verification
+* Authentication boundaries
+* Authentication governance
+
+It does not define authorization rules, permission models, identity providers, session implementation, or authentication technologies.
+
+---
+
+# Authentication Philosophy
+
+Authentication establishes identity.
+
+Its responsibility is to verify who or what is requesting access before business operations are allowed to proceed.
+
+Authentication creates trust in identity but does not determine what an authenticated identity may do.
+
+Identity verification should remain independent from business authorization to preserve architectural clarity.
+
+---
+
+# Authentication Design Principles
+
+Every authentication decision should prioritize:
+
+* Verified identity over assumed identity
+* Explicit trust over implicit trust
+* Consistency over implementation convenience
+* Separation of identity and authorization
+* Long-term maintainability over provider-specific optimization
+
+Identity should become a stable architectural concept rather than a platform-specific implementation.
+
+---
+
+# Identity Architecture
+
+Identity should exist independently of individual business capabilities.
+
+The platform should establish trusted identities before business domains evaluate permissions or execute workflows.
+
+Identity should remain consistent throughout the platform regardless of user role, authentication provider, or client application.
+
+Identity architecture should simplify trust relationships while preserving architectural boundaries.
+
+---
+
+# Identity Verification
+
+Verification should occur before protected business operations become available.
+
+Successful authentication establishes confidence that an identity is genuine.
+
+Authentication should never be treated as a substitute for authorization, validation, or business rule enforcement.
+
+Identity establishes trust—not permission.
+
+---
+
+# Authentication Boundaries
+
+Authentication should occur whenever an actor crosses a trust boundary.
+
+Actors may include:
+
+* Users
+* Services
+* External systems
+* Automated processes
+
+Each boundary should establish identity before protected platform capabilities become available.
+
+Trust should not persist beyond the architectural boundaries established by the platform.
+
+---
+
+# Identity Consistency
+
+Identity should remain consistent across every business capability.
+
+Equivalent identities should be represented uniformly regardless of authentication method or application entry point.
+
+Consistent identity architecture simplifies authorization, auditing, and operational visibility.
+
+Identity should remain stable throughout the lifetime of authenticated interactions.
+
+---
+
+# Authentication Evolution
+
+Identity architecture should evolve independently of authentication technologies.
+
+New authentication providers or verification methods should strengthen the platform's identity model rather than redefine it.
+
+Authentication improvements should increase flexibility without compromising architectural consistency.
+
+Business capabilities should remain unaffected by changes in identity implementation.
+
+---
+
+# Authentication Governance
+
+Authentication decisions should be intentional.
+
+Before introducing a new identity mechanism, evaluate:
+
+* Does this strengthen identity verification?
+* Does it preserve architectural boundaries?
+* Does it remain independent from authorization?
+* Will business capabilities remain unaffected?
+* Does it improve long-term maintainability?
+
+Identity architecture should become more consistent over time rather than increasingly fragmented.
+
+---
+
+# Authentication Quality Gates
+
+Authentication architecture remains healthy when:
+
+* Identity is verified before protected operations.
+* Identity and authorization remain separate concerns.
+* Authentication boundaries are clearly defined.
+* Identity remains consistent throughout the platform.
+* Business capabilities remain independent from authentication technology.
+* Identity architecture evolves without disrupting business domains.
+* Authentication strengthens platform trust.
+* Authentication decisions remain aligned with the Engineering Constitution.
+
+This document defines the authentication engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

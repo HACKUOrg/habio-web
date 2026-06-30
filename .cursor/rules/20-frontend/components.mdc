@@ -1,0 +1,242 @@
+---
+description: Components Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Components Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Component Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Frontend Standards
+* Design Standards
+
+**Related Standards**
+
+* UX Standards
+* Accessibility Standards
+* Forms Standards
+* Tables Standards
+* Dashboard Standards
+* Tailwind Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the component engineering standards for the hubIO platform.
+
+Its purpose is to establish a scalable component ecosystem that promotes consistency, composability, maintainability, and long-term product evolution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Component philosophy
+* Component architecture
+* Component responsibilities
+* Component composition
+* Reusability principles
+* Shared component governance
+
+It intentionally excludes implementation details, framework-specific APIs, styling conventions, and feature-specific business behavior, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to reusable user interface components, ensuring they remain understandable, composable, and sustainable as the platform evolves.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Frontend Standards
+* Design Standards
+* UX Standards
+* Accessibility Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Component architecture
+* Component composition
+* Reusability principles
+* Shared UI consistency
+* Component governance
+
+It does not define application workflows, business logic, framework implementation, or visual styling.
+
+---
+
+# Component Philosophy
+
+Components are the fundamental building blocks of the frontend.
+
+Their responsibility is to provide reusable presentation capabilities that allow business experiences to be assembled consistently throughout the platform.
+
+Every reusable component should simplify development, strengthen the design system, and improve long-term maintainability.
+
+Components should evolve into stable platform assets rather than isolated implementations created for individual features.
+
+---
+
+# Component Design Principles
+
+Every reusable component should prioritize:
+
+* Clarity over flexibility
+* Composition over specialization
+* Consistency over customization
+* Stability over rapid expansion
+* Maintainability over convenience
+
+A component should represent a reusable interaction pattern instead of a specific business workflow.
+
+Reusable components should become more valuable as additional features are introduced.
+
+---
+
+# Component Responsibilities
+
+Every component should have a clearly defined responsibility.
+
+Presentation, interaction, orchestration, and business behavior should remain separate concerns whenever practical.
+
+Reusable components should communicate user intent without assuming responsibility for application workflows.
+
+Clear ownership reduces coupling while improving readability and long-term maintainability.
+
+---
+
+# Component Composition
+
+Complex interfaces should be assembled from smaller, well-defined building blocks.
+
+Composition allows reusable capabilities to support many business scenarios without creating increasingly specialized components.
+
+New user experiences should primarily be created by combining existing components rather than introducing entirely new abstractions.
+
+A healthy component ecosystem grows through composition instead of duplication.
+
+---
+
+# Component Reusability
+
+Reusability should emerge from solving common interaction patterns rather than attempting to predict every future requirement.
+
+Reusable components should represent stable platform capabilities that remain valuable across multiple business domains.
+
+Feature-specific requirements should remain within feature implementations instead of expanding shared components unnecessarily.
+
+---
+
+# Component Consistency
+
+Reusable components establish the shared language of the product.
+
+Equivalent interactions should provide consistent:
+
+* Structure
+* Behavior
+* Feedback
+* States
+* Accessibility
+
+Consistency allows users to transfer knowledge naturally between different areas of the platform.
+
+---
+
+# Component Evolution
+
+Shared components should evolve carefully.
+
+Existing capabilities should be refined before introducing additional abstractions.
+
+Breaking established interaction patterns should be considered only when they provide significant improvements to the overall product experience.
+
+Long-term stability should take precedence over short-term implementation convenience.
+
+---
+
+# Shared Component Governance
+
+The introduction of a new reusable component should be justified by a recurring interaction pattern rather than a single implementation need.
+
+Before expanding the component ecosystem, engineers should evaluate:
+
+* Can an existing component satisfy the requirement?
+* Can composition solve the problem?
+* Will the component remain reusable across multiple domains?
+* Does it strengthen the shared design language?
+* Will it reduce long-term maintenance effort?
+
+Shared components should improve platform consistency instead of increasing architectural complexity.
+
+---
+
+# Components Quality Gates
+
+The component ecosystem remains healthy when:
+
+* Component responsibilities remain clearly defined.
+* Composition is preferred over specialization.
+* Shared components remain independent from business domains.
+* Reusability emerges from stable interaction patterns.
+* Consistency is maintained across the platform.
+* Component evolution preserves long-term maintainability.
+* Shared abstractions reduce duplication rather than introduce complexity.
+* Component decisions remain aligned with the Engineering Constitution.
+
+This document defines the component engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

@@ -1,0 +1,261 @@
+---
+description: Workflows Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Workflows Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Business Workflow Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* SaaS Standards
+* Permissions Standards
+
+**Related Standards**
+
+* API Standards
+* State Standards
+* Notifications Standards
+* Background Jobs Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the business workflow engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent principles for designing, executing, and evolving operational workflows that support property management while preserving business integrity, user clarity, and long-term scalability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Workflow philosophy
+* Workflow architecture
+* Operational progression
+* Responsibility transitions
+* Workflow governance
+* Workflow evolution
+
+It intentionally excludes workflow engines, automation technologies, orchestration frameworks, approval implementations, and process execution mechanisms, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to business workflows, ensuring operational processes remain understandable, predictable, and aligned with the platform's business architecture.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* SaaS Standards
+* Permissions Standards
+* State Standards
+* API Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Business workflow architecture
+* Operational progression
+* Responsibility transitions
+* Workflow governance
+* Workflow consistency
+
+It does not define automation technologies, workflow engines, implementation-specific orchestration, or user interface behavior.
+
+---
+
+# Workflow Philosophy
+
+Workflows represent how business operations progress.
+
+Their responsibility is to guide business activities from initiation to completion while ensuring every participant understands their responsibilities, current progress, and expected outcomes.
+
+Workflows should reduce operational uncertainty rather than increase procedural complexity.
+
+Business processes should feel natural to the people performing them.
+
+---
+
+# Workflow Design Principles
+
+Every workflow should prioritize:
+
+* Business outcomes over technical implementation
+* Clarity over procedural complexity
+* Predictable progression over exceptional paths
+* Explicit responsibility over shared ownership
+* Operational consistency over isolated optimization
+
+Workflows should strengthen business operations instead of exposing internal system behavior.
+
+---
+
+# Operational Progression
+
+Every workflow should progress through clearly defined business stages.
+
+Each stage should communicate:
+
+* The current operational state.
+* The responsible participant.
+* The expected business outcome.
+* The conditions required to continue.
+
+Progression should reflect how work naturally occurs within the business rather than how software is implemented.
+
+---
+
+# Responsibility Transitions
+
+Business responsibilities should transfer intentionally throughout a workflow.
+
+Every transition should establish:
+
+* Who currently owns the work.
+* Why responsibility is changing.
+* What information accompanies the transition.
+* What constitutes successful handoff.
+
+Clear responsibility transitions improve accountability while reducing operational ambiguity.
+
+---
+
+# Business Continuity
+
+Workflows should remain understandable regardless of interruptions.
+
+Users should always be able to determine:
+
+* Current progress.
+* Remaining work.
+* Previous actions.
+* Next expected activity.
+
+Business continuity supports operational confidence while reducing dependence on individual knowledge.
+
+---
+
+# Workflow Consistency
+
+Equivalent business workflows should follow consistent architectural principles.
+
+Consistency should be maintained across:
+
+* Workflow progression
+* Responsibility transitions
+* Business terminology
+* Operational outcomes
+* Completion expectations
+
+Consistent workflows improve productivity while simplifying future platform evolution.
+
+---
+
+# Workflow Adaptability
+
+Business operations naturally evolve.
+
+Workflow architecture should support change without requiring fundamental redesign.
+
+New business capabilities should extend existing workflow principles rather than introduce isolated process models.
+
+Adaptability should preserve familiarity while enabling continuous product improvement.
+
+---
+
+# Workflow Evolution
+
+Workflow architecture should evolve alongside the business.
+
+Operational improvements should simplify business processes while maintaining architectural consistency.
+
+Workflow evolution should strengthen the platform's operational model rather than create alternative ways of completing equivalent business activities.
+
+---
+
+# Workflow Governance
+
+Workflow decisions should be intentional.
+
+Before introducing a new workflow or business stage, evaluate:
+
+* Does this improve a business outcome?
+* Is the responsibility transition explicit?
+* Can an existing workflow be extended?
+* Does this preserve operational consistency?
+* Will future teams understand the process?
+
+Workflow architecture should become increasingly cohesive rather than increasingly fragmented.
+
+---
+
+# Workflow Quality Gates
+
+Workflow architecture remains healthy when:
+
+* Business progression remains understandable.
+* Responsibility transitions are explicit.
+* Operational continuity is preserved.
+* Workflow behavior remains consistent across the platform.
+* Business processes evolve without unnecessary complexity.
+* Adaptability supports long-term product growth.
+* Workflow architecture strengthens operational efficiency.
+* Workflow decisions remain aligned with the Engineering Constitution.
+
+This document defines the workflow engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

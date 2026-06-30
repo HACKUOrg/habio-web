@@ -1,0 +1,246 @@
+---
+description: LINE OA Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+LINE OA Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Customer Interaction Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Workflows Standards
+* Notifications Standards
+
+**Related Standards**
+
+* Authentication Standards
+* Integrations Standards
+* SaaS Standards
+* Permissions Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the LINE Official Account (LINE OA) engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles for delivering business capabilities through LINE OA while preserving workflow consistency, business integrity, and a unified product experience.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Customer interaction philosophy
+* Channel architecture
+* Business capability exposure
+* Communication consistency
+* LINE OA governance
+* Interaction evolution
+
+It intentionally excludes LINE Messaging API, webhooks, rich menus, authentication technologies, messaging formats, and implementation-specific LINE platform features, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to customer interactions delivered through LINE OA, ensuring business capabilities remain consistent regardless of interaction channel.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Workflows Standards
+* Notifications Standards
+* Integrations Standards
+* SaaS Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* LINE OA interaction architecture
+* Customer interaction principles
+* Business capability exposure
+* Channel consistency
+* Interaction governance
+
+It does not define LINE platform APIs, messaging implementation, user interface assets, or provider-specific configuration.
+
+---
+
+# Customer Interaction Philosophy
+
+LINE OA is a business interaction channel.
+
+Its responsibility is to provide customers with convenient access to business capabilities without requiring direct access to the operational management platform.
+
+Interactions should remain simple, understandable, and closely aligned with real business workflows.
+
+The interaction channel should simplify customer participation rather than expose internal platform complexity.
+
+---
+
+# Interaction Design Principles
+
+Every LINE OA interaction should prioritize:
+
+* Business outcomes over conversational complexity
+* Simplicity over feature completeness
+* Workflow continuity over isolated interactions
+* Customer clarity over implementation convenience
+* Product consistency over channel-specific behavior
+
+LINE OA should extend the product experience rather than become a separate product.
+
+---
+
+# Business Capability Exposure
+
+Only business capabilities appropriate for customer interaction should be exposed through LINE OA.
+
+The interaction channel should represent meaningful business activities while protecting operational responsibilities that belong to internal users.
+
+Business capabilities should remain consistent regardless of whether they are accessed through the web application or LINE OA.
+
+---
+
+# Workflow Continuity
+
+Customer interactions should participate naturally within existing business workflows.
+
+Activities initiated through LINE OA should continue through the same operational processes used throughout the platform.
+
+Business workflows should remain unified across all interaction channels.
+
+Channel selection should not alter business outcomes.
+
+---
+
+# Communication Consistency
+
+LINE OA should communicate using the same business terminology and operational language used throughout the platform.
+
+Customers should experience consistent business behavior regardless of communication channel.
+
+Consistency strengthens trust while reducing confusion during operational interactions.
+
+---
+
+# Customer Experience
+
+LINE OA should minimize customer effort.
+
+Interactions should communicate:
+
+* Current business status
+* Available actions
+* Expected outcomes
+* Required information
+* Next steps
+
+Customers should always understand how their actions affect ongoing business operations.
+
+---
+
+# Channel Independence
+
+Business capabilities should remain independent from communication channels.
+
+The platform should be capable of exposing equivalent customer experiences through additional channels in the future without redesigning business workflows.
+
+LINE OA is one delivery channel for business capabilities—not the definition of those capabilities.
+
+---
+
+# Interaction Evolution
+
+Customer interaction architecture should evolve alongside the product.
+
+New LINE OA capabilities should strengthen existing workflows rather than introduce channel-specific business logic.
+
+Evolution should improve accessibility while preserving operational consistency across the platform.
+
+---
+
+# LINE OA Governance
+
+Customer interaction decisions should be intentional.
+
+Before exposing a business capability through LINE OA, evaluate:
+
+* Does this improve the customer experience?
+* Does it preserve existing business workflows?
+* Does it maintain operational consistency?
+* Is this appropriate for customer self-service?
+* Will future interaction channels benefit from the same architecture?
+
+LINE OA should become more capable over time without becoming more complex.
+
+---
+
+# LINE OA Quality Gates
+
+Customer interaction architecture remains healthy when:
+
+* LINE OA exposes meaningful business capabilities.
+* Customer interactions remain simple and understandable.
+* Business workflows remain consistent across channels.
+* Communication uses shared business terminology.
+* Customer self-service improves operational efficiency.
+* Business capabilities remain independent from communication channels.
+* LINE OA evolves alongside the product.
+* Customer interaction decisions remain aligned with the Engineering Constitution.
+
+This document defines the LINE OA engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

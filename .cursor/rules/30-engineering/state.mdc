@@ -1,0 +1,322 @@
+---
+description: State Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+State Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+State Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Frontend Standards
+
+**Related Standards**
+
+* API Standards
+* Next.js Standards
+* Validation Standards
+* Security Standards
+* Performance Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the state engineering standards for the hubIO platform.
+
+Its purpose is to establish clear ownership, predictable behavior, and sustainable boundaries for application state across the product so that interfaces remain understandable, scalable, and reliable as the platform grows.
+
+---
+
+# Scope
+
+This standard defines:
+
+* State philosophy
+* State ownership
+* State boundaries
+* State consistency
+* State synchronization
+* State governance
+
+It intentionally excludes framework-specific state libraries, component implementation, and data-fetching mechanics, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to application state, ensuring state remains predictable, explicit, and aligned with the long-term architecture of the platform.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Frontend Standards
+* API Standards
+* Next.js Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* State architecture
+* State ownership
+* State boundaries
+* State synchronization principles
+* State governance
+
+It does not define implementation libraries, caching strategies, or framework-specific state utilities.
+
+---
+
+# State Philosophy
+
+State represents the current condition of the system.
+
+Its responsibility is to describe what is true now, what the user is currently doing, and what the interface needs in order to remain consistent with the business domain.
+
+State should always be treated as an architectural concern rather than a convenience layer.
+
+The primary goal of state engineering is to make application behavior predictable, understandable, and maintainable as the platform evolves.
+
+---
+
+# State Design Principles
+
+Every state decision should prioritize:
+
+* Predictability over convenience
+* Explicit ownership over shared ambiguity
+* Simplicity over unnecessary synchronization
+* Consistency over local optimization
+* Long-term maintainability over temporary ease
+
+State should clarify application behavior rather than obscure it.
+
+---
+
+# State Ownership
+
+Every piece of state should have a clearly defined owner.
+
+Ownership should be assigned according to the architectural layer responsible for the truth being represented.
+
+State should not be duplicated across layers unless there is a clear operational reason to do so.
+
+When multiple parts of the application appear to own the same state, the architecture should be reconsidered.
+
+---
+
+# State Boundaries
+
+State boundaries should reflect business and architectural responsibility.
+
+Different kinds of state should not be blended together without justification.
+
+Boundaries should make it clear whether state belongs to:
+
+* The server
+* The browser
+* The user interface
+* The route
+* The business domain
+
+Clear boundaries reduce coupling and make the system easier to reason about.
+
+---
+
+# State Categories
+
+State should be understood according to its source and lifecycle.
+
+The platform should distinguish between:
+
+* Persistent business state
+* Remote server state
+* Interface state
+* Navigation state
+* Derived state
+* Transitional state
+
+Each category serves a different architectural purpose and should be treated accordingly.
+
+---
+
+# Server State
+
+Server state represents data owned by the platform’s trusted business systems.
+
+This state should remain authoritative and should not be treated as a local approximation when the exact value matters.
+
+The frontend may present or cache server state for usability, but ownership should remain on the server.
+
+Server state should always be handled in a way that preserves business integrity.
+
+---
+
+# Client State
+
+Client state represents temporary interface behavior.
+
+It should support interaction, responsiveness, and local decision-making within the user interface.
+
+Client state should not become a substitute for business data or persistent application truth.
+
+When interface needs are temporary, local client state is preferred over broader architectural mechanisms.
+
+---
+
+# Route State
+
+Route state represents the current navigational context.
+
+It should help the application preserve meaning across navigation, bookmarking, and reload behavior.
+
+Route state should remain explicit and understandable because it forms part of the user’s workflow context.
+
+---
+
+# Derived State
+
+Derived state is calculated from other state sources.
+
+It should not be stored as independent truth unless there is a clear architectural reason to do so.
+
+Derived state should remain predictable and reproducible from the source data that created it.
+
+When possible, the application should compute derived information rather than duplicate it.
+
+---
+
+# Transitional State
+
+Transitional state represents in-progress conditions.
+
+Examples include loading, submitting, syncing, and refreshing.
+
+Transitional state should help the interface communicate system progress without becoming a source of business truth.
+
+Transitional conditions should remain short-lived and clearly bounded.
+
+---
+
+# State Consistency
+
+Equivalent experiences should manage state consistently across the platform.
+
+Users should not be forced to relearn how the application behaves because a different screen stores or interprets state differently.
+
+State patterns should support a shared interaction model across features, modules, and roles.
+
+---
+
+# State Synchronization
+
+When state exists in more than one place, synchronization must be intentional.
+
+Unnecessary duplication should be avoided wherever possible.
+
+When synchronization is required, the architecture should clearly define:
+
+* The source of truth
+* The consumers of the state
+* The expected update path
+* The boundaries of acceptable staleness
+
+Synchronization should be designed, not improvised.
+
+---
+
+# State Evolution
+
+State architecture should evolve with the business domain.
+
+As the platform grows, state responsibilities should become clearer rather than more fragmented.
+
+New state patterns should strengthen the architecture of the product instead of introducing isolated implementation choices.
+
+State evolution should support maintainability, scalability, and user confidence.
+
+---
+
+# State Governance
+
+State design should be intentional.
+
+Before introducing new state, evaluate:
+
+* Does this state represent a real architectural need?
+* Does an existing source of truth already exist?
+* Is the ownership of this state unambiguous?
+* Will this state improve predictability?
+* Can the same outcome be achieved through simpler architecture?
+
+State should be added only when it improves clarity or operational value.
+
+---
+
+# State Quality Gates
+
+State architecture remains healthy when:
+
+* Ownership is explicit.
+* Boundaries are clear.
+* Server and client responsibilities remain separated.
+* Derived state is not duplicated unnecessarily.
+* Route state preserves workflow context.
+* Transitional state remains temporary and understandable.
+* Synchronization is intentional and controlled.
+* State decisions remain aligned with the Engineering Constitution.
+
+This document defines the state engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

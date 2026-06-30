@@ -1,0 +1,257 @@
+---
+description: Testing Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Testing Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Quality Engineering
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Review Standards
+
+**Related Standards**
+
+* API Standards
+* Database Standards
+* Security Standards
+* Performance Standards
+* Validation Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the testing engineering standards for the hubIO platform.
+
+Its purpose is to establish testing as a fundamental engineering discipline that provides confidence in business behavior, architectural integrity, and long-term maintainability throughout the platform.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Testing philosophy
+* Testing responsibilities
+* Verification strategy
+* Quality confidence
+* Testability principles
+* Testing governance
+
+It intentionally excludes testing frameworks, tooling, automation pipelines, assertion libraries, and implementation-specific testing techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to software verification, ensuring confidence is established through systematic validation rather than assumptions or manual inspection.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Validation Standards
+* Review Standards
+* Performance Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Testing architecture
+* Verification principles
+* Quality confidence
+* Testability
+* Testing governance
+
+It does not define testing tools, framework-specific implementation, automation platforms, or continuous integration pipelines.
+
+---
+
+# Testing Philosophy
+
+Testing establishes engineering confidence.
+
+Its responsibility is to demonstrate that business capabilities continue to behave as intended while allowing the platform to evolve safely.
+
+Testing should reduce uncertainty rather than simply increase the number of executed test cases.
+
+Confidence should come from verifying meaningful business behavior instead of measuring implementation details.
+
+---
+
+# Testing Design Principles
+
+Every testing decision should prioritize:
+
+* Business confidence over implementation coverage
+* Behavioral verification over internal structure
+* Maintainability over excessive complexity
+* Repeatability over manual inspection
+* Prevention over defect detection
+
+Testing should strengthen engineering decisions rather than compensate for weak architecture.
+
+---
+
+# Verification Strategy
+
+Verification should confirm that business capabilities satisfy their intended responsibilities.
+
+Testing should establish confidence that:
+
+* Business rules remain correct.
+* Architectural boundaries remain intact.
+* Platform behavior remains predictable.
+* Critical workflows remain reliable.
+* Changes do not introduce unintended consequences.
+
+Verification should focus on outcomes that matter to the business.
+
+---
+
+# Business Confidence
+
+Testing should validate business behavior rather than implementation mechanics.
+
+A successful test demonstrates that users, services, and business workflows continue to operate correctly under expected conditions.
+
+Business confidence should remain stable even as internal implementation evolves.
+
+Testing should protect the platform's operational integrity.
+
+---
+
+# Testability
+
+Every architectural decision should improve the platform's ability to be verified.
+
+Clear responsibilities, explicit boundaries, and stable contracts naturally produce systems that are easier to test.
+
+Poor testability often indicates excessive coupling or unclear ownership.
+
+Testability should be treated as a characteristic of good architecture rather than an isolated engineering concern.
+
+---
+
+# Reliability Verification
+
+Testing should continuously reinforce platform reliability.
+
+Verification should provide confidence that the system behaves consistently across:
+
+* Business workflows
+* Architectural boundaries
+* User interactions
+* Service communication
+* Operational conditions
+
+Reliable systems maintain predictable behavior despite ongoing evolution.
+
+---
+
+# Testing Consistency
+
+Equivalent business capabilities should be verified using consistent engineering principles.
+
+Testing expectations should remain aligned throughout the platform regardless of implementation technology.
+
+Consistency improves maintainability while reducing uncertainty during future development.
+
+---
+
+# Testing Evolution
+
+Testing should evolve alongside the business domain.
+
+As the platform grows, verification should expand naturally with new business capabilities while preserving confidence in existing functionality.
+
+Testing improvements should strengthen architectural quality rather than increase unnecessary maintenance effort.
+
+Testing should become more expressive without becoming more complicated.
+
+---
+
+# Testing Governance
+
+Testing decisions should be intentional.
+
+Before introducing new verification strategies, evaluate:
+
+* Does this verify meaningful business behavior?
+* Does it increase engineering confidence?
+* Can the same confidence be achieved more simply?
+* Does it strengthen architectural maintainability?
+* Will future engineers understand the purpose of this verification?
+
+Testing should become more valuable over time rather than simply more extensive.
+
+---
+
+# Testing Quality Gates
+
+Testing architecture remains healthy when:
+
+* Business capabilities are verified with confidence.
+* Verification focuses on observable behavior.
+* Architectural boundaries remain testable.
+* Critical workflows remain protected.
+* Testability reflects good architectural design.
+* Verification evolves with the business domain.
+* Testing strengthens long-term maintainability.
+* Testing decisions remain aligned with the Engineering Constitution.
+
+This document defines the testing engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

@@ -1,0 +1,246 @@
+---
+description: Tailwind Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Tailwind Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Design System Implementation
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Design Standards
+* Frontend Standards
+
+**Related Standards**
+
+* Components Standards
+* Colors Standards
+* Typography Standards
+* Animations Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines how Tailwind CSS is used throughout the hubIO platform.
+
+Its purpose is to ensure Tailwind serves as the implementation layer of the design system, enabling consistent, maintainable, and scalable user interfaces across the product.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Tailwind philosophy
+* Utility architecture
+* Design token implementation
+* Layout principles
+* Styling consistency
+* Tailwind governance
+
+It intentionally excludes component implementation, framework-specific behavior, application styling, and visual design decisions, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to styling implementation, ensuring visual consistency is achieved through shared systems rather than individual developer preference.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Design Standards
+* Colors Standards
+* Typography Standards
+* Components Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Tailwind implementation principles
+* Utility architecture
+* Design token adoption
+* Styling consistency
+* Utility governance
+
+It does not define component behavior, interaction design, or business-specific presentation.
+
+---
+
+# Tailwind Philosophy
+
+Tailwind is the implementation language of the hubIO design system.
+
+Utilities should communicate design intent rather than individual visual decisions.
+
+Every utility class contributes to a shared visual language that remains consistent across the platform.
+
+Tailwind should simplify implementation while reinforcing established design principles instead of encouraging isolated styling approaches.
+
+---
+
+# Utility Design Principles
+
+Every Tailwind implementation should prioritize:
+
+* Consistency over customization
+* Reuse over duplication
+* System thinking over individual styling
+* Semantic intent over visual approximation
+* Maintainability over implementation convenience
+
+Styling decisions should strengthen the overall product rather than optimize isolated screens.
+
+---
+
+# Design Token Integration
+
+Tailwind should express approved design tokens rather than introduce new visual values.
+
+Spacing, typography, colors, radius, elevation, and other visual properties should originate from the shared design system.
+
+Utilities should reinforce existing design decisions instead of creating competing visual standards.
+
+---
+
+# Layout Architecture
+
+Tailwind should support responsive, flexible layouts that naturally adapt to different operational contexts.
+
+Layout utilities should communicate structure clearly while remaining independent from business functionality.
+
+Spacing, alignment, and positioning should express intentional hierarchy rather than compensate for inconsistent component design.
+
+---
+
+# Styling Consistency
+
+Equivalent interface elements should receive equivalent styling.
+
+Shared visual patterns should emerge from common utility composition rather than repeated custom implementations.
+
+Developers should extend established styling patterns before introducing new combinations.
+
+A consistent utility language reduces maintenance effort while improving product cohesion.
+
+---
+
+# Utility Composition
+
+Tailwind utilities should remain modular and composable.
+
+Frequently repeated utility combinations indicate opportunities to strengthen shared abstractions rather than duplicate implementation.
+
+Utility composition should improve readability without obscuring design intent.
+
+Reusable styling patterns should evolve together with the design system.
+
+---
+
+# Design System Alignment
+
+Tailwind should reinforce the design language established by the platform.
+
+Visual implementation should remain aligned with:
+
+* Color hierarchy
+* Typography hierarchy
+* Spacing system
+* Motion principles
+* Accessibility requirements
+
+Tailwind is responsible for expressing the design system, not redefining it.
+
+---
+
+# Tailwind Evolution
+
+Styling practices should evolve alongside the design system.
+
+New utility patterns should improve consistency while preserving established visual behavior throughout the platform.
+
+Visual evolution should occur through refinement of shared standards rather than accumulation of isolated styling techniques.
+
+---
+
+# Tailwind Governance
+
+Tailwind implementation should evolve intentionally.
+
+Before introducing new styling patterns, evaluate:
+
+* Does this already exist within the design system?
+* Can existing utility patterns achieve the same result?
+* Will this improve visual consistency?
+* Does it strengthen reusable styling?
+* Will future developers understand the intention easily?
+
+Styling decisions should reinforce the shared design language instead of increasing visual fragmentation.
+
+---
+
+# Tailwind Quality Gates
+
+Tailwind implementation remains healthy when:
+
+* Design tokens remain the source of visual decisions.
+* Utility composition reinforces shared styling patterns.
+* Layouts remain responsive and maintainable.
+* Equivalent interfaces receive consistent styling.
+* Visual implementation aligns with the design system.
+* New utility patterns improve long-term maintainability.
+* Styling remains understandable across the platform.
+* Tailwind decisions remain aligned with the Engineering Constitution.
+
+This document defines the Tailwind engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

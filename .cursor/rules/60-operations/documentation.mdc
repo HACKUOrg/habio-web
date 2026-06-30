@@ -1,0 +1,243 @@
+---
+description: Documentation Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Documentation Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Engineering Knowledge
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Project Standards
+* Review Standards
+
+**Related Standards**
+
+* Architecture Standards
+* API Standards
+* Git Standards
+* Product Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the documentation engineering standards for the hubIO platform.
+
+Its purpose is to establish documentation as a shared engineering knowledge system that preserves architectural intent, business understanding, and operational context throughout the lifecycle of the platform.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Documentation philosophy
+* Knowledge architecture
+* Documentation ownership
+* Documentation consistency
+* Documentation governance
+* Knowledge evolution
+
+It intentionally excludes documentation tooling, markdown syntax, publishing platforms, and implementation-specific documentation technologies, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to engineering knowledge, ensuring documentation remains accurate, understandable, and valuable as the platform evolves.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Project Standards
+* Review Standards
+* Architecture Standards
+* Git Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Engineering knowledge architecture
+* Documentation principles
+* Documentation ownership
+* Documentation governance
+* Knowledge evolution
+
+It does not define documentation tools, formatting conventions, publishing workflows, or implementation-specific authoring platforms.
+
+---
+
+# Documentation Philosophy
+
+Documentation preserves engineering knowledge.
+
+Its responsibility is to communicate why the platform exists, how it is designed, and how engineering decisions should be understood by future contributors.
+
+Documentation should reduce dependency on individual memory while increasing organizational understanding.
+
+Knowledge should remain accessible long after the original implementation has changed.
+
+---
+
+# Documentation Design Principles
+
+Every documentation decision should prioritize:
+
+* Understanding over completeness
+* Engineering intent over implementation detail
+* Long-term maintainability over short-term convenience
+* Shared knowledge over individual ownership
+* Continuous evolution over static reference
+
+Documentation should explain the reasoning behind engineering decisions rather than simply describe the resulting implementation.
+
+---
+
+# Knowledge Architecture
+
+Documentation should reflect the architecture of the platform.
+
+Knowledge should be organized according to clearly defined engineering domains so that engineers can locate information according to responsibility rather than file location.
+
+Documentation architecture should remain consistent with the platform architecture.
+
+---
+
+# Documentation Ownership
+
+Every meaningful body of knowledge should have a clearly defined owner.
+
+Ownership establishes responsibility for maintaining accuracy, resolving ambiguity, and evolving documentation alongside the product.
+
+Documentation should evolve whenever the engineering understanding of the platform evolves.
+
+Knowledge without ownership gradually loses reliability.
+
+---
+
+# Engineering Intent
+
+Documentation should communicate engineering intent before implementation details.
+
+Readers should understand:
+
+* Why a decision was made.
+* Which business problem it solves.
+* Which architectural principles influenced it.
+* How it relates to the broader platform.
+
+Engineering intent remains valuable even as implementation changes over time.
+
+---
+
+# Documentation Consistency
+
+Equivalent engineering concepts should be documented consistently throughout the platform.
+
+Consistency should be maintained across:
+
+* Terminology
+* Architectural language
+* Business concepts
+* Document structure
+* Engineering responsibilities
+
+Consistent documentation improves discoverability while reducing ambiguity.
+
+---
+
+# Knowledge Evolution
+
+Engineering knowledge should evolve continuously.
+
+Documentation should be updated whenever architectural understanding, business capabilities, or engineering responsibilities change.
+
+Outdated knowledge reduces engineering confidence more than missing knowledge.
+
+Documentation should remain a living representation of the platform.
+
+---
+
+# Documentation Governance
+
+Documentation decisions should be intentional.
+
+Before introducing new documentation, evaluate:
+
+* Does this preserve valuable engineering knowledge?
+* Does an existing document already own this topic?
+* Is the engineering intent clearly communicated?
+* Will future engineers understand this information?
+* Does this strengthen the knowledge architecture?
+
+Documentation should become increasingly cohesive rather than increasingly fragmented.
+
+---
+
+# Documentation Quality Gates
+
+Engineering documentation remains healthy when:
+
+* Engineering intent is preserved.
+* Knowledge ownership remains explicit.
+* Documentation reflects platform architecture.
+* Terminology remains consistent.
+* Documentation evolves alongside the product.
+* Knowledge remains understandable by future engineers.
+* Documentation strengthens organizational learning.
+* Documentation decisions remain aligned with the Engineering Constitution.
+
+This document defines the documentation engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

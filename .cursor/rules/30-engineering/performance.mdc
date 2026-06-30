@@ -1,0 +1,254 @@
+---
+description: Performance Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Performance Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Performance Engineering
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Frontend Standards
+
+**Related Standards**
+
+* API Standards
+* Database Standards
+* State Standards
+* Next.js Standards
+* Deployment Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the performance engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles that deliver responsive user experiences, efficient resource utilization, and sustainable system performance as the platform grows in complexity and scale.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Performance philosophy
+* Performance architecture
+* Resource efficiency
+* Scalability principles
+* Performance governance
+* Performance evolution
+
+It intentionally excludes implementation techniques, framework-specific optimizations, infrastructure tuning, and benchmarking tools, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to performance, ensuring responsiveness is achieved through sound architecture rather than isolated optimizations.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Frontend Standards
+* Database Standards
+* State Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Performance architecture
+* Resource efficiency
+* Scalability principles
+* Performance governance
+* System responsiveness
+
+It does not define implementation optimizations, caching technologies, rendering strategies, or infrastructure configuration.
+
+---
+
+# Performance Philosophy
+
+Performance is the result of architectural quality.
+
+Responsive systems emerge from clear responsibilities, efficient communication, and thoughtful resource management rather than isolated optimization efforts.
+
+Performance should be considered during system design instead of being addressed only after performance issues become visible.
+
+Engineering decisions should improve both user experience and long-term maintainability.
+
+---
+
+# Performance Design Principles
+
+Every performance decision should prioritize:
+
+* Architectural efficiency over micro-optimization
+* User experience over benchmark metrics
+* Predictability over peak performance
+* Simplicity over unnecessary optimization
+* Sustainable scalability over temporary gains
+
+Performance improvements should strengthen the architecture instead of introducing unnecessary complexity.
+
+---
+
+# System Responsiveness
+
+Users should receive timely and meaningful feedback for every interaction.
+
+Responsiveness should be measured by how quickly users can understand that the system is progressing toward their intended outcome.
+
+Perceived responsiveness is as important as computational efficiency.
+
+System behavior should encourage confidence even when business operations require additional processing.
+
+---
+
+# Resource Efficiency
+
+System resources should be used intentionally.
+
+Processing, storage, network communication, and rendering should contribute directly to delivering business value.
+
+Redundant work, unnecessary data movement, and duplicated computation should be minimized through architectural design.
+
+Efficient systems improve both scalability and operational reliability.
+
+---
+
+# Performance Boundaries
+
+Every architectural layer contributes to overall performance.
+
+Responsibilities should remain clearly separated so that performance improvements can occur within individual layers without introducing unintended side effects.
+
+Boundaries should reduce unnecessary dependencies while supporting efficient collaboration between platform components.
+
+---
+
+# Scalability
+
+Performance should remain predictable as the platform grows.
+
+Growth may include:
+
+* More organizations
+* More properties
+* Larger datasets
+* Higher user concurrency
+* Additional integrations
+* More business capabilities
+
+Scalability should result from architecture that accommodates increasing demand without requiring proportional engineering effort.
+
+---
+
+# Performance Consistency
+
+Equivalent user experiences should deliver equivalent levels of responsiveness.
+
+Performance expectations should remain consistent across features, modules, and business workflows.
+
+Users should not experience significant variations in responsiveness because of inconsistent engineering decisions.
+
+Consistency strengthens trust in the platform.
+
+---
+
+# Performance Evolution
+
+Performance architecture should evolve continuously alongside the product.
+
+New capabilities should improve or preserve overall responsiveness rather than gradually introducing performance degradation.
+
+Engineering improvements should reduce systemic complexity while strengthening long-term scalability.
+
+Performance should improve through refinement rather than repeated optimization cycles.
+
+---
+
+# Performance Governance
+
+Performance decisions should be intentional.
+
+Before introducing new architectural patterns or business capabilities, evaluate:
+
+* Does this introduce unnecessary work?
+* Does it increase resource consumption?
+* Can existing architecture achieve the same outcome?
+* Will responsiveness remain predictable as the platform grows?
+* Does this improve long-term scalability?
+
+Performance improvements should strengthen architectural quality rather than compensate for poor design.
+
+---
+
+# Performance Quality Gates
+
+Performance architecture remains healthy when:
+
+* System responsiveness supports productive user workflows.
+* Resources are used efficiently.
+* Architectural boundaries promote performance.
+* Scalability remains predictable.
+* Equivalent experiences deliver consistent responsiveness.
+* Performance evolves alongside the platform.
+* Engineering decisions improve long-term efficiency.
+* Performance decisions remain aligned with the Engineering Constitution.
+
+This document defines the performance engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

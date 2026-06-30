@@ -1,0 +1,253 @@
+---
+description: Git Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Git Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Source Control
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Review Standards
+* Deployment Standards
+
+**Related Standards**
+
+* Documentation Standards
+* Testing Standards
+* Architecture Standards
+* Project Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the source control engineering standards for the hubIO platform.
+
+Its purpose is to establish consistent principles for managing source code, preserving engineering history, and enabling safe collaboration while supporting long-term product evolution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Source control philosophy
+* Repository integrity
+* Change management
+* Collaboration principles
+* Source control governance
+* Repository evolution
+
+It intentionally excludes Git commands, branching workflows, repository hosting platforms, merge strategies, and implementation-specific version control techniques, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to source control, ensuring every change contributes to a reliable, understandable, and maintainable engineering history.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Review Standards
+* Deployment Standards
+* Testing Standards
+* Project Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Source control architecture
+* Repository integrity
+* Change management
+* Collaboration standards
+* Source control governance
+
+It does not define Git commands, repository platforms, branching implementations, or pull request tooling.
+
+---
+
+# Source Control Philosophy
+
+Source control preserves the engineering history of the platform.
+
+Its responsibility is to provide a trustworthy record of how the system evolves while enabling engineers to collaborate safely and confidently.
+
+Every change should improve the product while preserving the integrity of its history.
+
+The repository represents the collective knowledge of the engineering team rather than the work of individual contributors.
+
+---
+
+# Source Control Design Principles
+
+Every source control decision should prioritize:
+
+* Engineering clarity over development speed
+* Repository integrity over local convenience
+* Collaborative ownership over individual preference
+* Incremental evolution over disruptive change
+* Long-term maintainability over short-term efficiency
+
+The repository should communicate engineering intent rather than merely store source code.
+
+---
+
+# Change Management
+
+Every change should represent a meaningful engineering improvement.
+
+Changes should remain understandable, independently reviewable, and aligned with business capabilities.
+
+Large engineering initiatives should evolve through a sequence of coherent changes rather than a single disruptive revision.
+
+The repository should tell the story of how the platform evolved.
+
+---
+
+# Repository Integrity
+
+The repository should remain a reliable representation of the current product.
+
+Source history should preserve engineering decisions while maintaining confidence that every accepted change contributes positively to the platform.
+
+Repository integrity strengthens collaboration, troubleshooting, and long-term maintainability.
+
+---
+
+# Collaborative Ownership
+
+The repository belongs to the engineering organization rather than individual developers.
+
+Engineers contribute collectively toward a shared product.
+
+Collaboration should improve architectural consistency while reducing isolated implementation decisions.
+
+Shared ownership encourages continuous improvement across the entire platform.
+
+---
+
+# Engineering Traceability
+
+Engineering history should allow future teams to understand why meaningful changes occurred.
+
+Traceability should preserve the relationship between:
+
+* Business objectives
+* Engineering decisions
+* Architectural evolution
+* Product improvements
+
+Engineering intent should remain understandable long after implementation details change.
+
+---
+
+# Source Control Consistency
+
+Equivalent engineering changes should follow consistent collaboration principles.
+
+Consistency should be maintained across:
+
+* Change scope
+* Repository organization
+* Review expectations
+* Engineering terminology
+* Historical representation
+
+Consistent practices improve collaboration while strengthening repository quality.
+
+---
+
+# Repository Evolution
+
+Source control practices should evolve alongside the engineering organization.
+
+New collaboration models should strengthen existing engineering principles rather than introduce fragmented development practices.
+
+Repository evolution should simplify collaboration while preserving engineering history.
+
+---
+
+# Source Control Governance
+
+Source control decisions should be intentional.
+
+Before introducing significant repository changes, evaluate:
+
+* Does this improve engineering collaboration?
+* Does it preserve repository integrity?
+* Can existing repository organization support this change?
+* Will future engineers understand this history?
+* Does it strengthen long-term maintainability?
+
+The repository should become increasingly coherent as the platform evolves.
+
+---
+
+# Source Control Quality Gates
+
+Source control remains healthy when:
+
+* Engineering history remains understandable.
+* Repository integrity is preserved.
+* Changes remain meaningful and independently reviewable.
+* Collaboration reinforces shared ownership.
+* Engineering decisions remain traceable.
+* Repository organization evolves consistently.
+* Source control strengthens long-term maintainability.
+* Source control decisions remain aligned with the Engineering Constitution.
+
+This document defines the source control engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

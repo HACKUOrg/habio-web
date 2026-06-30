@@ -2,6 +2,15 @@
   "plugins": {
     "supabase": {
       "enabled": true
+    },
+    "stripe": {
+      "enabled": true
+    },
+    "vercel": {
+      "enabled": true
+    },
+    "superpowers": {
+      "enabled": true
     }
   }
 }

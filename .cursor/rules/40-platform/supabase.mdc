@@ -1,0 +1,256 @@
+---
+description: Supabase Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Supabase Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Platform Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Architecture Standards
+* Database Standards
+
+**Related Standards**
+
+* Authentication Standards
+* Validation Standards
+* Storage Standards
+* Realtime Standards
+* Background Jobs Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the platform engineering standards for using Supabase throughout the hubIO platform.
+
+Its purpose is to establish consistent architectural principles for leveraging Supabase as the platform foundation while preserving business integrity, scalability, maintainability, and long-term flexibility.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Platform philosophy
+* Platform responsibilities
+* Platform boundaries
+* Service ownership
+* Platform governance
+* Platform evolution
+
+It intentionally excludes product-specific implementation, framework APIs, SQL definitions, authentication flows, storage implementation, and realtime configuration, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to the Supabase platform, ensuring platform capabilities remain aligned with business architecture rather than dictating it.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* Architecture Standards
+* Database Standards
+* API Standards
+* Security Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Supabase platform architecture
+* Platform service responsibilities
+* Platform boundaries
+* Platform governance
+* Platform evolution
+
+It does not define business logic, application workflows, frontend implementation, or infrastructure-specific configuration.
+
+---
+
+# Platform Philosophy
+
+Supabase is the operational platform supporting hubIO.
+
+Its responsibility is to provide foundational platform capabilities that enable business domains to operate reliably without becoming the center of the application architecture.
+
+Business capabilities should depend on architectural principles rather than vendor-specific features.
+
+Supabase should enable the platform, not define it.
+
+---
+
+# Platform Design Principles
+
+Every platform decision should prioritize:
+
+* Business architecture over platform convenience
+* Platform independence over vendor dependency
+* Consistency over feature-specific optimization
+* Explicit ownership over implicit coupling
+* Long-term maintainability over short-term implementation speed
+
+Platform capabilities should strengthen the architecture instead of becoming architectural boundaries themselves.
+
+---
+
+# Platform Responsibilities
+
+Supabase provides foundational services that support business capabilities.
+
+Platform responsibilities include:
+
+* Identity infrastructure
+* Persistent data services
+* Object storage
+* Realtime communication
+* Platform automation
+* Secure service execution
+
+Business workflows should orchestrate these capabilities rather than becoming tightly coupled to individual platform services.
+
+---
+
+# Platform Boundaries
+
+Platform services should remain infrastructure responsibilities.
+
+Business domains should interact with platform capabilities through well-defined architectural boundaries instead of directly depending on implementation details.
+
+Clear boundaries improve portability, maintainability, and engineering confidence.
+
+Platform implementation should remain replaceable without redefining business architecture.
+
+---
+
+# Service Ownership
+
+Every platform capability should have a clearly defined responsibility.
+
+Authentication, storage, database services, realtime communication, and background execution should remain independent platform concerns.
+
+Business logic should coordinate platform capabilities without transferring business ownership into platform services.
+
+Ownership should remain aligned with the domain architecture.
+
+---
+
+# Business Independence
+
+Business capabilities should remain independent from vendor-specific behavior.
+
+Platform features should enhance developer productivity while preserving architectural flexibility.
+
+The application should describe business operations using domain language rather than platform terminology.
+
+Business architecture should remain stable even if platform implementation evolves.
+
+---
+
+# Platform Consistency
+
+Equivalent platform capabilities should be used consistently throughout the product.
+
+Platform responsibilities should remain predictable across every business domain.
+
+Consistency improves maintainability while reducing unnecessary architectural variation.
+
+Shared platform services should reinforce common engineering practices rather than encourage isolated implementation patterns.
+
+---
+
+# Platform Evolution
+
+Platform capabilities will continue to evolve.
+
+New platform features should be adopted only when they strengthen existing architectural principles, improve maintainability, or increase operational value.
+
+Technology adoption should remain intentional rather than feature-driven.
+
+Platform evolution should simplify engineering rather than increase dependency.
+
+---
+
+# Platform Governance
+
+Platform decisions should be intentional.
+
+Before adopting a new Supabase capability, evaluate:
+
+* Does this improve business architecture?
+* Does it strengthen platform consistency?
+* Can existing platform capabilities satisfy the requirement?
+* Will this increase unnecessary vendor coupling?
+* Does it improve long-term maintainability?
+
+Platform evolution should reinforce engineering principles rather than replace them.
+
+---
+
+# Supabase Quality Gates
+
+Platform architecture remains healthy when:
+
+* Business architecture remains independent from platform implementation.
+* Platform responsibilities remain clearly defined.
+* Service ownership remains consistent.
+* Platform capabilities strengthen architectural boundaries.
+* Business domains remain loosely coupled to platform services.
+* Platform evolution improves maintainability.
+* Vendor dependency remains intentional and controlled.
+* Platform decisions remain aligned with the Engineering Constitution.
+
+This document defines the Supabase engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

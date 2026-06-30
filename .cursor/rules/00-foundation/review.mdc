@@ -1,0 +1,419 @@
+---
+description: Review Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Review Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Engineering Quality
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Project Standards
+* Product Standards
+
+**Related Standards**
+
+* Architecture Standards
+* Frontend Standards
+* Database Standards
+* Security Standards
+* Testing Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the engineering review standards that every implementation must satisfy before it is considered complete.
+
+Its purpose is to ensure that all generated code, documentation, and architectural decisions consistently meet the quality expectations established by the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Engineering review process
+* Review categories
+* Quality expectations
+* Production readiness criteria
+* Definition of review completion
+
+It intentionally excludes implementation guidance, which belongs to the relevant Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It translates constitutional engineering principles into a practical review process that verifies implementation quality before completion.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Project Standards
+* Product Standards
+* Architecture Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Engineering review process
+* Quality evaluation
+* Production readiness verification
+* Review consistency
+
+It does not define implementation approaches or engineering architecture.
+
+---
+
+# Review Philosophy
+
+Every implementation should be reviewed against the Engineering Constitution before it is considered complete.
+
+The objective of review is not to find faults, but to improve quality, maintain consistency, and reduce long-term maintenance costs.
+
+Review should verify both technical correctness and product alignment.
+
+Every review should answer a single question:
+
+> Is this implementation ready to become part of the production system?
+
+If the answer is uncertain, further refinement is required.
+
+
+---
+
+# Review Process
+
+Every implementation should follow a consistent review process before completion.
+
+The review process should verify that the implementation satisfies business requirements, engineering standards, architectural constraints, and production quality expectations.
+
+A typical review consists of the following stages:
+
+1. Business Validation
+2. Architecture Review
+3. Engineering Review
+4. User Experience Review
+5. Performance Review
+6. Security Review
+7. Production Readiness Verification
+
+Each stage should be completed before progressing to the next.
+
+Review should improve implementation quality rather than simply detect mistakes.
+
+---
+
+# Business Review
+
+Verify that the implementation solves the intended business problem.
+
+Review should confirm:
+
+* Business requirements are fully satisfied.
+* Product scope is respected.
+* Product principles remain consistent.
+* User workflows remain intuitive.
+* Future product growth is supported.
+* Business terminology remains consistent.
+
+An implementation that works technically but fails the business objective is considered incomplete.
+
+---
+
+# Architecture Review
+
+Verify that the implementation follows the architectural standards of the project.
+
+Review should confirm:
+
+* Architectural boundaries are respected.
+* Dependencies remain appropriate.
+* Layer responsibilities remain clear.
+* Multi-tenant assumptions remain valid.
+* Business logic is correctly separated.
+* Shared components are reused whenever appropriate.
+
+Architectural consistency is more valuable than short-term implementation convenience.
+
+---
+
+# User Interface Review
+
+Review the visual quality of the implementation.
+
+Verify:
+
+* Visual hierarchy
+* Layout consistency
+* Spacing
+* Typography
+* Component consistency
+* Color usage
+* Responsive behavior
+* Loading states
+* Empty states
+* Error states
+* Permission states
+
+Every interface should feel like part of the same product.
+
+---
+
+# User Experience Review
+
+Review the usability of the implementation.
+
+Verify:
+
+* Primary actions are immediately obvious.
+* User workflows remain efficient.
+* Navigation is intuitive.
+* Cognitive load is minimized.
+* Important information is easy to discover.
+* User feedback is clear and timely.
+
+Engineering decisions should improve user experience rather than increase implementation complexity.
+
+---
+
+# Accessibility Review
+
+Accessibility is a fundamental aspect of engineering quality and should never be treated as an optional enhancement.
+
+Review should verify:
+
+* Keyboard accessibility
+* Visible focus indicators
+* Semantic HTML
+* ARIA usage where appropriate
+* Color contrast
+* Touch target sizing
+* Screen reader compatibility
+* Accessible form validation
+
+Every feature should remain usable regardless of a user's input method or accessibility requirements.
+
+---
+
+# Responsive Review
+
+Every supported screen size should provide a complete and usable experience.
+
+Review should verify:
+
+* Desktop usability
+* Tablet usability
+* Mobile usability
+* Responsive layouts
+* Adaptive navigation
+* Readable typography
+* Appropriate spacing
+* Viewport-safe dialogs
+* Scroll behavior
+* Usable data tables
+
+Responsive behavior should preserve usability rather than simply resize the interface.
+
+---
+
+# Performance Review
+
+Review should identify implementation choices that negatively affect application performance.
+
+Verify:
+
+* Rendering efficiency
+* Client component usage
+* Server component opportunities
+* Bundle size
+* Network requests
+* Data fetching strategy
+* Expensive computations
+* Lazy loading opportunities
+* Resource optimization
+
+Performance optimization should focus on measurable user experience improvements rather than premature optimization.
+
+---
+
+# Security Review
+
+Every implementation should be reviewed with a security-first mindset.
+
+Verify:
+
+* Authentication
+* Authorization
+* Input validation
+* Output encoding
+* Sensitive data handling
+* Server-side authorization
+* API protection
+* Database access control
+* Secret management
+* Principle of least privilege
+
+Client-side validation should never be considered sufficient protection.
+
+---
+
+# Code Quality Review
+
+Review should evaluate long-term maintainability rather than immediate functionality.
+
+Verify:
+
+* Readability
+* Naming consistency
+* Separation of concerns
+* Appropriate abstraction
+* Code duplication
+* Component responsibility
+* Reusability
+* Simplicity
+* Testability
+* Maintainability
+
+Every implementation should be understandable without requiring additional explanation.
+
+Readable code should always be preferred over clever code.
+
+---
+
+# Review Quality Gates
+
+An implementation is considered review-complete only when all applicable review categories satisfy the expected engineering standards.
+
+Every review should verify that:
+
+* Business objectives are satisfied.
+* Product principles remain consistent.
+* Architectural boundaries are respected.
+* User experience remains intuitive.
+* Accessibility requirements are considered.
+* Responsive behavior is verified.
+* Performance remains acceptable.
+* Security risks have been addressed.
+* Code quality meets long-term maintainability expectations.
+* Relevant Engineering Standards have been followed.
+
+If any applicable review category fails, the implementation should return to refinement before approval.
+
+---
+
+# Production Readiness
+
+Production readiness represents the minimum quality required before an implementation becomes part of the production system.
+
+Every production-ready implementation should include, when applicable:
+
+* Loading state
+* Empty state
+* Error state
+* Success feedback
+* Permission handling
+* Responsive layout
+* Accessibility support
+* Type safety
+* Validation
+* Logging
+* Error handling
+* Reusable implementation
+* Maintainable architecture
+* Documentation updates
+
+Production readiness is achieved only when both technical quality and user experience meet the expectations defined by the Engineering Standards.
+
+---
+
+# Review Completion
+
+A review is complete only when all applicable Engineering Standards have been satisfied.
+
+Review completion requires confirmation that:
+
+* The implementation fulfills the requested requirements.
+* No constitutional principles have been violated.
+* Repository conventions are respected.
+* Product direction remains consistent.
+* Architectural integrity is preserved.
+* No critical engineering concerns remain unresolved.
+
+Review completion indicates engineering confidence, not merely task completion.
+
+---
+
+# AI Review Responsibilities
+
+Before completing any implementation, AI should perform a complete internal review.
+
+The review should:
+
+* Evaluate the implementation against all applicable Engineering Standards.
+* Detect opportunities for simplification.
+* Remove unnecessary complexity.
+* Improve consistency.
+* Resolve quality concerns before presenting the result.
+
+AI should continuously optimize for implementation quality rather than generation speed.
+
+Review is an integral part of implementation, not a separate activity performed afterward.
+
+---
+
+# Closing Principle
+
+Engineering quality is measured by the maintainability, reliability, and consistency of the final implementation rather than the speed at which it was produced.
+
+Every implementation should be reviewed as if it will become a permanent part of the product.
+
+Deliver only work that is ready to be maintained, extended, and deployed with confidence.

@@ -1,0 +1,256 @@
+---
+description: Integrations Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Integrations Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Integration Architecture
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* API Standards
+* Security Standards
+
+**Related Standards**
+
+* Authentication Standards
+* Background Jobs Standards
+* Realtime Standards
+* Notifications Standards
+* LINE OA Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the integration engineering standards for the hubIO platform.
+
+Its purpose is to establish architectural principles for connecting hubIO with external systems while preserving business integrity, security, scalability, and long-term maintainability.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Integration philosophy
+* Integration architecture
+* System boundaries
+* External communication
+* Integration governance
+* Integration evolution
+
+It intentionally excludes communication protocols, third-party SDKs, authentication providers, webhooks, and implementation-specific integration technologies, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to external system communication, ensuring integrations strengthen business capabilities without compromising architectural boundaries.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+2. Engineering Glossary
+
+Recommended:
+
+* API Standards
+* Security Standards
+* Authentication Standards
+* Background Jobs Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Integration architecture
+* External system boundaries
+* Integration consistency
+* Integration governance
+* Platform interoperability
+
+It does not define third-party APIs, communication technologies, provider-specific implementation, or infrastructure configuration.
+
+---
+
+# Integration Philosophy
+
+Integrations extend business capabilities.
+
+Their responsibility is to enable hubIO to collaborate with external platforms while preserving ownership of its own business domain.
+
+External systems should enhance operational workflows without becoming the source of business architecture.
+
+The platform should remain in control of its business behavior regardless of external dependencies.
+
+---
+
+# Integration Design Principles
+
+Every integration decision should prioritize:
+
+* Business ownership over provider capabilities
+* Stable contracts over implementation convenience
+* Loose coupling over direct dependency
+* Resilience over optimistic communication
+* Long-term maintainability over provider-specific optimization
+
+Integrations should strengthen the platform without increasing architectural fragility.
+
+---
+
+# System Boundaries
+
+Every integration crosses an architectural boundary.
+
+Boundary responsibilities should clearly define:
+
+* What business capability is being extended.
+* Which system owns the business data.
+* Which platform is responsible for each operation.
+* How trust is established between systems.
+
+Clear boundaries preserve architectural independence while reducing operational risk.
+
+---
+
+# Business Ownership
+
+Business decisions should always remain within hubIO.
+
+External systems may contribute information, perform specialized tasks, or deliver services, but they should not become the authoritative owner of hubIO's business rules.
+
+Ownership should remain explicit regardless of the number of connected systems.
+
+---
+
+# Communication Principles
+
+Communication between systems should be intentional.
+
+Every interaction should communicate meaningful business intent rather than exposing internal implementation details.
+
+External communication should reinforce architectural contracts while remaining understandable to both systems.
+
+Integration should always occur through stable and well-defined boundaries.
+
+---
+
+# Reliability
+
+Integrations should tolerate external uncertainty.
+
+External systems may become unavailable, delayed, or behave unexpectedly.
+
+The architecture should preserve business continuity whenever practical without assuming external availability.
+
+Reliable integrations reduce operational disruption while strengthening platform resilience.
+
+---
+
+# Integration Consistency
+
+Equivalent integrations should follow consistent architectural principles.
+
+Consistency should be maintained across:
+
+* Business terminology
+* Communication boundaries
+* Trust relationships
+* Operational expectations
+* Failure handling
+
+Consistent integrations simplify engineering while improving maintainability.
+
+---
+
+# Integration Evolution
+
+Integration architecture should evolve alongside business capabilities.
+
+New external systems should strengthen existing integration principles rather than introduce provider-specific architectural models.
+
+Platform evolution should preserve consistency while expanding interoperability.
+
+Business architecture should remain independent of vendor ecosystems.
+
+---
+
+# Integration Governance
+
+Integration decisions should be intentional.
+
+Before introducing a new external integration, evaluate:
+
+* Does this strengthen a business capability?
+* Does hubIO retain ownership of business rules?
+* Does this preserve architectural boundaries?
+* Can existing integrations satisfy the requirement?
+* Will future engineers understand the integration model?
+
+Integrations should become more cohesive over time rather than increasingly provider-specific.
+
+---
+
+# Integration Quality Gates
+
+Integration architecture remains healthy when:
+
+* Business ownership remains within hubIO.
+* Architectural boundaries remain clearly defined.
+* External communication preserves stable contracts.
+* Integrations remain resilient to external failures.
+* Equivalent integrations follow consistent principles.
+* Platform interoperability evolves intentionally.
+* Vendor dependency remains controlled.
+* Integration decisions remain aligned with the Engineering Constitution.
+
+This document defines the integration engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

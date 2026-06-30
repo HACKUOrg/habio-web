@@ -1,0 +1,256 @@
+---
+description: Forms Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Forms Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Form Experience
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Frontend Standards
+* UX Standards
+
+**Related Standards**
+
+* Components Standards
+* Validation Standards
+* Accessibility Standards
+* Dashboard Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the form engineering standards for the hubIO platform.
+
+Its purpose is to ensure every form supports efficient task completion, minimizes user effort, and provides a predictable experience across all operational workflows.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Form philosophy
+* Form architecture
+* Information flow
+* Validation principles
+* User guidance
+* Form governance
+
+It intentionally excludes implementation details, validation libraries, reusable input components, styling conventions, and framework-specific behavior, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to user input, ensuring forms remain understandable, reliable, and aligned with long-term product maintainability.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Frontend Standards
+* UX Standards
+* Components Standards
+* Accessibility Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Form architecture
+* User input experience
+* Validation philosophy
+* Information organization
+* Form consistency
+* Form governance
+
+It does not define reusable inputs, validation implementation, field styling, or application-specific workflows.
+
+---
+
+# Form Philosophy
+
+Forms are the primary mechanism through which users create, update, and manage business information.
+
+Their responsibility is to guide users toward successful task completion while minimizing uncertainty, unnecessary effort, and opportunities for error.
+
+Well-designed forms should feel predictable, supportive, and efficient regardless of business domain or workflow complexity.
+
+The interface should adapt to the user's workflow rather than forcing users to adapt to the system.
+
+---
+
+# Form Design Principles
+
+Every form should prioritize:
+
+* Task completion over data collection
+* User understanding over technical structure
+* Guidance over instruction
+* Simplicity over field density
+* Confidence over speed
+
+Forms should reduce cognitive effort by presenting information in a logical sequence that reflects real operational workflows.
+
+---
+
+# Form Architecture
+
+Forms should organize information according to business processes rather than database structure.
+
+Information should progress naturally from one decision to the next, allowing users to complete tasks without unnecessary interruption.
+
+Complex business workflows should be divided into understandable sections that maintain context while reducing perceived complexity.
+
+Every form should communicate a clear beginning, progression, and completion.
+
+---
+
+# User Guidance
+
+Forms should continuously guide users throughout the completion process.
+
+Users should always understand:
+
+* What information is required.
+* Why the information is needed.
+* What action should be taken next.
+* Whether progress has been successfully recorded.
+
+Guidance should be embedded naturally within the interface instead of relying on extensive instructions.
+
+---
+
+# Validation Experience
+
+Validation exists to improve user confidence rather than prevent submission.
+
+Validation should identify issues as early as practical while avoiding unnecessary interruption.
+
+Every validation outcome should clearly communicate:
+
+* What requires attention.
+* Why the issue occurred.
+* How the user can successfully continue.
+
+Validation should support successful completion instead of acting as a barrier.
+
+---
+
+# Form Consistency
+
+Equivalent forms throughout the platform should provide consistent interaction patterns.
+
+Consistency should be maintained across:
+
+* Information organization
+* User guidance
+* Validation behavior
+* Feedback
+* Completion flow
+
+Predictable forms reduce learning time and increase operational efficiency.
+
+---
+
+# Form Completion
+
+Completing a form should represent the successful completion of a business task rather than simply submitting data.
+
+Users should always understand the outcome of their actions and the next logical step within the workflow.
+
+Successful completion should reinforce confidence that the intended business operation has been completed correctly.
+
+---
+
+# Form Evolution
+
+Forms should evolve alongside business workflows while preserving familiar interaction patterns.
+
+Additional business requirements should strengthen existing structures rather than introduce unnecessary complexity.
+
+Continuous refinement should simplify user input instead of increasing the amount of information users must provide.
+
+---
+
+# Form Governance
+
+Form evolution should be intentional.
+
+Before introducing new fields, validation rules, or interaction patterns, evaluate:
+
+* Does this information provide operational value?
+* Can existing information satisfy the requirement?
+* Will this reduce or increase user effort?
+* Does it remain consistent with existing forms?
+* Will users understand the purpose without additional explanation?
+
+Forms should become easier to complete over time rather than progressively more complicated.
+
+---
+
+# Forms Quality Gates
+
+Form engineering remains healthy when:
+
+* Business workflows remain clearly represented.
+* Information follows logical operational order.
+* User guidance remains intuitive.
+* Validation supports successful completion.
+* Form interactions remain consistent across the platform.
+* User effort remains proportional to business value.
+* Forms evolve without unnecessary complexity.
+* Form decisions remain aligned with the Engineering Constitution.
+
+This document defines the form engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

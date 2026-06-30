@@ -1,0 +1,3090 @@
+---
+description: Database Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Database Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Database
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Project Standards
+* Product Standards
+* Architecture Standards
+
+**Related Standards**
+
+* API Standards
+* Security Standards
+* Performance Standards
+* Supabase Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the database standards that govern how hubIO models, stores, protects, and evolves business data.
+
+Its purpose is to establish a consistent database architecture that preserves business integrity, supports multi-tenant SaaS, and enables safe long-term evolution while remaining aligned with the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Domain modeling
+* Entity design
+* Relationship design
+* Database architecture
+* Multi-tenant schema
+* Transactions
+* Data integrity
+* Performance
+* Schema evolution
+* Database governance
+
+It intentionally excludes implementation-specific application logic, engineering review procedures, and coding conventions, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to database architecture and schema design, ensuring that every persistence decision preserves business integrity, tenant isolation, and long-term maintainability.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Project Standards
+* Product Standards
+* Architecture Standards
+* Review Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Domain modeling
+* Schema architecture
+* Entity relationships
+* Data integrity
+* Tenant isolation
+* Transaction design
+* Schema evolution
+* Database governance
+
+It does not define application business workflows, repository conventions, or implementation details.
+
+---
+
+# Core Principles
+
+## Business Before Tables
+
+Never begin database design by thinking about tables.
+
+Begin by understanding:
+
+Business processes.
+
+Business language.
+
+Business ownership.
+
+Business constraints.
+
+Tables are the implementation of business concepts.
+
+---
+
+## Model Reality
+
+Entities should represent real business concepts.
+
+Examples:
+
+Organization
+
+Property
+
+Building
+
+Floor
+
+Room
+
+Occupancy
+
+Tenant
+
+Maintenance Ticket
+
+Invoice
+
+Payment
+
+Notification
+
+Audit Log
+
+Avoid creating entities that only exist to simplify implementation.
+
+---
+
+## One Entity, One Responsibility
+
+Every table should represent exactly one business concept.
+
+Do not combine unrelated concepts into a single table.
+
+Large tables usually indicate unclear domain boundaries.
+
+---
+
+## Stable Data Model
+
+Database schemas should evolve slower than application code.
+
+Frequent schema redesign usually indicates poor domain understanding.
+
+Design for long-term business stability.
+
+---
+
+## Source of Truth
+
+Every business fact should have exactly one authoritative location.
+
+Avoid storing identical information in multiple tables.
+
+Instead:
+
+Store facts once.
+
+Derive everything else.
+
+Data duplication increases inconsistency risk.
+
+---
+
+## Data Represents Facts
+
+The database stores facts.
+
+It should not store:
+
+Presentation.
+
+Formatting.
+
+UI state.
+
+Display preferences.
+
+Calculated values that can be derived.
+
+Keep persistent data independent from user interfaces.
+
+---
+
+## Explicit Relationships
+
+Relationships should always be intentional.
+
+Avoid implicit relationships based on:
+
+Names.
+
+Strings.
+
+Conventions.
+
+Application logic.
+
+Relationships should be enforced by the database whenever possible.
+
+---
+
+## Integrity First
+
+The database should reject invalid business states.
+
+Never depend solely on application code to preserve integrity.
+
+Use:
+
+Constraints.
+
+Foreign keys.
+
+Unique indexes.
+
+Checks.
+
+Transactions.
+
+Integrity belongs inside the database.
+
+---
+
+## Consistency Before Performance
+
+Incorrect data is worse than slow data.
+
+Never sacrifice business correctness for small performance gains.
+
+Optimize only after preserving integrity.
+
+---
+
+## Simplicity
+
+Prefer simple schemas.
+
+Simple schemas are easier to:
+
+Understand.
+
+Maintain.
+
+Query.
+
+Optimize.
+
+Complex schemas should only exist when justified by business complexity.
+
+---
+
+# Domain Modeling
+
+Database design begins with the domain.
+
+Identify:
+
+Business entities.
+
+Business relationships.
+
+Business ownership.
+
+Business invariants.
+
+Only after understanding the domain should implementation begin.
+
+---
+
+# Business Language
+
+Table names should reflect business vocabulary.
+
+Developers.
+
+Designers.
+
+Support teams.
+
+Product owners.
+
+All should recognize database terminology.
+
+Avoid technical naming when business terminology exists.
+
+---
+
+# Domain Ownership
+
+Every entity belongs to exactly one domain.
+
+Examples:
+
+Authentication owns Users.
+
+Properties own Buildings.
+
+Rooms own Occupancies.
+
+Billing owns Invoices.
+
+Maintenance owns Tickets.
+
+Notifications own Messages.
+
+Cross-domain ownership should never exist.
+
+---
+
+# Business Invariants
+
+Identify rules that must always remain true.
+
+Examples:
+
+Every Room belongs to exactly one Property.
+
+Every Occupancy belongs to one Room.
+
+Every Invoice belongs to one Tenant.
+
+Every Payment belongs to one Invoice.
+
+Every Maintenance Ticket belongs to one Room.
+
+These invariants should be enforced through schema design whenever possible.
+
+---
+
+# Database Responsibilities
+
+The database is responsible for:
+
+Persisting business facts.
+
+Protecting integrity.
+
+Maintaining relationships.
+
+Supporting transactions.
+
+Enforcing constraints.
+
+Providing durable storage.
+
+The database is not responsible for:
+
+Rendering UI.
+
+Business workflows.
+
+Presentation.
+
+Authorization decisions.
+
+Application behavior.
+
+Responsibilities should remain clearly separated.
+
+---
+
+# Database Architecture
+
+The hubIO database follows a relational, domain-driven architecture designed around business ownership rather than application structure.
+
+The schema should remain:
+
+- Predictable
+- Explicit
+- Normalized by default
+- Multi-tenant aware
+- Evolution-friendly
+
+Every schema decision should strengthen business integrity while remaining understandable for future engineers.
+
+The database should evolve through incremental changes rather than large structural redesigns.
+
+---
+
+# Long-Term Thinking
+
+Schema changes become increasingly expensive over time.
+
+Design every table assuming:
+
+Millions of rows.
+
+Years of historical data.
+
+Multiple developers.
+
+Additional product modules.
+
+Future integrations.
+
+The best schemas require minimal structural change as the product evolves.
+
+---
+
+# Entity Design
+
+An entity represents a business concept with its own lifecycle.
+
+Every entity should answer one business question.
+
+Examples:
+
+Organization
+
+"Who owns the system?"
+
+Property
+
+"What physical location is managed?"
+
+Room
+
+"Where does a tenant stay?"
+
+Occupancy
+
+"Who currently occupies a room?"
+
+Invoice
+
+"What financial obligation exists?"
+
+Maintenance Ticket
+
+"What repair work must be completed?"
+
+Avoid creating entities solely because the UI requires them.
+
+The database models the business, not the interface.
+
+---
+
+# Table Responsibilities
+
+Each table should represent one concept.
+
+Avoid combining unrelated information.
+
+Examples of poor design:
+
+Tenant + Invoice
+
+Room + Maintenance
+
+Property + Settings
+
+Instead create independent entities connected through relationships.
+
+---
+
+# Table Lifecycle
+
+Every table should have its own lifecycle.
+
+Questions include:
+
+When is it created?
+
+When is it updated?
+
+Can it be archived?
+
+Can it be deleted?
+
+Can history exist?
+
+If multiple concepts have different lifecycles, they should probably be separate tables.
+
+---
+
+# Primary Keys
+
+Primary keys should be:
+
+Stable.
+
+Immutable.
+
+Unique.
+
+Meaningless.
+
+Never encode business information into primary keys.
+
+Avoid identifiers such as:
+
+ROOM-001
+
+INV-2026-00001
+
+BKK-ROOM-15
+
+These are business identifiers rather than database identifiers.
+
+Generate human-readable identifiers separately.
+
+Primary keys should never require updates.
+
+---
+
+# Identifier Strategy
+
+Use UUIDs as the default identifier strategy.
+
+Reasons include:
+
+Distributed systems.
+
+Client-side generation.
+
+Security through non-sequential identifiers.
+
+Safer public exposure.
+
+Better support for future integrations.
+
+Business identifiers should remain independent from internal identifiers.
+
+---
+
+# Natural Keys
+
+Natural keys may exist as business constraints.
+
+Examples:
+
+Government ID.
+
+Tax Number.
+
+Email Address.
+
+Room Number (within a property).
+
+Natural keys should not replace surrogate primary keys.
+
+Business values can change.
+
+Primary keys should not.
+
+---
+
+# Foreign Keys
+
+Relationships should always be explicit.
+
+Every foreign key should describe ownership or association.
+
+Examples:
+
+property_id
+
+room_id
+
+tenant_id
+
+occupancy_id
+
+invoice_id
+
+Foreign keys should never be optional unless the business genuinely allows missing relationships.
+
+---
+
+# Relationship Design
+
+Design relationships around ownership.
+
+Examples:
+
+Organization
+
+↓
+
+Property
+
+↓
+
+Building
+
+↓
+
+Floor
+
+↓
+
+Room
+
+↓
+
+Occupancy
+
+↓
+
+Invoice
+
+Ownership should be obvious from the schema.
+
+---
+
+# Cardinality
+
+Identify relationship cardinality before implementation.
+
+Examples:
+
+One Property → Many Rooms
+
+One Room → Many Maintenance Tickets
+
+One Tenant → Many Invoices
+
+One Invoice → Many Payments
+
+Incorrect cardinality creates architectural debt.
+
+---
+
+# Many-to-Many Relationships
+
+Use junction tables explicitly.
+
+Avoid storing arrays of identifiers.
+
+Good:
+
+user_roles
+
+property_staff
+
+ticket_assignees
+
+Avoid:
+
+role_ids []
+
+assigned_users []
+
+Explicit relationships improve integrity.
+
+---
+
+# Optional Relationships
+
+Relationships should only be nullable when the business permits absence.
+
+Ask:
+
+Can this exist independently?
+
+If not, require the relationship.
+
+Nullable foreign keys should be intentional.
+
+---
+
+# Cascading Rules
+
+Deleting parent records should rarely delete business history.
+
+Prefer preserving historical records.
+
+Examples:
+
+Deleting a Property should not automatically remove:
+
+Invoices.
+
+Maintenance Tickets.
+
+Payments.
+
+Audit Logs.
+
+Use cascading deletes only for dependent records with no standalone business value.
+
+---
+
+# Constraints
+
+The database should enforce business invariants whenever possible.
+
+Use:
+
+PRIMARY KEY
+
+FOREIGN KEY
+
+UNIQUE
+
+CHECK
+
+NOT NULL
+
+Constraints are preferable to application assumptions.
+
+---
+
+# Unique Constraints
+
+Use unique constraints to model business rules.
+
+Examples:
+
+One active occupancy per room.
+
+One email per organization.
+
+One room number within a property.
+
+One invoice number within a tenant.
+
+Uniqueness should reflect business reality.
+
+---
+
+# Check Constraints
+
+Use check constraints to prevent impossible states.
+
+Examples:
+
+Amount >= 0
+
+Capacity > 0
+
+End Date >= Start Date
+
+Discount <= Total
+
+Business rules should fail early.
+
+---
+
+# Required Columns
+
+Required data should be enforced by the schema.
+
+Avoid relying on application validation alone.
+
+NOT NULL communicates business intent.
+
+---
+
+# Naming Philosophy
+
+Names should describe business meaning rather than implementation.
+
+Prefer:
+
+occupancy
+
+invoice
+
+maintenance_ticket
+
+Avoid:
+
+tbl_room
+
+data_room
+
+room_table
+
+tmp_room
+
+Meaningful names improve communication.
+
+---
+
+# Table Naming
+
+Use:
+
+Singular nouns.
+
+Lowercase.
+
+Snake case.
+
+Examples:
+
+property
+
+building
+
+room
+
+tenant
+
+occupancy
+
+invoice
+
+payment
+
+maintenance_ticket
+
+notification
+
+audit_log
+
+Consistency is more important than personal preference.
+
+---
+
+# Column Naming
+
+Columns should remain predictable.
+
+Primary Key
+
+id
+
+Foreign Keys
+
+property_id
+
+tenant_id
+
+room_id
+
+invoice_id
+
+Boolean Fields
+
+is_active
+
+is_archived
+
+is_default
+
+Timestamp Fields
+
+created_at
+
+updated_at
+
+deleted_at
+
+Business names should remain explicit.
+
+---
+
+# Reserved Names
+
+Avoid ambiguous column names.
+
+Avoid:
+
+data
+
+value
+
+type
+
+info
+
+object
+
+Prefer:
+
+status
+
+payment_method
+
+ticket_priority
+
+maintenance_category
+
+invoice_total
+
+Specific names improve readability.
+
+---
+
+# Enum Strategy
+
+Enums should model stable business concepts.
+
+Good examples:
+
+Ticket Status
+
+Invoice Status
+
+Room Status
+
+Payment Method
+
+Avoid enums for frequently changing values.
+
+Unstable business concepts belong in reference tables.
+
+---
+
+# Metadata
+
+Do not place unrelated business data inside generic JSON columns.
+
+JSON should supplement structured data rather than replace it.
+
+Frequently queried information belongs in explicit columns.
+
+---
+
+# Timestamps
+
+Business entities should generally include:
+
+created_at
+
+updated_at
+
+Some entities additionally require:
+
+deleted_at
+
+completed_at
+
+cancelled_at
+
+approved_at
+
+paid_at
+
+Timestamps describe business events rather than technical implementation.
+
+---
+
+# Immutable Records
+
+Some records should never change after creation.
+
+Examples:
+
+Audit Logs.
+
+Payment Records.
+
+Historical Events.
+
+Completed Financial Transactions.
+
+Immutable records improve traceability.
+
+When corrections are required, create compensating records rather than rewriting history.
+
+---
+
+# Multi-Tenant Database Architecture
+
+hubIO is a multi-tenant SaaS platform.
+
+The database must be designed under the assumption that multiple independent organizations share the same infrastructure.
+
+Tenant isolation is a non-negotiable architectural requirement.
+
+Every schema decision should preserve tenant boundaries.
+
+The database should make cross-tenant data leakage structurally difficult.
+
+---
+
+# Row-Level Security Principles
+
+The database is designed to support Row-Level Security (RLS) as the primary mechanism for tenant isolation.
+
+Every tenant-scoped table should expose a clear ownership path that enables efficient security policies.
+
+Security policies should be:
+
+- Explicit
+- Predictable
+- Easy to audit
+- Easy to maintain
+
+Database schema should simplify security policies rather than complicate them.
+
+Security should emerge naturally from the ownership model.
+
+---
+
+# Tenant Hierarchy
+
+Every business entity ultimately belongs to one Organization.
+
+The ownership hierarchy is:
+
+Organization
+
+↓
+
+Property
+
+↓
+
+Building
+
+↓
+
+Floor
+
+↓
+
+Room
+
+↓
+
+Occupancy
+
+↓
+
+Tenant
+
+↓
+
+Invoice
+
+↓
+
+Payment
+
+↓
+
+Maintenance Ticket
+
+↓
+
+Notification
+
+↓
+
+Audit Log
+
+Ownership should always be traceable.
+
+Every record should have a clear ownership path back to its Organization.
+
+---
+
+# Organization Ownership
+
+The Organization is the root business entity.
+
+Organizations own:
+
+Properties
+
+Users
+
+Staff
+
+Settings
+
+Billing Configuration
+
+Integrations
+
+Feature Flags
+
+Audit Logs
+
+An Organization should never directly access another Organization's resources.
+
+---
+
+# Tenant Context
+
+Every business operation executes within a tenant context.
+
+The current tenant should always be explicitly known before:
+
+Reading data.
+
+Creating records.
+
+Updating records.
+
+Deleting records.
+
+Running reports.
+
+Generating analytics.
+
+Executing background jobs.
+
+Implicit tenant assumptions are prohibited.
+
+---
+
+# Ownership Chain
+
+Every record must have an identifiable ownership chain.
+
+Example:
+
+Maintenance Ticket
+
+↓
+
+Room
+
+↓
+
+Floor
+
+↓
+
+Building
+
+↓
+
+Property
+
+↓
+
+Organization
+
+The ownership chain should never become ambiguous.
+
+Avoid orphan records.
+
+---
+
+# Tenant Scope
+
+Classify every table as one of the following.
+
+Global
+
+Shared across all organizations.
+
+Examples:
+
+Countries
+
+Currencies
+
+Languages
+
+System Feature Definitions
+
+Tenant
+
+Belongs to exactly one Organization.
+
+Examples:
+
+Properties
+
+Rooms
+
+Invoices
+
+Maintenance Tickets
+
+Audit Logs
+
+Reference
+
+Shared but read-only.
+
+Examples:
+
+Room Types
+
+Maintenance Categories
+
+Supported Payment Methods
+
+Table ownership should always be explicit.
+
+---
+
+# Organization Boundary
+
+Crossing organization boundaries requires explicit authorization.
+
+Queries should never accidentally return data from multiple organizations.
+
+Every tenant-scoped query should naturally include tenant isolation.
+
+Tenant filtering should become the default rather than an afterthought.
+
+---
+
+# Tenant Identifier Strategy
+
+Every tenant-scoped entity should include an explicit organization_id unless ownership is guaranteed through an immutable parent relationship.
+
+When ownership is indirect, ensure the relationship chain is short, clear, and enforceable.
+
+Avoid deep joins solely to determine tenant ownership.
+
+Optimize for correctness and clarity over minimal storage.
+
+---
+
+# Property Ownership
+
+Organizations may manage multiple Properties.
+
+Every Property owns:
+
+Buildings
+
+Floors
+
+Rooms
+
+Amenities
+
+Staff Assignments
+
+Operational Settings
+
+Properties should remain independent business units.
+
+Do not allow one Property's operational data to leak into another unless explicitly intended.
+
+---
+
+# Shared Reference Data
+
+Reference data should remain centralized.
+
+Examples:
+
+Country
+
+Language
+
+Currency
+
+Unit Types
+
+Maintenance Categories
+
+Reference data should never contain tenant-specific information.
+
+Reference tables should remain immutable or rarely changed.
+
+---
+
+# Tenant-Specific Configuration
+
+Business configuration belongs to the tenant.
+
+Examples:
+
+Invoice Prefix
+
+Tax Settings
+
+Branding
+
+Business Hours
+
+Notification Templates
+
+Automation Rules
+
+Feature Toggles
+
+Configurations should never be stored inside global tables.
+
+---
+
+# User Membership
+
+Users and Organizations have distinct responsibilities.
+
+A User represents an identity.
+
+Membership represents access.
+
+A single User may belong to multiple Organizations.
+
+Membership defines:
+
+Role.
+
+Permissions.
+
+Status.
+
+Invitations.
+
+Avoid embedding organization-specific information directly inside the User entity.
+
+---
+
+# Role Assignment
+
+Roles belong to Membership rather than User.
+
+Examples:
+
+Owner
+
+Property Manager
+
+Technician
+
+Housekeeper
+
+Accounting
+
+Administrator
+
+A user's permissions may differ across organizations.
+
+Authorization should evaluate membership rather than identity.
+
+---
+
+# Resource Ownership
+
+Every resource should have one clear owner.
+
+Examples:
+
+Room
+
+→ Property
+
+Invoice
+
+→ Occupancy
+
+Maintenance Ticket
+
+→ Room
+
+Notification
+
+→ Organization
+
+Audit Log
+
+→ Organization
+
+Ownership should never be inferred through unrelated relationships.
+
+---
+
+# Data Isolation
+
+Tenant isolation should be preserved at multiple layers.
+
+Database.
+
+Application.
+
+API.
+
+Authorization.
+
+Caching.
+
+Realtime.
+
+Storage.
+
+Logging.
+
+Isolation should never depend on a single protection mechanism.
+
+---
+
+# Row-Level Security Readiness
+
+Schema design should support Row-Level Security from the beginning.
+
+Avoid table structures that make ownership difficult to evaluate.
+
+Tenant ownership should be derivable using clear and efficient relationships.
+
+Security policies should remain understandable.
+
+---
+
+# Cross-Tenant Operations
+
+Some workflows legitimately span multiple tenants.
+
+Examples:
+
+Platform Analytics.
+
+System Monitoring.
+
+Internal Administration.
+
+Feature Rollout.
+
+Billing Platform.
+
+Such operations should remain isolated from tenant-facing application logic.
+
+Platform capabilities should never weaken tenant isolation.
+
+---
+
+# Audit Ownership
+
+Every audit record should identify:
+
+Organization.
+
+Actor.
+
+Action.
+
+Resource.
+
+Timestamp.
+
+Audit history should remain partitioned by tenant.
+
+Organizations should never access each other's audit records.
+
+---
+
+# File Ownership
+
+Uploaded files should belong to an identifiable business entity.
+
+Examples:
+
+Maintenance Photos
+
+Property Documents
+
+Invoices
+
+Contracts
+
+Identity Verification
+
+Every file should inherit tenant ownership from its parent resource.
+
+Avoid anonymous storage objects.
+
+---
+
+# Notification Ownership
+
+Notifications belong to business events.
+
+Each notification should identify:
+
+Organization.
+
+Recipient.
+
+Related Resource.
+
+Delivery Status.
+
+Timestamp.
+
+Notification history should remain tenant-isolated.
+
+---
+
+# Background Jobs
+
+Background jobs should execute within the correct tenant context.
+
+Examples:
+
+Generate Monthly Invoices.
+
+Send Payment Reminders.
+
+Archive Historical Data.
+
+Sync External Integrations.
+
+A background worker should never operate without an explicit tenant scope.
+
+---
+
+# Tenant Deletion
+
+Deleting an Organization is a business workflow rather than a database operation.
+
+Avoid cascading deletion of business history.
+
+Instead define an archival strategy.
+
+Business records often have legal, financial, or operational retention requirements.
+
+Deletion should preserve integrity while respecting retention policies.
+
+---
+
+# Tenant Integrity
+
+Before introducing any new table, answer:
+
+Who owns this entity?
+
+Does it belong to an Organization?
+
+Can ownership be traced?
+
+Can Row-Level Security evaluate ownership efficiently?
+
+Could this leak data across tenants?
+
+If ownership is unclear, the schema is incomplete.
+
+---
+
+# Tenant Isolation Principle
+
+Tenant isolation is not implemented through application code alone.
+
+It is designed into the schema, enforced through relationships, protected by security policies, and preserved throughout the entire lifecycle of the system.
+
+Every table should make tenant ownership obvious.
+
+---
+
+# Transactions and Data Consistency
+
+The database is responsible for preserving business integrity.
+
+Business operations should never leave the system in an inconsistent state.
+
+Every workflow should either:
+
+Complete successfully.
+
+Or
+
+Leave the system unchanged.
+
+Partial success is rarely acceptable.
+
+---
+
+# ACID Mindset
+
+Business-critical operations should preserve ACID properties whenever possible.
+
+Atomicity
+
+Complete all changes or none.
+
+Consistency
+
+Business rules remain valid before and after execution.
+
+Isolation
+
+Concurrent operations should not corrupt business data.
+
+Durability
+
+Committed data should survive failures.
+
+Every important business workflow should be evaluated against these principles.
+
+---
+
+# Transaction Boundaries
+
+Transactions should represent complete business operations rather than individual SQL statements.
+
+Examples:
+
+Tenant Move-In
+
+Should include:
+
+Create Occupancy
+
+Generate Initial Invoice
+
+Assign Default Permissions
+
+Create Audit Record
+
+Send Notification Event
+
+The workflow succeeds as one unit.
+
+---
+
+# Transaction Size
+
+Keep transactions as small as reasonably possible.
+
+Avoid:
+
+Long-running transactions.
+
+Waiting for user input.
+
+External API calls.
+
+File uploads.
+
+Email delivery.
+
+Realtime notifications.
+
+inside database transactions.
+
+Transactions should protect data, not workflows.
+
+---
+
+# Business Consistency
+
+Business consistency has higher priority than implementation convenience.
+
+Examples:
+
+A room cannot become occupied without creating an occupancy.
+
+An invoice cannot exist without a tenant.
+
+A payment cannot exceed the invoice balance.
+
+A completed maintenance ticket cannot return to "Pending" without a defined business rule.
+
+The database should prevent impossible business states.
+
+---
+
+# Eventual Consistency
+
+Not every workflow requires immediate consistency.
+
+Examples:
+
+Analytics.
+
+Email delivery.
+
+Push notifications.
+
+Search indexing.
+
+Activity feeds.
+
+Background synchronization.
+
+These may execute asynchronously.
+
+Business integrity should remain immediately consistent.
+
+Operational convenience may be eventually consistent.
+
+---
+
+# Concurrency
+
+Assume multiple users modify the same data simultaneously.
+
+Examples:
+
+Two managers assign the same room.
+
+Two technicians update the same maintenance ticket.
+
+Two accountants register the same payment.
+
+Concurrency is normal.
+
+Architecture should anticipate it.
+
+---
+
+# Lost Updates
+
+Avoid overwriting another user's work unintentionally.
+
+Prefer explicit concurrency strategies.
+
+Examples:
+
+Version columns.
+
+Updated timestamps.
+
+Optimistic locking.
+
+Conflict detection.
+
+Silent overwrites reduce trust.
+
+---
+
+# Idempotency
+
+Critical operations should be safe to retry.
+
+Examples:
+
+Invoice generation.
+
+Payment recording.
+
+Maintenance creation.
+
+Notification scheduling.
+
+Repeated execution should not duplicate business outcomes.
+
+Retry safety should be designed intentionally.
+
+---
+
+# Duplicate Prevention
+
+The database should prevent duplicate business events whenever possible.
+
+Examples:
+
+Duplicate invoice numbers.
+
+Duplicate active occupancy.
+
+Duplicate payment reference.
+
+Duplicate invitation.
+
+Use constraints before application logic.
+
+---
+
+# Referential Integrity
+
+Relationships should remain valid throughout the lifecycle of the data.
+
+Never allow:
+
+Invoices without tenants.
+
+Rooms without properties.
+
+Payments without invoices.
+
+Maintenance tickets without rooms.
+
+Foreign keys exist to protect business relationships.
+
+---
+
+# Soft Delete Strategy
+
+Business records should rarely disappear permanently.
+
+Soft delete preserves:
+
+History.
+
+Auditability.
+
+Recovery.
+
+Legal compliance.
+
+Business continuity.
+
+Deletion should usually mean:
+
+Inactive rather than removed.
+
+---
+
+# When to Use Soft Delete
+
+Soft delete is appropriate for:
+
+Properties.
+
+Rooms.
+
+Tenants.
+
+Maintenance Tickets.
+
+Invoices.
+
+Notifications.
+
+Staff Assignments.
+
+Avoid soft delete for:
+
+Temporary cache.
+
+Import staging tables.
+
+Derived data.
+
+Ephemeral records.
+
+---
+
+# Deletion Philosophy
+
+Deleting business history should be exceptional.
+
+Historical information often has:
+
+Financial value.
+
+Operational value.
+
+Legal value.
+
+Analytical value.
+
+Preserve history whenever practical.
+
+---
+
+# Record Lifecycle
+
+Every business entity should have a defined lifecycle.
+
+Typical stages:
+
+Created
+
+↓
+
+Active
+
+↓
+
+Updated
+
+↓
+
+Archived
+
+↓
+
+Deleted (optional)
+
+Lifecycle transitions should follow explicit business rules.
+
+---
+
+# Archiving
+
+Archiving differs from deletion.
+
+Archived records:
+
+Remain readable.
+
+Remain reportable.
+
+Remain auditable.
+
+Cannot participate in new business workflows.
+
+Archiving protects historical accuracy.
+
+---
+
+# Historical Accuracy
+
+Never rewrite historical business facts.
+
+Examples:
+
+Paid invoices.
+
+Completed maintenance.
+
+Historical occupancy.
+
+Completed payments.
+
+Corrections should create new business events rather than modifying historical truth.
+
+---
+
+# Auditing
+
+Important business actions should be permanently traceable.
+
+Examples:
+
+Created.
+
+Updated.
+
+Assigned.
+
+Approved.
+
+Cancelled.
+
+Completed.
+
+Deleted.
+
+Audit trails improve accountability.
+
+---
+
+# Audit Records
+
+Audit records should identify:
+
+Who performed the action.
+
+What changed.
+
+When it happened.
+
+Which resource changed.
+
+Which organization owns the record.
+
+Why the change occurred (when applicable).
+
+Audit logs should be append-only whenever possible.
+
+---
+
+# Immutable Business Events
+
+Certain business events should never be modified.
+
+Examples:
+
+Payments.
+
+Audit Logs.
+
+System Events.
+
+Completed Financial Transactions.
+
+Immutable records improve trust and reporting accuracy.
+
+---
+
+# Data Retention
+
+Every business entity should define its retention policy.
+
+Questions include:
+
+How long should records remain?
+
+Can they be archived?
+
+Can they be anonymized?
+
+Can they be permanently removed?
+
+Retention policies should satisfy both business and legal requirements.
+
+---
+
+# Recovery
+
+Assume mistakes happen.
+
+The database should support recovery from:
+
+Accidental deletion.
+
+Application bugs.
+
+Operational errors.
+
+Migration failures.
+
+Recovery capability is part of database design.
+
+---
+
+# Business Event Recording
+
+Think in terms of business events rather than row modifications.
+
+Examples:
+
+Tenant Moved In.
+
+Invoice Generated.
+
+Payment Received.
+
+Maintenance Completed.
+
+Room Vacated.
+
+Events explain business history more clearly than raw updates.
+
+---
+
+# Final Principle
+
+A correct database is not one that stores data.
+
+A correct database protects the truth of the business.
+
+Every transaction, constraint, relationship, and lifecycle decision should preserve that truth.
+
+---
+
+# Database Performance
+
+Performance is a consequence of good database design.
+
+Do not rely on indexes or hardware to compensate for poor schema design.
+
+The first optimization is always a correct data model.
+
+---
+
+# Performance Philosophy
+
+Optimize for correctness first.
+
+Optimize for simplicity second.
+
+Optimize for maintainability third.
+
+Optimize for performance last.
+
+Premature optimization creates unnecessary complexity.
+
+Measure before introducing optimization.
+
+---
+
+# Query-Driven Design
+
+Design tables based on business relationships.
+
+Optimize based on real query patterns.
+
+Never design schemas solely around expected SQL statements.
+
+Business integrity has higher priority than query convenience.
+
+---
+
+# Read and Write Balance
+
+Every optimization introduces trade-offs.
+
+Before optimizing, determine whether the workload is primarily:
+
+Read-heavy.
+
+Write-heavy.
+
+Balanced.
+
+Different workloads require different optimization strategies.
+
+Avoid assuming every table has identical access patterns.
+
+---
+
+# Normalize by Default
+
+Begin with a normalized schema.
+
+Normalization reduces:
+
+Data duplication.
+
+Update anomalies.
+
+Inconsistent business state.
+
+Maintenance cost.
+
+Normalize until real performance evidence suggests otherwise.
+
+---
+
+# Denormalization
+
+Denormalization is an optimization strategy.
+
+It is not a modeling strategy.
+
+Introduce duplicated data only when:
+
+Performance problems are measurable.
+
+The duplicated value has a clear owner.
+
+Synchronization rules are well defined.
+
+Maintenance cost is acceptable.
+
+Every denormalized column requires an explicit synchronization strategy.
+
+---
+
+# Query Simplicity
+
+Simple queries are easier to optimize than complex schemas.
+
+Prefer readable SQL over clever SQL.
+
+Avoid deeply nested queries when simpler alternatives exist.
+
+Database complexity should not become application complexity.
+
+---
+
+# Selecting Data
+
+Retrieve only the information required.
+
+Avoid selecting entire rows when only a few columns are needed.
+
+Large result sets increase:
+
+Network cost.
+
+Memory usage.
+
+Serialization time.
+
+Rendering time.
+
+Data transfer should be intentional.
+
+---
+
+# Filtering
+
+Filter data as early as possible.
+
+Avoid retrieving unnecessary rows.
+
+Business constraints should reduce the dataset before additional processing occurs.
+
+The database should perform filtering rather than the application whenever practical.
+
+---
+
+# Sorting
+
+Sort data within the database whenever the ordering belongs to the business query.
+
+Avoid sorting large datasets inside the application after retrieval.
+
+Ordering should be explicit and deterministic.
+
+---
+
+# Pagination
+
+Large datasets should never be loaded entirely.
+
+Use pagination for:
+
+Invoices.
+
+Maintenance Tickets.
+
+Audit Logs.
+
+Notifications.
+
+Occupancy History.
+
+Activity Streams.
+
+Design APIs assuming growth.
+
+---
+
+# Cursor-Based Pagination
+
+Prefer cursor-based pagination for continuously growing datasets.
+
+Use offset pagination only when:
+
+Dataset size is small.
+
+Stable ordering is guaranteed.
+
+Random page access is required.
+
+Cursor pagination scales more naturally.
+
+---
+
+# Index Philosophy
+
+Indexes improve read performance by increasing write cost.
+
+Every index is a trade-off.
+
+Before creating an index, ask:
+
+Which query benefits?
+
+How often is it executed?
+
+How frequently is the table updated?
+
+Can another index already satisfy the query?
+
+Unused indexes create maintenance overhead.
+
+---
+
+# Primary Indexes
+
+Primary keys should always be indexed.
+
+This should require no additional consideration.
+
+Primary key access should remain efficient.
+
+---
+
+# Foreign Key Indexes
+
+Frequently queried foreign keys should generally be indexed.
+
+Examples:
+
+organization_id
+
+property_id
+
+room_id
+
+tenant_id
+
+invoice_id
+
+Indexes should support common ownership lookups.
+
+---
+
+# Composite Indexes
+
+Create composite indexes based on actual query patterns.
+
+Column order matters.
+
+Design indexes for the most selective and frequently filtered columns.
+
+Avoid creating composite indexes without measured need.
+
+---
+
+# Unique Indexes
+
+Use unique indexes to enforce business constraints.
+
+Examples:
+
+One active occupancy per room.
+
+Unique invoice number within an organization.
+
+Unique invitation token.
+
+Business integrity is often more valuable than performance.
+
+---
+
+# Partial Indexes
+
+When only a subset of records is queried frequently, prefer partial indexes.
+
+Examples:
+
+Active records.
+
+Pending maintenance.
+
+Unpaid invoices.
+
+Unread notifications.
+
+Partial indexes reduce storage while improving query performance.
+
+---
+
+# Over-Indexing
+
+Avoid indexing every column.
+
+Indexes increase:
+
+Storage.
+
+Insert cost.
+
+Update cost.
+
+Delete cost.
+
+Maintenance.
+
+Only create indexes supported by real access patterns.
+
+---
+
+# Query Planning
+
+Database performance depends on execution plans rather than assumptions.
+
+Review expensive queries periodically.
+
+Optimize based on observed behavior.
+
+Never assume a query is efficient.
+
+---
+
+# Aggregation
+
+Large aggregations should be evaluated carefully.
+
+Examples:
+
+Dashboard statistics.
+
+Revenue reports.
+
+Occupancy summaries.
+
+Historical analytics.
+
+Frequently requested aggregates may justify precomputed summaries or materialized views.
+
+Business correctness must remain the source of truth.
+
+---
+
+# Materialized Data
+
+Materialized summaries should never replace transactional data.
+
+Use them only to improve read performance.
+
+The original business records remain authoritative.
+
+---
+
+# Caching
+
+Caching reduces repeated computation.
+
+Caching does not replace correct database design.
+
+Before introducing cache, define:
+
+Ownership.
+
+Expiration.
+
+Invalidation.
+
+Consistency expectations.
+
+Stale cache is often more harmful than slower queries.
+
+---
+
+# Bulk Operations
+
+Prefer batch processing for large datasets.
+
+Examples:
+
+Monthly invoice generation.
+
+Importing tenants.
+
+Property migration.
+
+Notification scheduling.
+
+Bulk operations reduce network overhead and improve throughput.
+
+---
+
+# N+1 Queries
+
+Avoid repeatedly querying related records inside loops.
+
+Prefer retrieving related data intentionally.
+
+N+1 query patterns should be identified and eliminated during development.
+
+---
+
+# Data Growth
+
+Assume continuous growth.
+
+Every schema should support:
+
+Millions of rows.
+
+Years of history.
+
+Thousands of organizations.
+
+Large audit logs.
+
+Large notification history.
+
+Growth should influence design without encouraging premature optimization.
+
+---
+
+# Partitioning
+
+Partitioning is an operational optimization.
+
+Do not partition tables simply because they are expected to become large.
+
+Introduce partitioning only when:
+
+Operational evidence supports it.
+
+Maintenance benefits are measurable.
+
+The partition strategy remains simple.
+
+Partitioning increases operational complexity.
+
+---
+
+# Performance Monitoring
+
+Database performance should be continuously observable.
+
+Monitor:
+
+Slow queries.
+
+Index usage.
+
+Connection count.
+
+Lock contention.
+
+Query frequency.
+
+Storage growth.
+
+Optimization begins with measurement rather than intuition.
+
+---
+
+# Performance Principle
+
+The fastest database is not the one with the most indexes.
+
+The fastest database is the one that stores correct data, answers predictable questions efficiently, and evolves without unnecessary complexity.
+
+Performance should emerge from good architecture rather than constant optimization.
+
+---
+
+# Schema Governance
+
+Database schemas should evolve intentionally.
+
+Every schema modification should:
+
+- Preserve business integrity.
+- Maintain backward compatibility whenever practical.
+- Be implemented through reviewed migrations.
+- Be documented when introducing significant structural changes.
+
+The database should evolve through disciplined governance rather than ad-hoc modification.
+
+---
+
+# Schema Evolution
+
+Database schemas should evolve gradually.
+
+The objective is continuous improvement rather than periodic redesign.
+
+Every schema change should preserve business integrity.
+
+Evolution is preferred over replacement.
+
+---
+
+# Evolution Philosophy
+
+The database is a long-lived asset.
+
+Application code changes frequently.
+
+Schemas should remain comparatively stable.
+
+Changing a schema should be more deliberate than changing application code.
+
+---
+
+# Migration Principles
+
+Every migration should be:
+
+Deterministic.
+
+Repeatable.
+
+Observable.
+
+Version controlled.
+
+Reviewable.
+
+A migration should always produce the same outcome when executed under identical conditions.
+
+---
+
+# Forward-Only Migrations
+
+Prefer forward-only migrations.
+
+Avoid editing historical migration files after they have been applied in shared environments.
+
+History should remain immutable.
+
+Corrections should be implemented through new migrations.
+
+---
+
+# Incremental Change
+
+Large schema changes should be divided into smaller migrations.
+
+Avoid combining unrelated structural modifications into a single migration.
+
+Small migrations are easier to:
+
+Review.
+
+Test.
+
+Rollback.
+
+Understand.
+
+Deploy.
+
+---
+
+# Atomic Migrations
+
+Whenever supported, schema migrations should complete atomically.
+
+Partial schema modifications increase operational risk.
+
+Either the migration succeeds or the schema remains unchanged.
+
+---
+
+# Backward Compatibility
+
+Application deployments and schema deployments should remain compatible during rollout.
+
+Avoid requiring:
+
+Immediate deployment.
+
+Synchronized releases.
+
+Manual intervention.
+
+Temporary compatibility often reduces deployment risk.
+
+---
+
+# Expand and Contract
+
+Prefer the following migration strategy:
+
+Expand
+
+↓
+
+Support both old and new structures
+
+↓
+
+Migrate existing data
+
+↓
+
+Update application
+
+↓
+
+Remove obsolete structures
+
+Avoid destructive schema changes during the first deployment.
+
+---
+
+# Data Migration
+
+Separate structural migrations from data migrations whenever practical.
+
+Schema changes modify structure.
+
+Data migrations modify business information.
+
+Independent execution improves safety.
+
+---
+
+# Data Transformation
+
+Transform business data carefully.
+
+Before transformation verify:
+
+Business correctness.
+
+Historical accuracy.
+
+Referential integrity.
+
+Reversibility (when practical).
+
+Business meaning must never be lost during migration.
+
+---
+
+# Rollback Strategy
+
+Not every migration can be reversed safely.
+
+Before deployment evaluate:
+
+Can rollback occur?
+
+Would rollback corrupt data?
+
+Would rollback lose business events?
+
+Would restoration require backup?
+
+Rollback planning is part of migration design.
+
+---
+
+# Migration Ordering
+
+Order migrations according to dependency.
+
+Example:
+
+Create table
+
+↓
+
+Add foreign key
+
+↓
+
+Insert reference data
+
+↓
+
+Create indexes
+
+↓
+
+Enable constraints
+
+↓
+
+Remove legacy structure
+
+Correct ordering reduces deployment failures.
+
+---
+
+# Long Running Migrations
+
+Large datasets require special consideration.
+
+Avoid locking important business tables for extended periods.
+
+Prefer incremental processing whenever possible.
+
+Production availability has higher priority than migration speed.
+
+---
+
+# Default Values
+
+Avoid introducing expensive default values on very large tables without evaluating operational impact.
+
+Consider phased population when appropriate.
+
+Database changes should minimize production disruption.
+
+---
+
+# Nullable First Strategy
+
+When introducing new required columns:
+
+Prefer:
+
+Create nullable column
+
+↓
+
+Populate existing records
+
+↓
+
+Validate data
+
+↓
+
+Enforce NOT NULL
+
+Avoid immediately introducing mandatory columns on populated tables.
+
+---
+
+# Removing Columns
+
+Column removal should be the final step.
+
+First:
+
+Stop writing.
+
+↓
+
+Stop reading.
+
+↓
+
+Verify unused.
+
+↓
+
+Remove safely.
+
+Premature deletion increases deployment risk.
+
+---
+
+# Renaming Columns
+
+Avoid direct renaming when compatibility matters.
+
+Prefer introducing the new column, migrating data, updating application logic, and removing the old column after verification.
+
+Stability is preferable to convenience.
+
+---
+
+# Reference Data Evolution
+
+Reference tables should evolve carefully.
+
+Avoid modifying identifiers used by business logic.
+
+Business identifiers should remain stable over time.
+
+---
+
+# Constraint Evolution
+
+Introduce constraints gradually.
+
+Recommended sequence:
+
+Validate existing data.
+
+↓
+
+Correct invalid records.
+
+↓
+
+Introduce constraint.
+
+↓
+
+Monitor behavior.
+
+Constraints should improve integrity rather than block deployments unexpectedly.
+
+---
+
+# Index Evolution
+
+Indexes should evolve alongside query behavior.
+
+Periodically review:
+
+Unused indexes.
+
+Duplicate indexes.
+
+Missing indexes.
+
+Changing workloads require changing optimization strategies.
+
+---
+
+# Database Refactoring
+
+Database refactoring should preserve external behavior.
+
+Internal improvements should not require application redesign.
+
+Schema quality should improve without disrupting business operations.
+
+---
+
+# Legacy Structures
+
+Temporary compatibility structures should remain temporary.
+
+Avoid accumulating:
+
+Unused columns.
+
+Deprecated tables.
+
+Legacy relationships.
+
+Obsolete indexes.
+
+Technical debt compounds over time.
+
+---
+
+# Database Versioning
+
+The schema should have a clearly identifiable version through migration history.
+
+Version history provides:
+
+Auditability.
+
+Deployment traceability.
+
+Operational confidence.
+
+Migration history becomes part of system documentation.
+
+---
+
+# Database Anti-Patterns
+
+Avoid the following architectural mistakes.
+
+---
+
+## Generic Tables
+
+Avoid tables intended to represent every possible business concept.
+
+Examples:
+
+entity
+
+record
+
+object
+
+data
+
+Business concepts deserve explicit schemas.
+
+---
+
+## EAV (Entity-Attribute-Value)
+
+Avoid Entity-Attribute-Value models for core business data.
+
+EAV reduces:
+
+Integrity.
+
+Performance.
+
+Type safety.
+
+Query simplicity.
+
+Use structured columns whenever business rules are known.
+
+---
+
+## Excessive JSON Storage
+
+Do not replace relational design with JSON.
+
+JSON should support flexibility rather than become the primary data model.
+
+Business-critical fields belong in relational columns.
+
+---
+
+## Polymorphic Relationships
+
+Avoid relationships such as:
+
+resource_type
+
+resource_id
+
+for core business entities.
+
+Explicit foreign keys provide stronger integrity and clearer ownership.
+
+---
+
+## Missing Constraints
+
+Never assume application code permanently protects the database.
+
+Business integrity should be enforced as close to the data as possible.
+
+---
+
+## Hidden Business Rules
+
+Avoid implementing business rules only inside stored procedures, triggers, or application services without documentation.
+
+Business rules should remain discoverable.
+
+---
+
+## Duplicate Columns
+
+Avoid storing identical business facts in multiple places.
+
+Every duplicated value increases synchronization risk.
+
+---
+
+## Premature Denormalization
+
+Never denormalize because it feels faster.
+
+Only denormalize after measuring a real performance bottleneck.
+
+---
+
+## Permanent Compatibility Layers
+
+Compatibility mechanisms should eventually disappear.
+
+Temporary architecture should not become permanent architecture.
+
+---
+
+# Schema Evolution Principle
+
+A successful schema is not the one that never changes.
+
+A successful schema is one that evolves safely, predictably, and continuously while preserving the integrity of the business.
+
+---
+
+# Database Design Heuristics
+
+When uncertain, prefer:
+
+Business concepts over UI concepts.
+
+Normalization over duplication.
+
+Explicit relationships over implicit assumptions.
+
+Constraints over application validation.
+
+Transactions over manual recovery.
+
+Stable identifiers over business identifiers.
+
+Schema evolution over schema replacement.
+
+Composition over generic abstraction.
+
+Simple queries over clever schemas.
+
+Long-term maintainability over short-term convenience.
+
+---
+
+# Database Quality Gates
+
+The database remains healthy when:
+
+- Business concepts remain accurately modeled.
+- Entity ownership remains explicit.
+- Tenant isolation remains preserved.
+- Relationships remain consistent.
+- Constraints protect business integrity.
+- Transactions preserve correctness.
+- Query performance remains predictable.
+- Schema evolution remains safe.
+- Migration history remains reliable.
+- Architectural consistency is maintained.
+
+This document defines database architecture and schema standards.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

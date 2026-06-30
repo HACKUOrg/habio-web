@@ -1,0 +1,611 @@
+---
+description: UX Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+UX Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+User Experience
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Design Standards
+
+**Related Standards**
+
+* Typography Standards
+* Accessibility Standards
+* Components Standards
+* Dashboard Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the user experience standards that guide how users interact with the hubIO platform.
+
+Its purpose is to ensure that every workflow is intuitive, efficient, and consistent while remaining aligned with the product vision and Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* User experience principles
+* Workflow design
+* Information flow
+* User feedback
+* Interaction patterns
+* Productivity principles
+
+It intentionally excludes visual design, typography, accessibility, and implementation details, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to user experience, ensuring every workflow reduces cognitive effort while supporting efficient property management operations.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Product Standards
+* Design Standards
+* Review Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* User workflows
+* Interaction principles
+* Information flow
+* Productivity optimization
+* User feedback
+* UX governance
+
+It does not define visual styling, accessibility, or implementation details.
+
+---
+
+# UX Philosophy
+
+Users should never need to "figure out" how the application works.
+
+The interface should guide them naturally.
+
+Every page should answer four questions within a few seconds.
+
+1. Where am I?
+2. What information am I looking at?
+3. What can I do here?
+4. What should I do next?
+
+If those questions are unclear, redesign the page.
+
+---
+
+# UX Design Principles
+
+Every user experience should support users in completing their work with confidence, efficiency, and minimal cognitive effort.
+
+Good UX should prioritize:
+
+* Task completion over visual complexity
+* Recognition over memorization
+* Consistency over novelty
+* Simplicity over feature density
+* Guidance over explanation
+
+User experience should reduce unnecessary decisions and help users focus on accomplishing their goals.
+
+Every interaction should move users naturally toward successful task completion.
+
+---
+
+# Workflow Design
+
+User workflows should reflect real operational processes rather than system implementation.
+
+Every workflow should:
+
+* Have a clear starting point
+* Guide users through logical steps
+* Minimize unnecessary interactions
+* Reduce opportunities for mistakes
+* Provide continuous feedback
+* End with a clear outcome
+
+Complex workflows should be divided into smaller, understandable steps whenever practical.
+
+Users should always know:
+
+* What they are doing
+* Why they are doing it
+* What happens next
+
+Workflow complexity should come from the business, not from the interface.
+
+---
+
+# Primary Actions
+
+Every page must have one obvious primary action.
+
+Examples
+
+Tenant List
+
+Primary Action
+
+Create Tenant
+
+Room List
+
+Primary Action
+
+Add Room
+
+Maintenance
+
+Primary Action
+
+Create Ticket
+
+Billing
+
+Primary Action
+
+Generate Invoice
+
+Dashboard
+
+Primary Action
+
+Quick Actions
+
+Never make users search for the main action.
+
+---
+
+# Information Hierarchy
+
+Users scan before they read.
+
+Arrange information in this order.
+
+1. Page Title
+2. Important Metrics
+3. Primary Actions
+4. Filters
+5. Content
+6. Secondary Actions
+7. Metadata
+
+Never hide important information below the fold.
+
+---
+
+# Reduce Cognitive Load
+
+Every screen should feel simple.
+
+Remove anything that does not help users complete their task.
+
+Avoid:
+
+Too many buttons
+
+Large paragraphs
+
+Decorative graphics
+
+Complicated terminology
+
+Duplicate actions
+
+Ask:
+
+Can this screen be simpler?
+
+---
+
+# Progressive Disclosure
+
+Do not show everything immediately.
+
+Show only what users need now.
+
+Reveal advanced options only when necessary.
+
+Examples
+
+Basic Filters
+
+Advanced Filters
+
+Basic Property Information
+
+Expandable Details
+
+Simple Forms
+
+Advanced Settings Section
+
+---
+
+# Recognition Over Recall
+
+Users should recognize instead of remember.
+
+Always prefer:
+
+Dropdown
+
+Autocomplete
+
+Search
+
+Badges
+
+Status Chips
+
+Avatars
+
+Icons with labels
+
+Avoid requiring users to memorize codes or workflows.
+
+---
+
+# Navigation Experience
+
+Users should always know:
+
+Where they are
+
+How they got there
+
+How to go back
+
+Use:
+
+Breadcrumbs
+
+Highlighted Sidebar
+
+Page Titles
+
+Back Navigation
+
+Never trap users inside modal workflows.
+
+---
+
+# Search First
+
+Most business users prefer searching over browsing.
+
+Whenever a page contains many records,
+
+provide search.
+
+Examples
+
+Tenant List
+
+Room List
+
+Tickets
+
+Invoices
+
+Properties
+
+Technicians
+
+Housekeepers
+
+Search should be fast and forgiving.
+
+---
+
+# Filtering
+
+Filtering should be easier than exporting data.
+
+Frequently used filters should always remain visible.
+
+Advanced filters may be collapsible.
+
+Do not hide common filters.
+
+---
+
+# Feedback
+
+Every user action deserves feedback.
+
+Examples
+
+Saving
+
+Loading Button
+
+Success Toast
+
+Deleting
+
+Confirmation Dialog
+
+Uploading
+
+Progress Indicator
+
+Background Processing
+
+Notification
+
+Never leave users wondering if something happened.
+
+---
+
+# Loading Experience
+
+Loading should preserve layout.
+
+Prefer
+
+Skeleton
+
+Instead of
+
+Spinner
+
+Loading indicators should appear immediately.
+
+Avoid blank pages.
+
+---
+
+# Empty States
+
+Every empty state should explain
+
+Why there is no data
+
+What users should do next
+
+Provide a clear CTA.
+
+Bad
+
+"No Data"
+
+Good
+
+"No tenants have been added yet.
+
+Create your first tenant to start managing your property."
+
+---
+
+# Error Handling
+
+Errors should explain:
+
+What happened
+
+Why
+
+What users can do next
+
+Avoid technical messages.
+
+Never display stack traces.
+
+Never expose server errors.
+
+---
+
+# Confirmation Dialogs
+
+Confirm only dangerous actions.
+
+Examples
+
+Delete
+
+Archive
+
+Cancel Contract
+
+Reset Password
+
+Do not confirm harmless actions.
+
+Too many confirmations slow users down.
+
+---
+
+# Destructive Actions
+
+Dangerous actions should be visually separated.
+
+Delete should never be the primary button.
+
+Use red only for destructive actions.
+
+---
+
+# Mobile UX
+
+Mobile users complete tasks.
+
+Desktop users manage operations.
+
+Design accordingly.
+
+Technicians
+
+Housekeepers
+
+Owners
+
+often use phones.
+
+Managers
+
+usually use desktop.
+
+Optimize workflows for each device.
+
+---
+
+# Notifications
+
+Only notify users when necessary.
+
+High Priority
+
+Failed Payment
+
+Urgent Maintenance
+
+Critical Issue
+
+Medium Priority
+
+Task Assigned
+
+Invoice Generated
+
+Low Priority
+
+Routine Updates
+
+Avoid notification fatigue.
+
+---
+
+# Perceived Performance
+
+Users should feel the application is fast.
+
+Optimistic updates are encouraged.
+
+Keep waiting time visible.
+
+Never freeze the interface.
+
+---
+
+# Consistency
+
+Every interaction should behave consistently.
+
+Buttons
+
+Dialogs
+
+Tables
+
+Forms
+
+Search
+
+Filters
+
+Navigation
+
+Status Indicators
+
+Users should never relearn the interface.
+
+---
+
+# UX Governance
+
+User experience should evolve intentionally.
+
+Before introducing a new interaction pattern, evaluate:
+
+* Can an existing workflow solve the problem?
+* Does the change reduce user effort?
+* Will the interaction remain consistent across modules?
+* Does it improve productivity?
+* Will new users understand it without explanation?
+
+UX improvements should strengthen consistency rather than introduce additional interaction patterns.
+
+Interaction debt should be reduced through refinement of existing workflows instead of creating new exceptions.
+
+---
+
+# UX Quality Gates
+
+The user experience remains healthy when:
+
+* User goals remain immediately understandable.
+* Primary actions remain obvious.
+* Workflows remain efficient.
+* Navigation remains predictable.
+* Information hierarchy supports decision-making.
+* Feedback is timely and meaningful.
+* Cognitive load remains low.
+* Mobile workflows remain practical.
+* Interaction patterns remain consistent.
+* UX decisions remain aligned with the Product Standards.
+
+This document defines the user experience standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.
+

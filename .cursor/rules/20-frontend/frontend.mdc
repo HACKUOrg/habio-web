@@ -1,0 +1,263 @@
+---
+description: Frontend Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Frontend Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Frontend Engineering
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Architecture Standards
+
+**Related Standards**
+
+* Design Standards
+* UX Standards
+* Components Standards
+* Forms Standards
+* Dashboard Standards
+* Next.js Standards
+* TypeScript Standards
+* State Management Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the frontend engineering standards for the hubIO platform.
+
+Its purpose is to ensure every frontend feature is maintainable, scalable, predictable, and aligned with the platform architecture while providing a consistent user experience across all products.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Frontend engineering principles
+* Presentation architecture
+* Responsibility boundaries
+* Interface consistency
+* State ownership philosophy
+* Frontend scalability
+* Frontend governance
+
+It intentionally excludes implementation details, framework-specific guidance, component implementation, and styling conventions, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to frontend development, ensuring the user interface remains maintainable, scalable, and capable of supporting long-term product evolution without unnecessary technical complexity.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Product Standards
+* Architecture Standards
+* Design Standards
+* UX Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Frontend architecture
+* Presentation responsibilities
+* Interface consistency
+* State ownership principles
+* Frontend scalability
+* Frontend governance
+
+It does not define component implementation, framework conventions, styling, or application-specific behaviors.
+
+---
+
+# Frontend Philosophy
+
+The frontend represents the operational face of the platform.
+
+Its responsibility extends beyond rendering interfaces to providing an environment where users can understand information, complete business workflows, and make decisions with confidence.
+
+Every interface should communicate business intent before technical implementation.
+
+Users should never need to understand how the system is built in order to successfully operate it.
+
+Engineering decisions should prioritize clarity, predictability, consistency, and long-term maintainability over unnecessary abstraction or implementation complexity.
+
+---
+
+# Frontend Design Principles
+
+Frontend engineering should support business operations through interfaces that are reliable, understandable, and scalable.
+
+Every implementation should prioritize:
+
+* Business workflows over technical structure
+* Predictability over novelty
+* Consistency over local optimization
+* Simplicity over unnecessary abstraction
+* Maintainability over short-term convenience
+
+Frontend architecture should become easier to extend as the platform grows rather than increasingly difficult to understand.
+
+---
+
+# Presentation Architecture
+
+Presentation should remain responsible only for communicating information and enabling user interaction.
+
+Business rules, infrastructure concerns, and implementation details should remain independent from presentation whenever practical.
+
+Interfaces should organize business complexity into understandable workflows instead of exposing technical complexity directly to users.
+
+Presentation architecture should encourage clear separation of responsibilities while supporting long-term maintainability.
+
+---
+
+# Interface Consistency
+
+Users should experience hubIO as a single product rather than independent modules.
+
+Equivalent interactions should behave consistently throughout the platform.
+
+Consistency should be maintained across:
+
+* Navigation
+* Information hierarchy
+* User interactions
+* Feedback patterns
+* Page layouts
+* Business terminology
+
+Consistency reduces cognitive effort and improves operational confidence.
+
+---
+
+# Information Presentation
+
+Interfaces should present information according to business importance rather than technical structure.
+
+Business-critical information should receive the highest visual priority.
+
+Supporting information should provide context without competing for attention.
+
+Information density should improve productivity while avoiding unnecessary visual noise.
+
+Users should understand the current state of the system within a few seconds of opening a page.
+
+---
+
+# State Ownership
+
+Frontend state should exist only where it provides operational value.
+
+Each piece of state should have a single, clearly defined owner.
+
+Presentation state, application state, navigation state, and business data should maintain clear responsibility boundaries.
+
+Duplicating responsibilities across multiple layers should be avoided whenever possible.
+
+Clear ownership improves predictability, maintainability, and engineering confidence.
+
+---
+
+# Scalability
+
+Frontend architecture should support continuous product growth without requiring significant architectural redesign.
+
+Scalability includes:
+
+* Additional business domains
+* Additional user roles
+* Additional properties
+* Larger operational datasets
+* Future platform capabilities
+
+Growth should occur through extension of existing patterns rather than introduction of isolated implementations.
+
+---
+
+# Engineering Governance
+
+Frontend engineering should evolve intentionally.
+
+Before introducing a new architectural pattern, evaluate:
+
+* Can existing frontend patterns solve the problem?
+* Does the change improve maintainability?
+* Will the implementation remain consistent across the platform?
+* Does it reduce engineering complexity?
+* Will future developers understand the solution easily?
+
+Frontend evolution should strengthen platform consistency rather than introduce competing architectural approaches.
+
+Technical debt should be reduced by improving shared patterns instead of creating exceptions.
+
+---
+
+# Frontend Quality Gates
+
+Frontend engineering remains healthy when:
+
+* Business workflows remain clearly represented.
+* Presentation responsibilities remain well separated.
+* Interface behavior remains predictable.
+* Information hierarchy supports operational decision-making.
+* State ownership remains clearly defined.
+* Frontend architecture scales without unnecessary complexity.
+* Engineering decisions reinforce consistency across the platform.
+* Frontend implementations remain aligned with the Engineering Constitution.
+
+This document defines the frontend engineering standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.

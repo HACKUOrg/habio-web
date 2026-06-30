@@ -1,0 +1,580 @@
+---
+description: Typography Standards
+globs:
+alwaysApply: false
+---
+
+# hubIO Engineering Standards
+
+---
+
+# Document Metadata
+
+**Document**
+
+Typography Standards
+
+**Version**
+
+2.0
+
+**Status**
+
+Stable
+
+**Maturity**
+
+Stable
+
+**Engineering Domain**
+
+Typography
+
+**Authority**
+
+Engineering Constitution
+
+**Depends On**
+
+* Engineering Constitution
+* Engineering Glossary
+* Product Standards
+* Design Standards
+
+**Related Standards**
+
+* Colors Standards
+* Accessibility Standards
+* Frontend Standards
+
+**Review Cycle**
+
+Quarterly
+
+**Last Reviewed**
+
+2026-06
+
+---
+
+# Purpose
+
+This document defines the typography standards that establish a clear, consistent, and readable visual language across the hubIO platform.
+
+Its purpose is to ensure that typography supports usability, information hierarchy, and long-term design consistency while remaining aligned with the Engineering Constitution.
+
+---
+
+# Scope
+
+This standard defines:
+
+* Typography philosophy
+* Font selection
+* Type scale
+* Text hierarchy
+* Readability
+* Typography consistency
+* Typography governance
+* Responsive typography
+
+It intentionally excludes layout, colors, animations, accessibility, and implementation details, which are defined by their respective Engineering Standards.
+
+---
+
+# Constitutional Interpretation
+
+This document extends the hubIO Engineering Constitution.
+
+It applies constitutional engineering principles to typography, ensuring written information remains readable, predictable, and consistent throughout the product.
+
+---
+
+# Required Reading
+
+1. Engineering Constitution
+
+Recommended:
+
+* Design Standards
+* Accessibility Standards
+* Frontend Standards
+
+---
+
+# Engineering Responsibilities
+
+This document owns:
+
+* Typography system
+* Font hierarchy
+* Readability
+* Text consistency
+* Type scale
+* Typography governance
+* Responsive typography
+
+It does not define layout, colors, components, or implementation details.
+
+---
+
+# Typography Philosophy
+
+Typography is the primary communication medium of the interface.
+
+Well-designed typography improves comprehension, reduces cognitive effort, and establishes visual hierarchy without relying on decorative elements.
+
+Typography should always prioritize:
+
+* Readability
+* Consistency
+* Clarity
+* Information hierarchy
+* Long-term maintainability
+
+Text should communicate information rather than decorate the interface.
+
+---
+
+# Typography Principles
+
+Every typographic decision should prioritize:
+
+Readability
+
+↓
+
+Hierarchy
+
+↓
+
+Consistency
+
+↓
+
+Accessibility
+
+↓
+
+Brand Identity
+
+Typography is a communication system—not decoration.
+
+---
+
+# Font Families
+
+## Primary Typeface
+
+English
+
+* Geist
+
+Thai
+
+* IBM Plex Sans Thai
+
+Monospace
+
+* JetBrains Mono
+
+---
+
+# Font Responsibilities
+
+Each font has a purpose.
+
+Geist
+
+Interface
+
+Navigation
+
+Buttons
+
+Headings
+
+Cards
+
+Tables
+
+IBM Plex Sans Thai
+
+Thai interface
+
+Forms
+
+Descriptions
+
+Tables
+
+JetBrains Mono
+
+Code
+
+IDs
+
+Reference numbers
+
+Status codes
+
+Log output
+
+Never use monospace for body text.
+
+---
+
+
+# Type Scale
+
+Use a consistent type scale.
+
+| Token | Size |
+|-------|------|
+| xs | 12px |
+| sm | 14px |
+| base | 16px |
+| lg | 18px |
+| xl | 20px |
+| 2xl | 24px |
+| 3xl | 30px |
+| 4xl | 36px |
+
+---
+
+# Text Hierarchy
+
+Typography establishes information hierarchy before color, spacing, or visual decoration.
+
+Each level of text should communicate its relative importance through consistent size, weight, and placement.
+
+Users should immediately distinguish between:
+
+- Page titles
+- Section headings
+- Card titles
+- Body content
+- Supporting information
+- Metadata
+
+Hierarchy should remain predictable across every module.
+
+---
+
+# Readability First
+
+Typography should always be optimized for reading.
+
+Avoid:
+
+Dense paragraphs
+
+Tiny text
+
+Overly bold interfaces
+
+Poor line spacing
+
+Reading should feel effortless.
+
+---
+
+# Body Text
+
+Default body size
+
+16px
+
+Body text should remain comfortable across desktop and mobile.
+
+Avoid reducing body text below 14px.
+
+Body text should remain the default reading experience throughout the application.
+
+---
+
+# Headings
+
+Headings communicate structure—not decoration.
+
+Recommended hierarchy
+
+H1
+
+Primary page title
+
+H2
+
+Major section
+
+H3
+
+Card title
+
+H4
+
+Small subsection
+
+Avoid skipping heading levels.
+
+---
+
+# Font Weight
+
+Use weight intentionally.
+
+Recommended
+
+Regular
+
+400
+
+Medium
+
+500
+
+Semibold
+
+600
+
+Bold
+
+700
+
+Avoid excessive bold text.
+
+If everything is bold, nothing stands out.
+
+Avoid using multiple font weights within the same visual hierarchy unless they communicate different semantic importance.
+
+---
+
+# Emphasis
+
+Prefer hierarchy before weight.
+
+Increase emphasis using:
+
+Spacing
+
+Position
+
+Size
+
+Color
+
+Weight
+
+Bold should be the final tool—not the first.
+
+---
+
+# Line Height
+
+Readable interfaces require generous spacing.
+
+Recommended
+
+Headings
+
+1.2–1.3
+
+Body
+
+1.5–1.7
+
+Small labels
+
+1.3–1.4
+
+Avoid cramped text.
+
+---
+
+# Letter Spacing
+
+Use default spacing unless a design token specifies otherwise.
+
+Avoid manually adjusting tracking across the interface.
+
+Consistency is more important than experimentation.
+
+---
+
+# Line Length
+
+Readable paragraphs should remain narrow.
+
+Ideal
+
+45–75 characters
+
+Avoid full-width paragraphs on desktop.
+
+Use max-width constraints for long-form content.
+
+---
+
+# Text Alignment
+
+Default alignment
+
+Left
+
+Avoid centered paragraphs.
+
+Center alignment should be reserved for:
+
+Landing pages
+
+Empty states
+
+Success screens
+
+Reading should remain predictable.
+
+---
+
+# Text Color Hierarchy
+
+Use semantic colors.
+
+Primary text
+
+Highest emphasis
+
+Secondary text
+
+Supporting information
+
+Muted text
+
+Metadata
+
+Disabled text
+
+Unavailable information
+
+Never use multiple shades randomly.
+
+---
+
+# Numeric Data
+
+Numbers require consistency.
+
+Use tabular numerals whenever possible.
+
+Examples
+
+Revenue
+
+Occupancy
+
+Payments
+
+Statistics
+
+Tables
+
+Dashboards
+
+Aligned numbers improve readability.
+
+---
+
+# Monospace Usage
+
+JetBrains Mono should only appear when:
+
+IDs
+
+Invoice numbers
+
+Room codes
+
+API keys
+
+Reference values
+
+Logs
+
+Never use monospace for navigation or descriptive content.
+
+---
+
+# Responsive Typography
+
+Scale typography naturally.
+
+Do not simply shrink every heading.
+
+Prioritize readability across:
+
+Desktop
+
+Tablet
+
+Mobile
+
+Typography should adapt to available space while preserving the established hierarchy.
+
+---
+
+# Consistency
+
+Typography should be predictable.
+
+Users should immediately recognize:
+
+Titles
+
+Sections
+
+Metadata
+
+Descriptions
+
+Actions
+
+Never invent new styles when existing ones satisfy the requirement.
+
+---
+
+# Typography Governance
+
+The typography system should evolve intentionally.
+
+Before introducing a new typography pattern, evaluate:
+
+- Can an existing text style solve the problem?
+- Does the new style improve readability?
+- Will it remain consistent across modules?
+- Does it increase unnecessary complexity?
+
+Typography should evolve through refinement rather than introducing additional text styles.
+
+Avoid creating one-off typography variants for individual screens.
+
+Consistency should always take precedence over stylistic preference.
+
+---
+
+# Typography Quality Gates
+
+The typography system remains healthy when:
+
+- Font families remain consistent.
+- Type scale is applied consistently.
+- Information hierarchy is immediately understandable.
+- Text remains readable across supported devices.
+- Numeric information remains easy to compare.
+- Typography supports accessibility requirements.
+- New typography styles are introduced intentionally.
+- Typography remains aligned with the Design Standards.
+- Typography hierarchy remains consistent across modules.
+- Typography supports efficient information scanning.
+
+This document defines the typography standards for the hubIO platform.
+
+Implementation guidance is defined by the Engineering Constitution and the relevant Engineering Standards.
