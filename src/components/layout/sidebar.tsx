@@ -10,21 +10,44 @@ interface SidebarProps {
   role: MembershipRole
 }
 
+const accountLink = (role: MembershipRole) => ({
+  href: `/${role}/account/link-line`,
+  label: 'Account',
+})
+
+const sharedNav = [{ href: '/notifications', label: 'Notifications' }]
+
 const navItems: Record<MembershipRole, { href: string; label: string }[]> = {
   owner: [
     { href: '/owner/dashboard', label: 'Dashboard' },
     { href: '/owner/properties', label: 'Properties' },
     { href: '/owner/staff/invite', label: 'Invite staff' },
     { href: '/manager/tenants/new', label: 'Add tenant' },
+    ...sharedNav,
+    accountLink('owner'),
   ],
   manager: [
     { href: '/manager/dashboard', label: 'Dashboard' },
     { href: '/manager/staff/invite', label: 'Invite staff' },
     { href: '/manager/tenants/new', label: 'Add tenant' },
+    ...sharedNav,
+    accountLink('manager'),
   ],
-  tenant: [{ href: '/tenant/dashboard', label: 'Dashboard' }],
-  technician: [{ href: '/technician/dashboard', label: 'Dashboard' }],
-  housekeeper: [{ href: '/housekeeper/dashboard', label: 'Dashboard' }],
+  tenant: [
+    { href: '/tenant/dashboard', label: 'Dashboard' },
+    ...sharedNav,
+    accountLink('tenant'),
+  ],
+  technician: [
+    { href: '/technician/dashboard', label: 'Dashboard' },
+    ...sharedNav,
+    accountLink('technician'),
+  ],
+  housekeeper: [
+    { href: '/housekeeper/dashboard', label: 'Dashboard' },
+    ...sharedNav,
+    accountLink('housekeeper'),
+  ],
 }
 
 export function Sidebar({ role }: SidebarProps) {
